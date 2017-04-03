@@ -12,8 +12,8 @@ $GLOBALS['config'] = array(
     
     'mysql' => array(
          'host' => '127.0.0.1',
-         'username' => 'mds',
-         'password' => 'GetIn2016',
+         'username' => 'root',
+         'password' => 'root@1',
          'db' => 'mds'
      ),
      

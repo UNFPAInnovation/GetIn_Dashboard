@@ -111,7 +111,7 @@ switch ($page) {
             include 'pages/' . $page . '.php';
         break;
         
-    case 'send_reminder_missed':
+    case 'broadcast_message':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
         break;
@@ -134,7 +134,12 @@ switch ($page) {
     case 'ambulance_drivers':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
-        break;    
+        break; 
+        
+    case 'messages':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break; 
     
 }
 ?>

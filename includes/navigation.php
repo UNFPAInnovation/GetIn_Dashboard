@@ -16,7 +16,7 @@
             ?>
             <li class="dropdown">
                 <a href="javascript:;">
-                    <i class="fa fa-money"></i>
+                    <i class="fa fa-list"></i>
                     Demographics
                     <span class="caret"></span>
                 </a>
@@ -34,7 +34,7 @@
             </li>
             <li class="dropdown">
                 <a href="javascript:;">
-                    <i class="fa fa-money"></i>
+                    <i class="fa fa-archive"></i>
                     Follow Up
                     <span class="caret"></span>
                 </a>
@@ -59,7 +59,7 @@
             </li>
             <li class="dropdown">
                 <a href="javascript:;">
-                    <i class="fa fa-money"></i>
+                    <i class="fa fa-hospital"></i>
                     Visits
                     <span class="caret"></span>
                 </a>
@@ -106,8 +106,8 @@
 
 <li class="dropdown">
                 <a href="javascript:;">
-                    <i class="fa fa-file-text-o"></i>
-                    Drivers
+                    <i class="fa fa-user"></i>
+                    Medical Personnel
                     <span class="caret"></span>
                 </a>
 
@@ -116,6 +116,18 @@
                         <a href="index.php?page=ambulance_drivers">
                             <i class="fa fa-unlock"></i> 
                             Ambulance Driver
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.php?page=ambulance_drivers">
+                            <i class="fa fa-unlock"></i> 
+                            Nurses
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.php?page=ambulance_drivers">
+                            <i class="fa fa-unlock"></i> 
+                            VHT
                         </a>
                     </li>
 
@@ -166,22 +178,22 @@
             </li>
             <li class="dropdown">
                 <a href="javascript:;">
-                    <i class="fa fa-money"></i>
-                    SMS
+                    <i class="fa fa-envelope"></i>
+                    Messages
                     <span class="caret"></span>
                 </a>
 
                 <ul class="sub-nav">
                     <li>
-                        <a href="#">
+                        <a href="index.php?page=messages">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            Send Appointment Reminders
+                            Compose SMS
                         </a>
                     </li>
                     <li>
-                        <a href="index.php?page=send_reminder_missed">
+                        <a href="index.php?page=broadcast_message">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            Send Missed Appointment
+                            Choose Existing SMS
                         </a>
                     </li>
 
@@ -190,7 +202,7 @@
             </li>
             <li class="dropdown">
                 <a href="javascript:;">
-                    <i class="fa fa-money"></i>
+                    <i class="fa fa-chain-broken"></i>
                     Reports
                     <span class="caret"></span>
                 </a>
@@ -199,13 +211,13 @@
                     <li>
                         <a href="#">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            Send Appointment Reminders
+                            Mapped Girls
                         </a>
                     </li>
                     <li>
-                        <a href="index.php?page=send_reminder_missed">
+                        <a href="#">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            Send Missed Appointment
+                            Demographical Statistics
                         </a>
                     </li>
 

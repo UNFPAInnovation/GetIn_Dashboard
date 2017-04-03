@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
 
-        <title>Missed Visits</title>
+        <title>Broad Cast Message</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="">
@@ -42,7 +42,7 @@
             <div id="content">		
 
                 <div id="content-header">
-                    <h1>Send message to patients who missed appointments</h1>
+                    <h1>Broad Cast Message</h1>
                 </div> <!-- #content-header -->	
 
 
@@ -57,14 +57,13 @@
                                 <div class="portlet-header">
 
                                     <h3>
-                                        <i class="fa fa-list"></i>
-                                        Missed Appointment
+                                        <i class="fa fa-envelope"></i>
+                                        Broad Cast Message
                                     </h3>
-<button type="submit" id="login-btn" class="btn btn-primary btn-block span4">BroadCast Message &nbsp; <i class="fa fa-play-circle"></i></button>
                                 </div> <!-- /.portlet-header -->
 
                                 <div class="portlet-content">						
-                                    
+
                                     <div class="table-responsive">
 
                                         <table 
@@ -78,41 +77,28 @@
                                             >
                                             <thead>
                                                 <tr>
-                                                    
-                                                    <th data-filterable="true" data-sortable="true" data-direction="desc">Full Name</th>
-                                                    <th data-direction="asc" data-filterable="true" data-sortable="true">Phone</th>
-                                                    <th data-filterable="true" data-sortable="true">Power Holder Contact</th>
-                                                    <th data-filterable="true" class="hidden-xs hidden-sm">Village</th>
-                                                    <th data-filterable="true" class="hidden-xs hidden-sm">Date of Birth</th>
-                                                    <th data-filterable="true" class="hidden-xs hidden-sm">Status</th>
-                                                    <th data-filterable="true" class="hidden-xs hidden-sm">Appointment Date</th>
+
+                                                    <th data-filterable="true" data-sortable="true" data-direction="desc">Patient Group</th>
+                                                    <th data-direction="asc" data-filterable="true" data-sortable="true">Message To Broad Cast</th>
+                                                    <th width="10%">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $date_today=  date('Y-m-d');
-                                                $scheduled = DB::getInstance()->query("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id");
+                                                $date_today = date('Y-m-d');
+                                                // $scheduled = DB::getInstance()->query("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id");
+                                                $scheduled = DB::getInstance()->query("SELECT * from messages");
                                                 foreach ($scheduled->results() as $scheduled) {
-                                                    $status=$scheduled->status_id;
-                                                    $due_on=$scheduled->due_on;
-                                                    $date_due_on_array=  explode(" ", $due_on);
-                                                    $date_due_on=$date_due_on_array[0];
-                                                    if($status==5){
-                                                        if($date_due_on<$date_today){
                                                     ?>
                                                     <tr>
-                                                        
-                                                        <td><?php echo $scheduled->family_name."  ".$scheduled->given_name ?></td>
-                                                        <td><?php echo $scheduled->pnumber;  ?></td>
-                                                        <td><?php echo $scheduled->holder_pnumber;  ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo $scheduled->village;  ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo streamline_date($scheduled->dob);  ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo descStatus($status);  ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo streamline_date_time($scheduled->due_on);  ?></td>
+
+                                                        <td><?php echo $scheduled->Patient_Group; ?></td>
+                                                        <td><?php echo $scheduled->Message; ?></td>
+                                                        <td><form>
+                                                                <button type="submit" id="login-btn" class="btn btn-primary btn-block col-md-4">BroadCast &nbsp; <i class="fa fa-play-circle"></i></button>
+                                                            </form></td>
                                                     </tr>  
                                                     <?php
-                                                        }
-                                                    }
                                                 }
                                                 ?>
                                             </tbody>
@@ -146,9 +132,9 @@
 
         </div> <!-- #wrapper -->
 
-        <?php
-        include 'includes/footer.php';
-        ?>
+<?php
+include 'includes/footer.php';
+?>
 
         <script src="./js/libs/jquery-1.9.1.min.js"></script>
         <script src="./js/libs/jquery-ui-1.9.2.custom.min.js"></script>
