@@ -51,7 +51,9 @@
                     <div class="row">
 
                         <div class="col-md-12">
-
+                            <strong>Key</strong>
+                            <br/><font color='red'>Missed Appointment</font> = SMS will be sent to mothers who missed appointments.
+                            <br/><font color='red'>Visit Reminder </font>= SMS will be sent to mothers 3 days prior to visit
                             <div class="portlet">
 
                                 <div class="portlet-header">
@@ -94,8 +96,10 @@
 
                                                         <td><?php echo $scheduled->Patient_Group; ?></td>
                                                         <td><?php echo $scheduled->Message; ?></td>
-                                                        <td><form>
-                                                                <button type="submit" id="login-btn" class="btn btn-primary btn-block col-md-4">BroadCast &nbsp; <i class="fa fa-play-circle"></i></button>
+                                                        <td><form action="index.php?page=bulk_sms_send" method="post">
+                                                                <input type="hidden" name="identifier" value="<?php echo $scheduled->Patient_Group;  ?>"/>
+                                                                <input type="hidden" name="message" value="<?php echo $scheduled->Message;  ?>"/>
+                                                                <button type="submit" id="login-btn" class="btn btn-success btn-block col-md-4">BroadCast</button>
                                                             </form></td>
                                                     </tr>  
                                                     <?php

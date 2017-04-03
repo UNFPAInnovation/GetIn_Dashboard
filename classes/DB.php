@@ -47,6 +47,7 @@ class DB {
                 $this->_error = true;
             }
         }
+        $sql="";
         return $this;
     }
 
@@ -179,25 +180,13 @@ class DB {
     }
     
     //function for converting for tracking orders
-    public function trackOrdersPrice($orderId)
+    public function returnCount($sql_query)
     {
         $this->_columnName=0;
-        $this->_query=  $this->query("SELECT * FROM jerm_orders WHERE Order_Number=$orderId");
+        $this->_query=  $this->query($sql_query);
         foreach ($this->_query->results() as $result){
-            $this->_columnName+=($result->Quantity*$result->Price);
+            $this->_columnName++;
             }
-        return $this->_columnName;
-    }
-    //function for converting for tracking orders
-    public function trackOrdersQty($orderId)
-    {
-        $this->_columnName=0;
-        $this->_query=  $this->query("SELECT * FROM jerm_orders WHERE Order_Number=$orderId");
-        foreach ($this->_query->results() as $result){
-            $this->_columnName+=$result->Quantity;
-            }
-            
-            //echo $this->_columnName;
         return $this->_columnName;
     }
     

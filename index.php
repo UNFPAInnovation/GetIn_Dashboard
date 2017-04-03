@@ -4,6 +4,7 @@
 session_start();
 require_once 'functions/functions.php';
 include 'core/init.php';
+$date_today=  date('Y-m-d');
 //error_reporting(0);
 $crypt = new Encryption();
 //echo date("Y-m-d h:i:s");
@@ -126,7 +127,7 @@ switch ($page) {
             include 'pages/' . $page . '.php';
         break;
         
-    case 'edit_blog':
+    case 'bulk_sms_send':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
         break;

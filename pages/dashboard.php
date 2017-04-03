@@ -45,12 +45,12 @@
                                     <span class="content">Mapped Girls</span>
                                     <span class="value">
                                         <?php
-                                        $counter = 0;
+                                        $mother_counter = 0;
                                         $mother_count = DB::getInstance()->query("SELECT * FROM core_patients");
                                         foreach ($mother_count->results() as $mother_count) {
-                                            $counter++;
+                                            $mother_counter++;
                                         }
-                                        echo seperators($counter);
+                                        echo seperators($mother_counter);
                                         ?></span>
                                 </div> <!-- /.details -->
 
@@ -149,17 +149,34 @@
                                     <thead>
                                         <tr>
                                             <th data-sortable="true" width="40%">AGE Groups</th>
-                                            <td width="60%">(15-19):    0 Girls<br/>(20-24):    0 Girls<br/>(25-20):    0 Girls<br/>
+                                            <?php
+                                            $group1 = 0;
+                                            $group2 = 0;
+                                            $group3 = 0;
+                                            $age_groups = DB::getInstance()->query("SELECT * FROM core_patients");
+                                            foreach ($age_groups->results() as $age_groups) {
+                                                $age = calcAge($age_groups->dob, date('Y-m-d'));
+                                                if ($age >= 15 && $age <= 19):
+                                                    $group1++;
+                                                elseif ($age >= 20 && $age <= 24):
+                                                    $group2++;
+                                                elseif ($age >= 25 && $age <= 30):
+                                                    $group3++;
+                                                else:
+                                                endif;
+                                            }
+                                            ?>
+                                            <td width="60%">(15-19):    <?php echo $group1; ?> Girls<br/>(20-24):    <?php echo $group2; ?>  Girls<br/>(24-30):    <?php echo $group3; ?>  Girls<br/>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <th data-direction="asc" data-filterable="true" data-sortable="true">Mapped Girls</th>
-                                            <td>0</td>
+                                            <td><?php echo $mother_counter; ?> </td>
                                         </tr>
                                         <tr>
                                             <th data-sortable="true" width="40%">Personnel</th>
-                                            <td width="60%">VHT:    0 <br/>Nurses:    0 <br/>Drivers:    0 <br/>
+                                            <td width="60%">VHT:    0 <br/>Nurses:    0 <br/>Drivers:    <?php echo DB::getInstance()->returnCount("select * from core_ambulancedriver"); ?> <br/>
                                             </td>
                                         </tr>
                                     </thead>
@@ -184,17 +201,50 @@
                                     <thead>
                                         <tr>
                                             <th data-sortable="true" width="40%">Visits</th>
-                                            <td width="60%">Scheduled Visits    0<br/>Visited Today:    0<br/>Missed Visit:    0<br/>
+                                            <td width="60%">Scheduled Visits    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/>
+                                                Visited Today:    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/>
+                                                Missed Visit:    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/>
                                             </td>
                                         </tr>
                                         <tr>
+                                            <?php
+                                            $cug = DB::getInstance()->query("SELECT * FROM core_patients");
+                                            $mtn=0;
+                                            $airtel=0;
+                                            $pending=0;
+                                            foreach ($cug->results() as $cug) {
+                                                $phone1 = str_split($cug->pnumber);
+                                                $phone2 = str_split($cug->holder_pnumber);
+                                                
+                                                $pattern1 = $phone1[0] . "" . $phone1[1] . "" . $phone1[2];
+                                                $pattern2 = $phone2[0] . "" . $phone2[1] . "" . $phone2[2];
+                                                if ($pattern1 == '078' || $pattern1 == '077' || $pattern1 == '075' || $pattern1 == '070'){
+
+                                                if ($pattern1 == '078' || $pattern1 == '077'):
+                                                $mtn++;
+                                                elseif($pattern1 == '075' || $pattern1 == '070'):
+                                                $airtel++;
+                                                endif;
+                                                
+                                                
+                                                if ($pattern2 == '075' || $pattern2 == '070'):
+                                                $airtel++;
+                                                elseif($pattern2 == '078' || $pattern2 == '077'):
+                                                $mtn++;
+                                                endif;
+                                            }
+                                            else{
+                                                $pending++;
+                                            }
+                                            }
+                                            ?>
                                             <th data-sortable="true" width="40%">User Groups</th>
-                                            <td width="60%">MTN:    0 <br/>Airtel:    0 <br/>Pending:    0 <br/>
+                                            <td width="60%">MTN:    <?php echo $mtn; ?> <br/>Airtel:    <?php echo $airtel; ?> <br/>Pending:    <?php echo $pending; ?> <br/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th data-sortable="true" width="40%">Composed Broad Cast Messages</th>
-                                            <td width="60%">
+                                            <td width="60%"> <?php echo DB::getInstance()->returnCount("select * from messages"); ?>
                                             </td>
                                         </tr>
                                     </thead>
@@ -249,10 +299,10 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php
-                                                        $users_list = DB::getInstance()->query("SELECT * FROM core_patients order by subject_ptr_id desc limit 10");
-                                                        foreach ($users_list->results() as $users_list) {
-                                                            ?>
+<?php
+$users_list = DB::getInstance()->query("SELECT * FROM core_patients order by subject_ptr_id desc limit 10");
+foreach ($users_list->results() as $users_list) {
+    ?>
                                                             <tr>
                                                                 <td><?php echo $users_list->given_name . " " . $users_list->family_name; ?></td>
 
@@ -260,9 +310,9 @@
                                                                 <td><?php echo $users_list->holder_pnumber; ?>
                                                                 </td>
                                                             </tr>  
-                                                            <?php
-                                                        }
-                                                        ?>
+    <?php
+}
+?>
                                                     </tbody>
                                                 </table>
                                             </div> <!-- /.table-responsive -->
@@ -320,10 +370,10 @@
                                                     </thead> 
 
                                                     <tbody> 
-                                                        <?php
-                                                        $recent_users = DB::getInstance()->query("SELECT * FROM jerm_users  ORDER BY User_Id DESC LIMIT 10");
-                                                        foreach ($recent_users->results() as $recent_users) {
-                                                            ?>
+<?php
+$recent_users = DB::getInstance()->query("SELECT * FROM jerm_users  ORDER BY User_Id DESC LIMIT 10");
+foreach ($recent_users->results() as $recent_users) {
+    ?>
                                                             <tr class=""> 
                                                                 <td class="checkbox-column"> 
                                                                     <input type="checkbox" name="actiony" value="joey" class="icheck-input"> 
@@ -333,7 +383,7 @@
                                                                 <td><?php echo $recent_users->Last_Name; ?></td> 
                                                                 <td><span class="label label-success">Approved</span></td> 
                                                             </tr> 
-                                                        <?php } ?>
+<?php } ?>
                                                     </tbody> 
                                                 </table>
 
@@ -386,9 +436,9 @@
 
         </div> <!-- #wrapper -->
 
-        <?php
-        include 'includes/footer.php';
-        ?>
+<?php
+include 'includes/footer.php';
+?>
 
         <script src="js/libs/jquery-1.9.1.min.js"></script>
         <script src="js/libs/jquery-ui-1.9.2.custom.min.js"></script>

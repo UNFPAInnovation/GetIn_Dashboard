@@ -73,4 +73,30 @@ function streamline_date_time($date) {
     $new_date = date_format($create_date, 'l, jS F Y \a\t g:ia');
     return $new_date;
 }
+
+function calcAge($date1, $date2) {
+    $date1 = date_create($date1);
+    $date2 = date_create($date2);
+    $diff12 = date_diff($date2, $date1);
+    $days = $diff12->d;
+    $months = $diff12->m;
+    $years = $diff12->y;
+    return $years;
+}
+
+function group_range($val, $min, $max) {
+  return ($val >= $min && $val <= $max);
+}
+
+function send_sms($phone,$message) {
+    $sms_username = "unfair";
+    $sms_password = "unf41r";
+    $sms_phone_number = $phone;
+    $sms_message =$message ;
+    $sms_message = urlencode($sms_message);
+    $_SESSION['sms_verification_code'] = $sms_code;
+    $url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$sms_username}&passwd={$sms_password}&msg={$sms_message}&type=text&from=UNFPA&numbers={$sms_phone_number}";
+    $api_reply = file_get_contents($url);
+    return $api_reply;
+}
 ?>

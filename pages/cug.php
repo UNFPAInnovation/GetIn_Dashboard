@@ -58,7 +58,7 @@
 
                                     <h3>
                                         <i class="fa fa-list"></i>
-                                        List od CUG
+                                        List of CUG
                                     </h3>
 
                                 </div> <!-- /.portlet-header -->
