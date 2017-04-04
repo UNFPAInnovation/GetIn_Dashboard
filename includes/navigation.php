@@ -209,13 +209,13 @@
 
                 <ul class="sub-nav">
                     <li>
-                        <a href="#">
+                        <a href="index.php?page=demographics">
                             <i class="fa fa-arrow-circle-o-right"></i> 
                             Mapped Girls
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="index.php?page=demographics_statistics">
                             <i class="fa fa-arrow-circle-o-right"></i> 
                             Demographical Statistics
                         </a>

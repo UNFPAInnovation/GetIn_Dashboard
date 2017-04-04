@@ -94,9 +94,9 @@ function send_sms($phone,$message) {
     $sms_phone_number = $phone;
     $sms_message =$message ;
     $sms_message = urlencode($sms_message);
-    $_SESSION['sms_verification_code'] = $sms_code;
-    $url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$sms_username}&passwd={$sms_password}&msg={$sms_message}&type=text&from=UNFPA&numbers={$sms_phone_number}";
+    //$url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$sms_username}&passwd={$sms_password}&msg={$sms_message}&type=text&from=UNFPA&numbers={$sms_phone_number}";
+    $url= "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$sms_username}&passwd={$sms_password}&from=UNFPA_GetIn_Project&numbers={$sms_phone_number}&msg={$message}";
     $api_reply = file_get_contents($url);
-    return $api_reply;
+    echo  $api_reply;
 }
 ?>

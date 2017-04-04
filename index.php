@@ -122,7 +122,7 @@ switch ($page) {
             include 'pages/' . $page . '.php';
         break;
         
-    case 'delete_blog':
+    case 'demographics_statistics':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
         break;
