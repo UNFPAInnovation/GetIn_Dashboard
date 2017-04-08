@@ -8,7 +8,7 @@ if ($user->isLoggedIn()) {
 
     <h1 id="site-logo" class="hidden-print">
             <a href="#">
-                <img src="img/logos/logo.png" alt="Site Logo" />
+                <img src="img/logos/logo.png" style="height: 100px;width: 160px;" alt="Site Logo" />
             </a>
         </h1>	
 

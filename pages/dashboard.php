@@ -176,7 +176,7 @@
                                         </tr>
                                         <tr>
                                             <th data-sortable="true" width="40%">Personnel</th>
-                                            <td width="60%">VHT:    0 <br/>Nurses:    0 <br/>Drivers:    <?php echo DB::getInstance()->returnCount("select * from core_ambulancedriver"); ?> <br/>
+                                            <td width="60%">VHT:    0 <br/>Mid Wives:    0 <br/>Drivers:    <?php echo DB::getInstance()->returnCount("select * from core_ambulancedriver"); ?> <br/>
                                             </td>
                                         </tr>
                                     </thead>
@@ -279,7 +279,7 @@
                                             <ul class="portlet-tools pull-right">
                                                 <li>
                                                     <button class="btn btn-sm btn-default">
-                                                        <a href="#"> ALL </a>
+                                                        <a href="index.php?page=demographics"> ALL </a>
                                                     </button>
                                                 </li>
                                             </ul>
@@ -342,7 +342,7 @@ foreach ($users_list->results() as $users_list) {
                                             <ul class="portlet-tools pull-right">
                                                 <li>
                                                     <button class="btn btn-sm btn-default">
-                                                        <a href="#"> ALL USERS</a>
+                                                        <a href="index.php?page=list_users"> ALL USERS</a>
                                                     </button>
                                                 </li>
                                             </ul>
@@ -399,28 +399,7 @@ foreach ($recent_users->results() as $recent_users) {
 
                             </div> <!-- /.row -->
 
-                            <div class="portlet">
-
-                                <div class="portlet-header">
-
-                                    <h3>
-                                        <i class="fa fa-calendar"></i>
-                                        Full Calendar
-                                    </h3>
-
-                                </div> <!-- /.portlet-header -->
-
-                                <div class="portlet-content">
-
-
-                                    <div id="full-calendar"></div>
-
-
-                                </div> <!-- /.portlet-content -->
-
-                            </div> <!-- /.portlet -->
-
-
+                           
 
                         </div> <!-- /.col-md-9 -->
 

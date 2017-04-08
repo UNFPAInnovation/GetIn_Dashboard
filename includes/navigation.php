@@ -114,19 +114,19 @@
                 <ul class="sub-nav">
                     <li>
                         <a href="index.php?page=ambulance_drivers">
-                            <i class="fa fa-unlock"></i> 
+                            <i class="fa fa-arrow-circle-o-right"></i> 
                             Ambulance Driver
                         </a>
                     </li>
                     <li>
                         <a href="index.php?page=ambulance_drivers">
-                            <i class="fa fa-unlock"></i> 
+                            <i class="fa fa-arrow-circle-o-right"></i> 
                             Nurses
                         </a>
                     </li>
                     <li>
                         <a href="index.php?page=ambulance_drivers">
-                            <i class="fa fa-unlock"></i> 
+                           <i class="fa fa-arrow-circle-o-right"></i> 
                             VHT
                         </a>
                     </li>
@@ -145,7 +145,7 @@
                 <ul class="sub-nav">
                     <li>
                         <a href="index.php?page=cug">
-                            <i class="fa fa-unlock"></i> 
+                            <i class="fa fa-arrow-circle-o-right"></i> 
                             List Closed User Groups
                         </a>
                     </li>
@@ -163,13 +163,13 @@
                 <ul class="sub-nav">
                     <li>
                         <a href="index.php?page=users">
-                            <i class="fa fa-group"></i> 
+                            <i class="fa fa-arrow-circle-o-right"></i> 
                             New User
                         </a>
                     </li>
                     <li>
                         <a href="index.php?page=list_users">
-                            <i class="fa fa-reorder"></i> 
+                           <i class="fa fa-arrow-circle-o-right"></i> 
                             List Users
                         </a>
                     </li>
@@ -202,7 +202,7 @@
             </li>
             <li class="dropdown">
                 <a href="javascript:;">
-                    <i class="fa fa-chain-broken"></i>
+                    <i class="fa fa-book"></i>
                     Reports
                     <span class="caret"></span>
                 </a>
@@ -234,7 +234,7 @@
                 <ul class="sub-nav">
                     <li>
                         <a href="#">
-                            <i class="fa fa-arrow-circle-o-right"></i> 
+                           <i class="fa fa-arrow-circle-o-right"></i> 
                             Change Password
                         </a>
                     </li>

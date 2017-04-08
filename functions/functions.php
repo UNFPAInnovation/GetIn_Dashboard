@@ -99,4 +99,16 @@ function send_sms($phone,$message) {
     $api_reply = file_get_contents($url);
     echo  $api_reply;
 }
+
+function cleanData($str) {
+    if ($str == 't')
+        $str = 'TRUE';
+    if ($str == 'f')
+        $str = 'FALSE';
+    if (preg_match("/^0/", $str) || preg_match("/^\+?\d{8,}$/", $str) || preg_match("/^\d{4}.\d{1,2}.\d{1,2}/", $str)) {
+        $str = "'$str";
+    }
+    if (strstr($str, '"'))
+        $str = '"' . str_replace('"', '""', $str) . '"';
+}
 ?>

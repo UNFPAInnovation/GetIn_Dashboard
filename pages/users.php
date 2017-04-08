@@ -137,10 +137,10 @@
                                         <div class="form-group">	
                                             <label for="select-role">Role</label>
                                             <select id="select-input" name="role" class="form-control">
-                                                <option value="Author">VHT</option>
-                                                <option value="Administrator">MidWife</option>
-                                                <option value="Administrator">DHO</option>
-                                                <option value="Admin">Admin</option>
+                                                <option value="vht">VHT</option>
+                                                <option value="midwife">MidWife</option>
+                                                <option value="dho">DHO</option>
+                                                <option value="admin">Admin</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
