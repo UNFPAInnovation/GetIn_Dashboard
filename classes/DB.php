@@ -44,6 +44,7 @@ class DB {
                 $this->_result = $this->_query->fetchAll(PDO::FETCH_OBJ);
                 $this->_count = $this->_query->rowCount();
             } else {
+                print_r($this->_query->errorInfo());
                 $this->_error = true;
             }
         }

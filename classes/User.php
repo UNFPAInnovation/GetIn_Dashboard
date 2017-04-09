@@ -26,8 +26,8 @@ class User
     }
     public function find($user=null){
         if($user){
-            $field=(is_numeric($user)) ? 'User_Id':'User_Name';
-            $data=  $this->_db->get('jerm_users',array($field,'=',$user));
+            $field=(is_numeric($user)) ? 'id':'username';
+            $data=  $this->_db->get('auth_user',array($field,'=',$user));
             if($data->count())
             {
                 $this->_data=$data->first();
@@ -40,9 +40,9 @@ class User
         //print_r($this->_data);
         if($user)
         {
-            if($this->data()->Password===Hash::make($password)){
+            if($this->data()->password===Hash::make($password)){
                 //echo 'OK!';
-                Session::put($this->_sessionId, $this->data()->User_Id);
+                Session::put($this->_sessionId, $this->data()->id);
                 return TRUE;
             }
         }

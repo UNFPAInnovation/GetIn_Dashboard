@@ -12,7 +12,7 @@
         </li>
 
         <?php
-        if ($_SESSION['jermadmin_role'] == 'Administrator'):
+        if ($_SESSION['getin_role'] == 'Administrator'):
             ?>
             <li class="dropdown">
                 <a href="javascript:;">
@@ -25,7 +25,7 @@
                     <li>
                         <a href="index.php?page=demographics">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            List Pregnant Girls
+                            Mapped Girls
                         </a>
                     </li>		
 
@@ -233,7 +233,7 @@
 
                 <ul class="sub-nav">
                     <li>
-                        <a href="#">
+                        <a href="index.php?page=change_password">
                             <i class="fa fa-arrow-circle-o-right"></i> 
                             Change Password
                         </a>
@@ -241,8 +241,8 @@
 
                 </ul>
             </li>
-            <li class="dropdown">
-                <a href="index.php?page=logout.php">
+            <li>
+                <a href="index.php?page=logout">
                     <i class="fa fa-lock"></i>
                     Logout
                 </a>

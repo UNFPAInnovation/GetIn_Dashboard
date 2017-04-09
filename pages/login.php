@@ -57,9 +57,9 @@ ob_start();
                                 $user = new User();
                                 $login = $user->login(Input::get("username"), Input::get("password"));
                                 if ($login) {
-                                    $_SESSION['jermadmin_username']=$username;
-                                    $_SESSION['jermadmin_role']=DB::getInstance()->getName("jerm_users",$username,"Role","User_Name");
-//                                    echo $_SESSION['jermadmin_role'];
+                                    $_SESSION['getin_username']=$username;
+                                    $_SESSION['getin_role']=DB::getInstance()->getName("auth_user",$username,"role","username");
+                                    $_SESSION['getin_user_id']=DB::getInstance()->getName("auth_user",$username,"id","username");
                                     Redirect::to('index.php?page=dashboard');
                                 } else {
                                     echo 'Sorry, Login was not successful';

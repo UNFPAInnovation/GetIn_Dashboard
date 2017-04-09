@@ -3,7 +3,7 @@
 //echo 'Display';
 
 session_start();
-$_SESSION['jermadmin_role'] = 'Administrator';
+$_SESSION['getin_role'] = 'Administrator';
 require_once 'functions/functions.php';
 include 'core/init.php';
 $date_today=  date('Y-m-d');
@@ -141,6 +141,11 @@ switch ($page) {
         break; 
         
     case 'messages':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break; 
+        
+    case 'change_password':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
         break; 

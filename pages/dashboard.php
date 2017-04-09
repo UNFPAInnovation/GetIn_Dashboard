@@ -325,7 +325,7 @@
 
                                             <h3>
                                                 <i class="fa fa-money"></i>
-                                                Recent Pregnant Mothers
+                                                Recent Mapped Girls
                                             </h3>
 
                                             <ul class="portlet-tools pull-right">
@@ -344,7 +344,7 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Mother Names</th>
+                                                            <th>Girl Names</th>
                                                             <th>Phone Number</th>
                                                             <th>Power Holder</th>
                                                             <th></th>
