@@ -32,8 +32,8 @@ ob_start();
 
             <div id="logo">
                
-                    <img src="./img/logos/logo-login.png" alt="Logo" />
-                </a>
+                    <img src="./img/logos/logo.png" style="height: 110px;width: 170px; margin-top: -8px;margin-left: -8px" alt="Logo" />
+               
             </div>
 
             <div id="login">
@@ -84,13 +84,13 @@ ob_start();
                     <input type="hidden" value="<?php echo Token::generate(); ?>" name="token"/>
                     <div class="form-group">
 
-                        <button type="submit" id="login-btn" class="btn btn-primary btn-block">Signin &nbsp; <i class="fa fa-play-circle"></i></button>
+                        <button type="submit" id="login-btn" class="btn btn-success btn-block">Signin &nbsp; <i class="fa fa-play-circle"></i></button>
 
                     </div>
                 </form>
 
 
-                <a href="javascript:;" class="btn btn-default">Forgot Password?</a>
+                <!--<a href="javascript:;" class="btn btn-default">Forgot Password?</a>-->
 
             </div> <!-- /#login -->
 

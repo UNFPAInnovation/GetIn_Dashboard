@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
 
-        <title>GetIn Users</title>
+        <title> VHT </title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="">
@@ -42,12 +42,12 @@
             <div id="content">		
 
                 <div id="content-header">
-                    <h1>System Users</h1>
+                    <h1>VHT</h1>
                 </div> <!-- #content-header -->	
 
 
                 <div id="content-container">
-                    <a href="index.php?page=users"><label class="label label-success">Add Users</label></a><br/><p></p>
+
                     <div class="row">
 
                         <div class="col-md-12">
@@ -58,7 +58,7 @@
 
                                     <h3>
                                         <i class="fa fa-list"></i>
-                                        List Users
+                                        List of all VHTs
                                     </h3>
 
                                 </div> <!-- /.portlet-header -->
@@ -79,32 +79,35 @@
                                             <thead>
                                                 <tr>
                                                     <th class="checkbox-column">
-                                                        <input type="checkbox" class="icheck-input">
+                                                       #
                                                     </th>
+                                                    <th data-filterable="true" data-sortable="true" data-direction="desc">Full Name</th>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">User Name</th>
-                                                    <th data-direction="asc" data-filterable="true" data-sortable="true">Full Names</th>
-                                                    <th data-filterable="true" data-sortable="true">Email</th>
-                                                    <th data-filterable="true" class="hidden-xs hidden-sm">Date Joined</th>
-                                                    <th data-filterable="true" class="hidden-xs hidden-sm">Role</th>
+                                                    <th data-filterable="true" data-sortable="true" data-direction="desc">Email</th>
+                                                    <th data-direction="asc" data-filterable="true" data-sortable="true">Phone</th>
+                                                    <th data-filterable="true" data-sortable="true" data-direction="desc">Role</th>
+                                                    <th data-filterable="true" data-sortable="true" data-direction="desc">Last Login</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $users_list = DB::getInstance()->query("SELECT * FROM auth_user");
-                                                foreach ($users_list->results() as $users_list) {
+                                                $midwife_list = DB::getInstance()->query("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='vht'");
+                                                $i=1;
+                                                foreach ($midwife_list->results() as $midwife_list) {
                                                     ?>
                                                     <tr>
                                                         <td class="checkbox-column">
-                                                            <input type="checkbox" class="icheck-input">
+                                                            <?php echo $i; ?>
                                                         </td>
-                                                        <td><?php echo $users_list->username; ?></td>
-                                                        <td><?php echo $users_list->first_name . " " . $users_list->last_name; ?>
-                                                        </td>
-                                                        <td><?php echo $users_list->email; ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo plain_date($users_list->date_joined); ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->u_role; ?></td>
+                                                        <td><?php echo $midwife_list->first_name." ".$midwife_list->last_name;  ?></td>
+                                                        <td><?php echo $midwife_list->username;  ?></td>
+                                                        <td><?php echo $midwife_list->email; ?></td>
+                                                        <td><?php echo $midwife_list->phone_number;  ?></td>
+                                                        <td><?php echo $midwife_list->role;  ?></td>
+                                                        <td><?php echo $midwife_list->last_login;  ?></td>
                                                     </tr>  
                                                     <?php
+                                                    $i++;
                                                 }
                                                 ?>
                                             </tbody>

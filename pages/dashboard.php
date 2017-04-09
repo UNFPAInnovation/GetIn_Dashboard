@@ -95,12 +95,7 @@
                                 <div class="details">
                                     <span class="content">Registered Users</span>
                                     <span class="value"><?php
-                                        $counter_users = 0;
-                                        $_users = DB::getInstance()->query("SELECT * FROM jerm_users");
-                                        foreach ($_users->results() as $_users) {
-                                            $counter_users++;
-                                        }
-                                        echo seperators($counter_users);
+                                        echo DB::getInstance()->returnCount("SELECT * FROM auth_user");
                                         ?></span>
                                 </div> <!-- /.details -->
 
@@ -166,17 +161,45 @@
                                                 endif;
                                             }
                                             ?>
-                                            <td width="60%">(15-19):    <?php echo $group1; ?> Girls<br/>(20-24):    <?php echo $group2; ?>  Girls<br/>(24-30):    <?php echo $group3; ?>  Girls<br/>
+                                            <td width="30%">
+                                                (15-19) Years:     <br/><p></p>
+                                                (20-24) Years:     <br/><p></p>
+                                                (24-30) Years:     <br/><p></p>
+                                            </td>
+                                            <td width="30%">
+                                                <strong><?php echo $group1; ?> Girls  </strong>  <br/><p></p>
+                                                <strong><?php echo $group2; ?> Girls </strong>  <br/><p></p>
+                                                <strong><?php echo $group3; ?> Girls </strong>  <br/><p></p>
+                                            </td>
+                                            <td>
+                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <th data-direction="asc" data-filterable="true" data-sortable="true">Mapped Girls</th>
-                                            <td><?php echo $mother_counter; ?> </td>
+                                            <td>Mapped Girl </td>
+                                            <td><strong><?php echo $mother_counter; ?></strong></td>
+                                            <td> <a href="#"><label class="label label-success">Details</label></a></td>
                                         </tr>
                                         <tr>
                                             <th data-sortable="true" width="40%">Personnel</th>
-                                            <td width="60%">VHT:    0 <br/>Mid Wives:    0 <br/>Drivers:    <?php echo DB::getInstance()->returnCount("select * from core_ambulancedriver"); ?> <br/>
+                                            <td width="30%">
+                                                VHT:           <br/><p></p>
+                                                Mid Wives:     <br/><p></p>
+                                                Drivers:       <br/><p></p>
+                                            </td>
+                                            <td width="30%">
+                                                <strong><?php echo DB::getInstance()->returnCount("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='vht'"); ?></strong><br/><p></p>
+                                                <strong><?php echo DB::getInstance()->returnCount("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='midwife'"); ?></strong><br/><p></p>
+                                                <strong><?php echo DB::getInstance()->returnCount("select * from core_ambulancedriver"); ?></strong> <br/><p></p>
+                                            </td>
+                                            <td>
+                                                <a href="index.php?page=vht_count"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=midwives_count"> <label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=ambulance_drivers"><label class="label label-success">Details</label></a><br/><p></p>
                                             </td>
                                         </tr>
                                     </thead>
@@ -200,51 +223,80 @@
                                     >
                                     <thead>
                                         <tr>
-                                            <th data-sortable="true" width="40%">Visits</th>
-                                            <td width="60%">Scheduled Visits    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/>
-                                                Visited Today:    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/>
-                                                Missed Visit:    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/>
+                                            <th data-sortable="true" width="60%">Visits</th>
+                                            <td width="25%">Scheduled Visits   <br/><p></p>
+                                                Visited Today:    <br/><p></p>
+                                                Missed Visit:    <br/><p></p>
+                                            </td>
+                                            <td width="20%">
+                                                <strong> <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/><p></p>
+                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/><p></p>
+                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/><p></p>
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <?php
                                             $cug = DB::getInstance()->query("SELECT * FROM core_patients");
-                                            $mtn=0;
-                                            $airtel=0;
-                                            $pending=0;
+                                            $mtn = 0;
+                                            $airtel = 0;
+                                            $pending = 0;
                                             foreach ($cug->results() as $cug) {
                                                 $phone1 = str_split($cug->pnumber);
                                                 $phone2 = str_split($cug->holder_pnumber);
-                                                
+
                                                 $pattern1 = $phone1[0] . "" . $phone1[1] . "" . $phone1[2];
                                                 $pattern2 = $phone2[0] . "" . $phone2[1] . "" . $phone2[2];
-                                                if ($pattern1 == '078' || $pattern1 == '077' || $pattern1 == '075' || $pattern1 == '070'){
+                                                if ($pattern1 == '078' || $pattern1 == '077' || $pattern1 == '075' || $pattern1 == '070') {
 
-                                                if ($pattern1 == '078' || $pattern1 == '077'):
-                                                $mtn++;
-                                                elseif($pattern1 == '075' || $pattern1 == '070'):
-                                                $airtel++;
-                                                endif;
-                                                
-                                                
-                                                if ($pattern2 == '075' || $pattern2 == '070'):
-                                                $airtel++;
-                                                elseif($pattern2 == '078' || $pattern2 == '077'):
-                                                $mtn++;
-                                                endif;
-                                            }
-                                            else{
-                                                $pending++;
-                                            }
+                                                    if ($pattern1 == '078' || $pattern1 == '077'):
+                                                        $mtn++;
+                                                    elseif ($pattern1 == '075' || $pattern1 == '070'):
+                                                        $airtel++;
+                                                    endif;
+
+
+                                                    if ($pattern2 == '075' || $pattern2 == '070'):
+                                                        $airtel++;
+                                                    elseif ($pattern2 == '078' || $pattern2 == '077'):
+                                                        $mtn++;
+                                                    endif;
+                                                }
+                                                else {
+                                                    $pending++;
+                                                }
                                             }
                                             ?>
                                             <th data-sortable="true" width="40%">User Groups</th>
-                                            <td width="60%">MTN:    <?php echo $mtn; ?> <br/>Airtel:    <?php echo $airtel; ?> <br/>Pending:    <?php echo $pending; ?> <br/>
+                                            <td width="25%">MTN:    <br/><p></p>
+                                                Airtel:     <br/><p></p>
+                                                Pending:     <br/><p></p>
+                                            </td>
+                                            <td width="20">
+                                                <strong> <?php echo $mtn; ?>  <br/><p></p>
+                                                    <?php echo $airtel; ?><br/><p></p>
+                                                    <?php echo $pending; ?><br/><p></p></strong></td>
+                                            <td width="20%">
+                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th data-sortable="true" width="40%">Composed Broad Cast Messages</th>
-                                            <td width="60%"> <?php echo DB::getInstance()->returnCount("select * from messages"); ?>
+                                            <th data-sortable="true" width="60%">Composed Broad Cast Messages</th>
+                                            <td width="25%"> 
+                                                Messages
+                                            </td>
+                                            <td width="20%">
+                                                <strong><?php echo DB::getInstance()->returnCount("select * from messages"); ?></strong>
+                                            </td>
+                                            <td>
+                                                <a href="#"><label class="label label-success">Details</label></a>
                                             </td>
                                         </tr>
                                     </thead>
@@ -299,10 +351,10 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-<?php
-$users_list = DB::getInstance()->query("SELECT * FROM core_patients order by subject_ptr_id desc limit 10");
-foreach ($users_list->results() as $users_list) {
-    ?>
+                                                        <?php
+                                                        $users_list = DB::getInstance()->query("SELECT * FROM core_patients order by subject_ptr_id desc limit 10");
+                                                        foreach ($users_list->results() as $users_list) {
+                                                            ?>
                                                             <tr>
                                                                 <td><?php echo $users_list->given_name . " " . $users_list->family_name; ?></td>
 
@@ -310,9 +362,9 @@ foreach ($users_list->results() as $users_list) {
                                                                 <td><?php echo $users_list->holder_pnumber; ?>
                                                                 </td>
                                                             </tr>  
-    <?php
-}
-?>
+                                                            <?php
+                                                        }
+                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div> <!-- /.table-responsive -->
@@ -358,7 +410,7 @@ foreach ($users_list->results() as $users_list) {
                                                     <thead> 
                                                         <tr> 
                                                             <th class="checkbox-column"> 
-                                                                <input type="checkbox" id="check-all" class="icheck-input" />
+                                                                #
                                                             </th> 
                                                             <th class="hidden-xs">First Name
                                                             </th> 
@@ -370,20 +422,23 @@ foreach ($users_list->results() as $users_list) {
                                                     </thead> 
 
                                                     <tbody> 
-<?php
-$recent_users = DB::getInstance()->query("SELECT * FROM jerm_users  ORDER BY User_Id DESC LIMIT 10");
-foreach ($recent_users->results() as $recent_users) {
-    ?>
+                                                        <?php
+                                                        $recent_users = DB::getInstance()->query("SELECT * FROM auth_user  ORDER BY id DESC LIMIT 10");
+                                                        $i=1;
+                                                        foreach ($recent_users->results() as $recent_users) {
+                                                            ?>
                                                             <tr class=""> 
                                                                 <td class="checkbox-column"> 
-                                                                    <input type="checkbox" name="actiony" value="joey" class="icheck-input"> 
+                                                                    <?php echo $i; ?>
                                                                 </td> 
 
-                                                                <td class="hidden-xs"><?php echo $recent_users->First_Name; ?></td> 
-                                                                <td><?php echo $recent_users->Last_Name; ?></td> 
+                                                                <td class="hidden-xs"><?php echo $recent_users->first_name; ?></td> 
+                                                                <td><?php echo $recent_users->last_name; ?></td> 
                                                                 <td><span class="label label-success">Approved</span></td> 
                                                             </tr> 
-<?php } ?>
+                                                        <?php 
+                                                        $i++;
+                                                        } ?>
                                                     </tbody> 
                                                 </table>
 
@@ -399,7 +454,7 @@ foreach ($recent_users->results() as $recent_users) {
 
                             </div> <!-- /.row -->
 
-                           
+
 
                         </div> <!-- /.col-md-9 -->
 
@@ -415,9 +470,9 @@ foreach ($recent_users->results() as $recent_users) {
 
         </div> <!-- #wrapper -->
 
-<?php
-include 'includes/footer.php';
-?>
+        <?php
+        include 'includes/footer.php';
+        ?>
 
         <script src="js/libs/jquery-1.9.1.min.js"></script>
         <script src="js/libs/jquery-ui-1.9.2.custom.min.js"></script>

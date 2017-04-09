@@ -6,11 +6,11 @@
 
         <li class="active">				
             <a href="index.php?page=dashboard">
-                <i class="fa fa-dashboard"></i>
+                <i class="fa fa-home"></i>
                 Dashboard
             </a>				
         </li>
-       
+
         <?php
         if ($_SESSION['jermadmin_role'] == 'Administrator'):
             ?>
@@ -49,7 +49,7 @@
                     </li>		
                     <li>
                         <a href="index.php?page=midwife_follow">
-                        
+
                             <i class="fa fa-arrow-circle-o-right"></i> 
                             Midwife
                         </a>
@@ -79,14 +79,14 @@
                             Expected Today
                         </a>
                     </li>
-                     <li>
+                    <li>
                         <a href="index.php?page=attended_today">
 
                             <i class="fa fa-arrow-circle-o-right"></i> 
                             Attended 
                         </a>
                     </li>
-                     <li>
+                    <li>
                         <a href="index.php?page=missed_attendance">
 
                             <i class="fa fa-arrow-circle-o-right"></i> 
@@ -104,7 +104,7 @@
 
             </li>
 
-<li class="dropdown">
+            <li class="dropdown">
                 <a href="javascript:;">
                     <i class="fa fa-user"></i>
                     Medical Personnel
@@ -115,18 +115,18 @@
                     <li>
                         <a href="index.php?page=ambulance_drivers">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            Ambulance Driver
+                            Ambulance Drivers
                         </a>
                     </li>
                     <li>
-                        <a href="index.php?page=ambulance_drivers">
+                        <a href="index.php?page=midwives_count">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            Nurses
+                            Mid Wives
                         </a>
                     </li>
                     <li>
-                        <a href="index.php?page=ambulance_drivers">
-                           <i class="fa fa-arrow-circle-o-right"></i> 
+                        <a href="index.php?page=vht_count">
+                            <i class="fa fa-arrow-circle-o-right"></i> 
                             VHT
                         </a>
                     </li>
@@ -169,7 +169,7 @@
                     </li>
                     <li>
                         <a href="index.php?page=list_users">
-                           <i class="fa fa-arrow-circle-o-right"></i> 
+                            <i class="fa fa-arrow-circle-o-right"></i> 
                             List Users
                         </a>
                     </li>
@@ -234,12 +234,19 @@
                 <ul class="sub-nav">
                     <li>
                         <a href="#">
-                           <i class="fa fa-arrow-circle-o-right"></i> 
+                            <i class="fa fa-arrow-circle-o-right"></i> 
                             Change Password
                         </a>
                     </li>
 
                 </ul>
+            </li>
+            <li class="dropdown">
+                <a href="index.php?page=logout.php">
+                    <i class="fa fa-lock"></i>
+                    Logout
+                </a>
+
             </li>
             <?php
         endif;

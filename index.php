@@ -65,7 +65,7 @@ switch ($page) {
             include 'pages/' . $page . '.php';
         break;
         
-    case 'address_cost':
+    case 'midwives_count':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
         break;
@@ -120,7 +120,7 @@ switch ($page) {
             include 'pages/' . $page . '.php';
         break;
         
-    case 'list_blog':
+    case 'vht_count':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
         break;

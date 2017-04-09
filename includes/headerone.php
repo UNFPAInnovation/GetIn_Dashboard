@@ -55,24 +55,7 @@ if ($user->isLoggedIn()) {
                 </a>
 
                 <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-user"></i> 
-                            &nbsp;&nbsp;My Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-calendar"></i> 
-                            &nbsp;&nbsp;My Calendar
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-cogs"></i> 
-                            &nbsp;&nbsp;Settings
-                        </a>
-                    </li>
+                    
                     <li class="divider"></li>
                     <li>
                         <a href="index.php?page=logout">

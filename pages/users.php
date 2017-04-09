@@ -30,9 +30,10 @@
                 <div id="content-header">
                     <h1>Users</h1>
                 </div> <!-- #content-header -->	
-
+                
 
                 <div id="content-container">	
+                    <a href="index.php?page=list_users"><label class="label label-success">View Users</label></a><br/><p></p>
                     <div class="portlet">
 
                         <div class="portlet-header">
@@ -43,8 +44,9 @@
                             </h3>
 
                         </div> <!-- /.portlet-header -->
-
+                        
                         <div class="portlet-content">
+                            
                             <form action="#" method="post">
                                 <?php
                                 if (Input::exists()) {
@@ -80,22 +82,24 @@
                                         $cpassword = Input::get('cpassword');
                                         $email = Input::get('email');
                                         $role = Input::get('role');
-                                        $website = Input::get('website');
-                                        $queryDup = "select * from jerm_users where User_Name='$username'";
+                                        $is_active = 1;
+                                        $date_joined=date('Y-m-d');
+                                        $queryDup = "select * from auth_user where username='$username'";
                                         if (DB::getInstance()->checkRows($queryDup)):
                                             echo "<h5 align='center' ><font color='red'>User Already Registered.</font></h5>";
                                             header("refresh:1;url=index.php?page=users");
                                             exit();
 //                                            
                                         endif;
-                                        $userInsert = DB::getInstance()->insert('jerm_users', array(
-                                            'User_Name' => $username,
-                                            'Role' => $role,
-                                            'Password' => sha1($password),
-                                            'First_Name' => $fname,
-                                            'Last_Name' => $lname,
-                                            'Email' => $email,
-                                            'Website' => $website
+                                        $userInsert = DB::getInstance()->insert('auth_user', array(
+                                            'username' => $username,
+                                            'u_role' => $role,
+                                            'password' => sha1($password),
+                                            'first_name' => $fname,
+                                            'last_name' => $lname,
+                                            'email' => $email,
+                                            'is_active' => $is_active,
+                                            'date_joined'=>$date_joined
                                         ));
                                         if ($userInsert) {
                                             echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
@@ -150,10 +154,6 @@
                                         <div class="form-group">
                                             <label for="confirm-password">Confirm Password</label>
                                             <input type="password" name="cpassword" id="username-input" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="website">Website</label>
-                                            <input type="text" name="website" value="<?php echo escape(Input::get('website')); ?>" id="website-input" class="form-control">
                                         </div>
 
 

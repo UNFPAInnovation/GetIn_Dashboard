@@ -61,7 +61,7 @@ function streamline_date($date) {
 }
 
 //Returns the date in an english formatted manner. eg 24-01-2016
-function streamline_date_plain($date) {
+function plain_date($date) {
     $create_date = date_create($date);
     $new_date = date_format($create_date, 'd-m-Y');
     return $new_date;

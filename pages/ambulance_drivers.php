@@ -79,7 +79,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="checkbox-column">
-                                                        <input type="checkbox" class="icheck-input">
+                                                       #
                                                     </th>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">Full Name</th>
                                                     <th data-direction="asc" data-filterable="true" data-sortable="true">Phone</th>
@@ -87,18 +87,20 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $users_list = DB::getInstance()->query("SELECT * FROM core_ambulancedriver");
-                                                foreach ($users_list->results() as $users_list) {
+                                                $i=1;
+                                                $ambulance_drivers = DB::getInstance()->query("SELECT * FROM core_ambulancedriver");
+                                                foreach ($ambulance_drivers->results() as $ambulance_drivers) {
                                                     ?>
                                                     <tr>
                                                         <td class="checkbox-column">
-                                                            <input type="checkbox" class="icheck-input">
+                                                           <?php echo $i; ?>
                                                         </td>
-                                                        <td><?php echo $users_list->first_name." ".$users_list->last_name;  ?></td>
-                                                        <td><?php echo $users_list->phone_number;  ?>
+                                                        <td><?php echo $ambulance_drivers->first_name." ".$ambulance_drivers->last_name;  ?></td>
+                                                        <td><?php echo $ambulance_drivers->phone_number;  ?>
                                                         </td>
                                                     </tr>  
                                                     <?php
+                                                    $i++;
                                                 }
                                                 ?>
                                             </tbody>
