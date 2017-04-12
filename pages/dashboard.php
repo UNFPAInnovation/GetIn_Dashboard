@@ -33,10 +33,9 @@
                 <div id="content-container">
 
                     <div class="row">
-
                         <div class="col-md-3 col-sm-6">
 
-                            <a href="javascript:;" class="dashboard-stat primary">
+                            <a href="javascript:;" class="dashboard-stat tertiary">
                                 <div class="visual">
                                     <i class="fa fa-star"></i>
                                 </div> <!-- /.visual -->
@@ -62,9 +61,9 @@
 
                         <div class="col-md-3 col-sm-6">
 
-                            <a href="javascript:;" class="dashboard-stat secondary">
+                            <a href="javascript:;" class="dashboard-stat tertiary">
                                 <div class="visual">
-                                    <i class="fa fa-shopping-cart"></i>
+                                    <i class="fa fa-star"></i>
                                 </div> <!-- /.visual -->
 
                                 <div class="details">
@@ -89,7 +88,7 @@
 
                             <a href="javascript:;" class="dashboard-stat tertiary">
                                 <div class="visual">
-                                    <i class="fa fa-clock-o"></i>
+                                    <i class="fa fa-star"></i>
                                 </div> <!-- /.visual -->
 
                                 <div class="details">
@@ -107,9 +106,9 @@
 
                         <div class="col-md-3 col-sm-6">
 
-                            <a href="javascript:;" class="dashboard-stat">
+                            <a href="javascript:;" class="dashboard-stat tertiary">
                                 <div class="visual">
-                                    <i class="fa fa-money"></i>
+                                    <i class="fa fa-star"></i>
                                 </div> <!-- /.visual -->
 
                                 <div class="details">
@@ -164,7 +163,7 @@
                                             <td width="30%">
                                                 (15-19) Years:     <br/><p></p>
                                                 (20-24) Years:     <br/><p></p>
-                                                (24-30) Years:     <br/><p></p>
+                                                (25-30) Years:     <br/><p></p>
                                             </td>
                                             <td width="30%">
                                                 <strong><?php echo $group1; ?> Girls  </strong>  <br/><p></p>
@@ -172,9 +171,9 @@
                                                 <strong><?php echo $group3; ?> Girls </strong>  <br/><p></p>
                                             </td>
                                             <td>
-                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
-                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
-                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=demographics&grp=1"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=demographics&grp=2"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=demographics&grp=3"><label class="label label-success">Details</label></a><br/><p></p>
                                             </td>
                                         </tr>
 
@@ -182,7 +181,7 @@
                                             <th data-direction="asc" data-filterable="true" data-sortable="true">Mapped Girls</th>
                                             <td>Mapped Girl </td>
                                             <td><strong><?php echo $mother_counter; ?></strong></td>
-                                            <td> <a href="#"><label class="label label-success">Details</label></a></td>
+                                            <td> <a href="index.php?page=demographics"><label class="label label-success">Details</label></a></td>
                                         </tr>
                                         <tr>
                                             <th data-sortable="true" width="40%">Personnel</th>
@@ -227,17 +226,22 @@
                                             <td width="25%">Scheduled Visits   <br/><p></p>
                                                 Visited Today:    <br/><p></p>
                                                 Missed Visit:    <br/><p></p>
+                                                Expected Today:    <br/><p></p>
                                             </td>
                                             <td width="20%">
                                                 <strong> <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/><p></p>
-                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/><p></p>
-                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id"); ?><br/><p></p>
+                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and tt.due_on='$date_due_on'"); ?><br/><p></p>
+                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and tt.due_on>'$date_due_on'"); ?><br/><p></p>
+                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and tt.due_on='$date_due_on'"); ?><br/><p></p>
+
+
                                                 </strong>
                                             </td>
                                             <td>
-                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
-                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
-                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=scheduled_appointments"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=attended_today"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=missed_attendance"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=expected_visits"><label class="label label-success">Details</label></a><br/><p></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -282,9 +286,9 @@
                                                     <?php echo $airtel; ?><br/><p></p>
                                                     <?php echo $pending; ?><br/><p></p></strong></td>
                                             <td width="20%">
-                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
-                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
-                                                <a href="#"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=cug&grp=1"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=cug&grp=2"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=cug"><label class="label label-success">Details</label></a><br/><p></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -424,7 +428,7 @@
                                                     <tbody> 
                                                         <?php
                                                         $recent_users = DB::getInstance()->query("SELECT * FROM auth_user  ORDER BY id DESC LIMIT 10");
-                                                        $i=1;
+                                                        $i = 1;
                                                         foreach ($recent_users->results() as $recent_users) {
                                                             ?>
                                                             <tr class=""> 
@@ -436,9 +440,10 @@
                                                                 <td><?php echo $recent_users->last_name; ?></td> 
                                                                 <td><span class="label label-success">Approved</span></td> 
                                                             </tr> 
-                                                        <?php 
-                                                        $i++;
-                                                        } ?>
+                                                            <?php
+                                                            $i++;
+                                                        }
+                                                        ?>
                                                     </tbody> 
                                                 </table>
 
@@ -454,7 +459,59 @@
 
                             </div> <!-- /.row -->
 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table border="1">
+                                        <tr>
+                                            <td>
+                                                <?php
+// This is a simple example on how to draw a chart using FusionCharts and PHP.
+// We have included includes/fusioncharts.php, which contains functions
+// to help us easily embed the charts.
+                                                include "fusioncharts.php";
+// Create the chart - Column 2D Chart with data given in constructor parameter 
+// Syntax for the constructor - new FusionCharts("type of chart", "unique chart id", "width of chart", "height of chart", "div id to render the chart", "type of data", "actual data")
+                                                $columnChart = new FusionCharts("column2d", "ex1", "100%", 400, "chart-1", "json", '{  
+                "chart":{  
+                  "caption":"Harry\'s SuperMart",
+                  "subCaption":"Top 5 stores in last month by revenue",
+                  "numberPrefix":"$",
+                  "theme":"ocean"
+                },
+                "data":[  
+                  {  
+                     "label":"Bakersfield Central",
+                     "value":"880000"
+                  },
+                  {  
+                     "label":"Garden Groove harbour",
+                     "value":"730000"
+                  },
+                  {  
+                     "label":"Los Angeles Topanga",
+                     "value":"590000"
+                  },
+                  {  
+                     "label":"Compton-Rancho Dom",
+                     "value":"520000"
+                  },
+                  {  
+                     "label":"Daly City Serramonte",
+                     "value":"330000"
+                  }
+                ]
+            }');
+// Render the chart
+                                                $columnChart->render();
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
 
+
+
+                            </div>
 
                         </div> <!-- /.col-md-9 -->
 

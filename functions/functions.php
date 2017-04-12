@@ -111,4 +111,12 @@ function cleanData($str) {
     if (strstr($str, '"'))
         $str = '"' . str_replace('"', '""', $str) . '"';
 }
+/*
+ * adding months to a specific date
+ */
+function addMonthsToDate($months, $dateCovert) {
+    $date = date_create($dateCovert);
+    date_add($date, date_interval_create_from_date_string($months . ' months'));
+    return date_format($date, 'Y-m-d');
+}
 ?>

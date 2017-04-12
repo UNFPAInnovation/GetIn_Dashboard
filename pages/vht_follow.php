@@ -79,29 +79,31 @@
                                             <thead>
                                                 <tr>
 
-                                                    <th data-filterable="true" data-sortable="true" data-direction="desc">Full Name</th>
+                                                    <th data-filterable="true" data-sortable="true" data-direction="desc">Patient Full Name</th>
                                                     <th data-direction="asc" data-filterable="true" data-sortable="true">Action Date</th>
                                                     <th data-filterable="true" data-sortable="true">Bleeding Heavily</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Swollen Feet</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Fever</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Blurred Vision</th>
-                                                    <!--<th data-filterable="true" class="hidden-xs hidden-sm">Diagnosis</th>-->
+                                                    <th data-filterable="true" class="hidden-xs hidden-sm">Notes</th>
+                                                    <th data-filterable="true" class="hidden-xs hidden-sm">VHT Incharge</th>
                                                     <!--<th data-filterable="true" class="hidden-xs hidden-sm">Appointment Date</th>-->
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $midwife = DB::getInstance()->query("SELECT co.*,ce.*,cs.*,cp.* FROM core_encounter ce,core_observer co,core_subject cs,core_patients cp where ce.uuid=co.uuid and cs.uuid=co.uuid and cs.id=cp.subject_ptr_id and co.role='vht'");
+                                                $midwife = DB::getInstance()->query("select cb.*,ce.*,co.*,cs.*,cp.* from core_observer cb, core_observation co, core_subject cs, core_encounter ce,core_patients cp where cb.uuid=ce.observer_id and co.encounter_id=ce.uuid and cs.uuid=ce.subject_id and cp.subject_ptr_id=cs.id and cb.role='vht' group by cs.uuid");
                                                 foreach ($midwife->results() as $midwife) {
                                                     ?>
                                                     <tr>
                                                         <td class="hidden-xs hidden-sm"><?php echo $midwife->given_name . " " . $midwife->family_name; ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo streamline_date_time($midwife->created); ?></td>
+                                                        <td class="hidden-xs hidden-sm"><?php echo streamline_date($midwife->created); ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php echo $midwife->bleeding; ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php echo $midwife->swollen_feet; ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php echo $midwife->fever; ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php echo $midwife->blurred_vision; ?></td>
-                                                        <!--<td class="hidden-xs hidden-sm"><?php //echo $midwife->education_level; ?></td>-->
+                                                        <td class="hidden-xs hidden-sm"><?php echo $midwife->value_text; ?></td>
+                                                        <td class="hidden-xs hidden-sm"><?php echo "<strong>Name:</strong> ".DB::getInstance()->getName("auth_user",$midwife->user_id,"first_name","id")."  ".DB::getInstance()->getName("auth_user",$midwife->user_id,"last_name","id")."<br/> <strong> Phone: </strong>".$midwife->phone; ?></td>
                                                     </tr>  
                                                     <?php
                                                 }

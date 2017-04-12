@@ -53,7 +53,7 @@
                         <div class="col-md-12">
 
                             <div class="portlet">
-
+                                <img src="img/excel.png" alt="excel"/> <a href="index.php?page=download_excel" target="_blank"><label class="label label-success">Download Excel</label></a>
                                 <div class="portlet-header">
 
                                     <h3>
@@ -86,25 +86,99 @@
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">LMD</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Marital Status</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Education Level</th>
+                                                    <th data-filterable="true" class="hidden-xs hidden-sm">EDD</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $users_list = DB::getInstance()->query("SELECT * FROM core_patients");
-                                                foreach ($users_list->results() as $users_list) {
+                                                $get_id = Input::get("grp");
+                                                $patient_list = DB::getInstance()->query("SELECT * FROM core_patients");
+                                                foreach ($patient_list->results() as $patient_list) {
+                                                    $age = calcAge($patient_list->dob, date('Y-m-d'));
+                                                    if ($get_id == 1) {
+                                                        if ($age >= 15 && $age <= 19) {
+                                                            ?>
+                                                            <tr>
+                                                                <td><?php echo $patient_list->given_name . " " . $patient_list->family_name; ?></td>
+                                                                <td><?php echo streamline_date($patient_list->dob); ?></td>
+                                                                <td><?php echo $patient_list->pnumber; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->holder_pnumber; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->location; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
+                                                                <td><form action="index.php?page=demograhics_details" method="post">
+                                                                    <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
+                                                                    <button class="btn btn-xs btn-success" type="submit">View Details</button>
+                                                                </form></td>
+                                                            </tr>   
+                                                            <?php
+                                                        }
+                                                    } elseif ($get_id == 2) {
+                                                        if ($age >= 20 && $age <= 24) {
+                                                            ?>
+                                                            <tr>
+                                                                <td><?php echo $patient_list->given_name . " " . $patient_list->family_name; ?></td>
+                                                                <td><?php echo streamline_date($patient_list->dob); ?></td>
+                                                                <td><?php echo $patient_list->pnumber; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->holder_pnumber; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->location; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
+                                                                <td><form action="index.php?page=demograhics_details" method="post">
+                                                                    <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
+                                                                    <button class="btn btn-xs btn-success" type="submit">View Details</button>
+                                                                </form></td>
+                                                            </tr> 
+                                                            <?php
+                                                        }
+                                                    } elseif ($get_id == 3) {
+                                                        if ($age >= 25 && $age <= 30) {
+                                                            ?>
+                                                            <tr>
+                                                                <td><?php echo $patient_list->given_name . " " . $patient_list->family_name; ?></td>
+                                                                <td><?php echo streamline_date($patient_list->dob); ?></td>
+                                                                <td><?php echo $patient_list->pnumber; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->holder_pnumber; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->location; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
+                                                                <td>
+                                                                    <form action="index.php?page=demograhics_details" method="post">
+                                                                    <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
+                                                                    <button class="btn btn-xs btn-success" type="submit">View Details</button>
+                                                                </form>
+                                                                </td>
+                                                            </tr> 
+                                                            <?php
+                                                        }
+                                                    } else {
+                                                        ?>
+                                                        <tr>
+                                                            <td><?php echo $patient_list->given_name . " " . $patient_list->family_name; ?></td>
+                                                            <td><?php echo streamline_date($patient_list->dob); ?></td>
+                                                            <td><?php echo $patient_list->pnumber; ?></td>
+                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->holder_pnumber; ?></td>
+                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->location; ?></td>
+                                                            <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
+                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
+                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
+                                                            <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
+                                                            <td><form action="index.php?page=demograhics_details" method="post">
+                                                                    <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
+                                                                    <button class="btn btn-xs btn-success" type="submit">View Details</button>
+                                                                </form></td>
+                                                        </tr> 
+                                                        <?php
+                                                    }
                                                     ?>
-                                                    <tr>
-                                                        <td><?php echo $users_list->given_name." ".$users_list->family_name;  ?></td>
-                                                        <td><?php echo $users_list->dob;  ?></td>
-                                                        <td><?php echo $users_list->pnumber;  ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->holder_pnumber;  ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->location;  ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->lmd;  ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->marital_status;  ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->education_level;  ?></td>
-                                                        <td><button class="btn btn-xs btn-success">View Details</button></td>
-                                                    </tr>  
+
                                                     <?php
                                                 }
                                                 ?>

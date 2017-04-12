@@ -90,6 +90,8 @@
                                             </thead>
                                             <tbody>
                                                 <?php
+                                                $ie=1;
+                                                $get_id=  Input::get("grp");
                                                 $users_list = DB::getInstance()->query("SELECT * FROM core_patients");
                                                 foreach ($users_list->results() as $users_list) {
                                                     $phone1 = str_split($users_list->pnumber);
@@ -104,24 +106,35 @@
                                                         </td>
                                                         <td><?php echo $users_list->given_name . " " . $users_list->family_name; ?></td>
                                                         <td><?php echo $users_list->pnumber; ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->power_holder; ?></td>
+                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->holder_pnumber; ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php
-                                                            if ($pattern1 == '078' || $pattern1 == '077'):
-                                                                echo "MTN - User Group";
-                                                            elseif($pattern1 == '075' || $pattern1 == '070'):
-                                                                echo "Airtel - User Group";
-                                                            endif;
+                                                            if ($pattern1 == '078' || $pattern1 == '077'){
+                                                                if($get_id==1 || empty($get_id)){
+                                                                echo "<font color='blue'>MTN - User Group</font>";
+                                                                }
+                                                            }
+                                                            elseif($pattern1 == '075' || $pattern1 == '070'){
+                                                                if($get_id==2 || empty($get_id)){
+                                                                echo "<font color='green'>Airtel - User Group</font>";
+                                                                }
+                                                            }
                                                             ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php
-                                                            if ($pattern1 == '075' || $pattern1 == '070'):
-                                                                echo "Airtel - User Group";
-                                                            elseif($pattern1 == '078' || $pattern1 == '077'):
-                                                                echo "MTN - User Group";
-                                                            endif;
+                                                            if ($pattern2 == '078' || $pattern2 == '077'){
+                                                                if($get_id==2 || empty($get_id)){
+                                                                echo "<font color='blue'>MTN - User Group</font>";
+                                                                }
+                                                            }
+                                                            elseif($pattern2 == '075' || $pattern2 == '070'){
+                                                                if($get_id==2 || empty($get_id)){
+                                                                echo "<font color='green'>Airtel - User Group</font>";
+                                                                }
+                                                            }
                                                             ?></td>
                                                     </tr>  
                                                     <?php
                                                     endif;
+                                                    $ie++;
                                                 }
                                                 ?>
                                             </tbody>
