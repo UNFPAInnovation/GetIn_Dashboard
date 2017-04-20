@@ -75,6 +75,17 @@
                                                     ?></td>
                                             </tr>
                                             
+                                            <tr>
+                                                <td><strong>Contraceptive Use</strong></td>
+
+                                                <td><?php
+                                                    $contraceptive_use = DB::getInstance()->query("SELECT contraceptive_use ,count(contraceptive_use) as number FROM core_patients group by contraceptive_use");
+                                                    foreach ($contraceptive_use->results() as $contraceptive_use) {
+                                                        echo $contraceptive_use->contraceptive_use."     <strong>".$contraceptive_use->number."</strong><br/>"; 
+                                                    }
+                                                    ?></td>
+                                            </tr>
+                                            
                                         </table>
 
                                     </div> <!-- /.col -->

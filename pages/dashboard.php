@@ -5,6 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <?php include 'includes/header.php'; ?>	
+        <link href="css/extension-page-style.css" rel="stylesheet" type="text/css"  />
+        <script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+        <script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.widgets.js"></script>
     </head>
 
     <body>
@@ -468,42 +471,38 @@
 // This is a simple example on how to draw a chart using FusionCharts and PHP.
 // We have included includes/fusioncharts.php, which contains functions
 // to help us easily embed the charts.
-                                                include "fusioncharts.php";
+                                                include 'fusioncharts.php';
 // Create the chart - Column 2D Chart with data given in constructor parameter 
 // Syntax for the constructor - new FusionCharts("type of chart", "unique chart id", "width of chart", "height of chart", "div id to render the chart", "type of data", "actual data")
                                                 $columnChart = new FusionCharts("column2d", "ex1", "100%", 400, "chart-1", "json", '{  
                 "chart":{  
-                  "caption":"Harry\'s SuperMart",
-                  "subCaption":"Top 5 stores in last month by revenue",
-                  "numberPrefix":"$",
+                  "caption":"Age groups of mapped girls",
+                  "subCaption":"",
+                  "numberPrefix":"",
                   "theme":"ocean"
                 },
                 "data":[  
                   {  
-                     "label":"Bakersfield Central",
-                     "value":"880000"
+                     "label":"15-19 Years",
+                     "value":"27"
                   },
                   {  
-                     "label":"Garden Groove harbour",
-                     "value":"730000"
+                     "label":"20-24 Years",
+                     "value":"2"
                   },
                   {  
-                     "label":"Los Angeles Topanga",
-                     "value":"590000"
-                  },
-                  {  
-                     "label":"Compton-Rancho Dom",
-                     "value":"520000"
-                  },
-                  {  
-                     "label":"Daly City Serramonte",
-                     "value":"330000"
+                     "label":"25-30",
+                     "value":"0"
                   }
                 ]
             }');
 // Render the chart
                                                 $columnChart->render();
                                                 ?>
+                                                <div class="live-chart-wrapper">
+                                                    <span id="chart-1" class="chart" style="height:500px"><!-- Fusion Charts will render here--></span>
+
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
