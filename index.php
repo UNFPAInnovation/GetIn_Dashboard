@@ -8,6 +8,7 @@ require_once 'functions/functions.php';
 include 'core/init.php';
 $date_today=  date('Y-m-d');
 error_reporting(0);
+//$uuid=`makeuuid.py`;
 //$passwordHasher=new PBKDF2PasswordHasher();
 $crypt = new Encryption();
 //echo date("Y-m-d h:i:s");

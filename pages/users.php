@@ -49,6 +49,7 @@
 
                             <form action="#" method="post">
                                 <?php
+                                 //echo "This is the UUID:".$uuid;
                                 if (Input::exists()) {
                                     // echo Input::get('username');
                                     $validate = new Validate();
@@ -96,11 +97,15 @@
                                             exit();
 //                                            
                                         endif;
-                                        $uuid== `makeuuid.py`;
+                                        /*
+                                         * send and receive values from python
+                                         */
+                                        $uuid=`makeuuid.py`;
+                                        $send_pwd_python=  exec("python makepassword.py .$password");
                                         $userInsert = DB::getInstance()->insert('auth_user', array(
                                             'username' => $username,
                                             'u_role' => $role,
-                                            'password' => sha1($password),
+                                            'password' => $send_pwd_python,
                                             'first_name' => $fname,
                                             'last_name' => $lname,
                                             'email' => $email,
@@ -111,7 +116,7 @@
                                             $last_insert_id = DB::getInstance()->previous_id();
                                             DB::getInstance()->insert('core_observer', array(
                                                 'uuid' => $uuid,
-                                                'user_id' => $$last_insert_id,
+                                                'user_id' => $last_insert_id,
                                                 'role' => $role,
                                                 'phone_number'=>$phone_number
                                             ));
