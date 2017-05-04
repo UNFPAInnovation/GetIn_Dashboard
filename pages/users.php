@@ -30,7 +30,7 @@
                 <div id="content-header">
                     <h1>Users</h1>
                 </div> <!-- #content-header -->	
-                
+
 
                 <div id="content-container">	
                     <a href="index.php?page=list_users"><label class="label label-success">View Users</label></a><br/><p></p>
@@ -44,9 +44,9 @@
                             </h3>
 
                         </div> <!-- /.portlet-header -->
-                        
+
                         <div class="portlet-content">
-                            
+
                             <form action="#" method="post">
                                 <?php
                                 if (Input::exists()) {
@@ -72,6 +72,10 @@
                                         'lastname' => array(
                                             'required' => TRUE
                                         )
+                                        ,
+                                        'phone_number' => array(
+                                            'required' => TRUE
+                                        )
                                     ));
                                     if ($validation->passed()) {
                                         //login user
@@ -82,8 +86,9 @@
                                         $cpassword = Input::get('cpassword');
                                         $email = Input::get('email');
                                         $role = Input::get('role');
+                                        $phone_number = Input::get('phone_number');
                                         $is_active = 1;
-                                        $date_joined=date('Y-m-d');
+                                        $date_joined = date('Y-m-d');
                                         $queryDup = "select * from auth_user where username='$username'";
                                         if (DB::getInstance()->checkRows($queryDup)):
                                             echo "<h5 align='center' ><font color='red'>User Already Registered.</font></h5>";
@@ -91,6 +96,7 @@
                                             exit();
 //                                            
                                         endif;
+                                        $uuid== `makeuuid.py`;
                                         $userInsert = DB::getInstance()->insert('auth_user', array(
                                             'username' => $username,
                                             'u_role' => $role,
@@ -99,9 +105,16 @@
                                             'last_name' => $lname,
                                             'email' => $email,
                                             'is_active' => $is_active,
-                                            'date_joined'=>$date_joined
+                                            'date_joined' => $date_joined
                                         ));
                                         if ($userInsert) {
+                                            $last_insert_id = DB::getInstance()->previous_id();
+                                            DB::getInstance()->insert('core_observer', array(
+                                                'uuid' => $uuid,
+                                                'user_id' => $$last_insert_id,
+                                                'role' => $role,
+                                                'phone_number'=>$phone_number
+                                            ));
                                             echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
                                             header("refresh:2;url=index.php?page=users");
                                         }
@@ -154,6 +167,11 @@
                                         <div class="form-group">
                                             <label for="confirm-password">Confirm Password</label>
                                             <input type="password" name="cpassword" id="username-input" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="phone-number">Phone</label>
+                                            <input type="number" name="phone_number" placeholder="eg: 2567XX123456" id="phone-input" class="form-control">
                                         </div>
 
 

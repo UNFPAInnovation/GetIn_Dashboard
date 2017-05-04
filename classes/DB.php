@@ -207,6 +207,9 @@ class DB {
 //          returns array
         return $this->_result;
     }
+    public function previous_id() {
+        return $this->_pdo->lastInsertId();
+    }
 }
 
 ?>
