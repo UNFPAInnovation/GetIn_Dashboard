@@ -100,7 +100,7 @@
                                         /*
                                          * send and receive values from python
                                          */
-                                        $uuid=`makeuuid.py`;
+                                        //$uuid=`makeuuid.py`;
                                         $send_pwd_python=  exec("python makepassword.py .$password");
                                         $userInsert = DB::getInstance()->insert('auth_user', array(
                                             'username' => $username,
