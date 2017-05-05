@@ -8,7 +8,7 @@ require_once 'functions/functions.php';
 include 'core/init.php';
 $date_today=  date('Y-m-d');
 error_reporting(0);
-$uuid=`makeuuid.py`;
+$uuid=exec('python makeuuid.py');
 //$passwordHasher=new PBKDF2PasswordHasher();
 $crypt = new Encryption();
 //echo date("Y-m-d h:i:s");
@@ -157,6 +157,21 @@ switch ($page) {
         break; 
         
     case 'download_excel':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break; 
+        
+    case 'sms_number':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break; 
+        
+    case 'sms_group':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break; 
+        
+    case 'override_messages':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
         break; 

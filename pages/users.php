@@ -49,7 +49,7 @@
 
                             <form action="#" method="post">
                                 <?php
-                                 //echo "This is the UUID:".$uuid;
+                               //echo "This is the UUID:".$uuid;
                                 if (Input::exists()) {
                                     // echo Input::get('username');
                                     $validate = new Validate();

@@ -85,19 +85,41 @@ function calcAge($date1, $date2) {
 }
 
 function group_range($val, $min, $max) {
-  return ($val >= $min && $val <= $max);
+    return ($val >= $min && $val <= $max);
 }
 
-function send_sms($phone,$message) {
-    $sms_username = "unfair";
-    $sms_password = "unf41r";
-    $sms_phone_number = $phone;
-    $sms_message =$message ;
-    $sms_message = urlencode($sms_message);
-    //$url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$sms_username}&passwd={$sms_password}&msg={$sms_message}&type=text&from=UNFPA&numbers={$sms_phone_number}";
-    $url= "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$sms_username}&passwd={$sms_password}&from=UNFPA_GetIn_Project&numbers={$sms_phone_number}&msg={$sms_message}";
-    $api_reply = file_get_contents($url);
-    echo  $api_reply;
+function file_fetch_contents($url) {
+    $curl_handle = curl_init();
+    curl_setopt($curl_handle, CURLOPT_URL, $url);
+    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+    $contents = curl_exec($curl_handle);
+    curl_close($curl_handle);
+
+    return $contents;
+}
+
+function send_sms($phone, $message) {
+//    $sms_username = "unfair";
+//    $sms_password = "unf41r";
+//    $sms_phone_number = $phone;
+//    $sms_message = $message;
+//    $sms_message = urlencode($sms_message);
+//    //$url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$sms_username}&passwd={$sms_password}&msg={$sms_message}&type=text&from=UNFPA&numbers={$sms_phone_number}";
+//    $url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$sms_username}&passwd={$sms_password}&from=UNFPA_GetIn_Project&numbers={$sms_phone_number}&msg={$sms_message}";
+//    $api_reply = file_fetch_contents($url);
+//    echo $api_reply;
+    $user = "unfair";
+    $pass = "unf41r";
+    $sender = "UNFPA - GetIn Project";
+    $phone_numbers = $phone;
+    $msg = urlencode($message." - FROM ".$sender);
+
+    $url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$user}&passwd={$pass}&from=UNFPA_GetIn_Project&numbers={$phone}&msg={$msg}";//http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username=$user&passwd=$pass&from=$sender&numbers=256775131098&msg=%s";
+//    echo $url;
+    $contents = file_fetch_contents($url);
+    print_r($contents); // check this to see if sent or not
+    
+    return TRUE;
 }
 
 function cleanData($str) {
@@ -111,9 +133,11 @@ function cleanData($str) {
     if (strstr($str, '"'))
         $str = '"' . str_replace('"', '""', $str) . '"';
 }
+
 /*
  * adding months to a specific date
  */
+
 function addMonthsToDate($months, $dateCovert) {
     $date = date_create($dateCovert);
     date_add($date, date_interval_create_from_date_string($months . ' months'));

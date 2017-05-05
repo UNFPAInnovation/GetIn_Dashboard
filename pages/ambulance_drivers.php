@@ -83,6 +83,7 @@
                                                     </th>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">Full Name</th>
                                                     <th data-direction="asc" data-filterable="true" data-sortable="true">Phone</th>
+                                                    <th data-direction="asc" data-filterable="true" data-sortable="true">Operational Subcounty</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -98,6 +99,7 @@
                                                         <td><?php echo $ambulance_drivers->first_name." ".$ambulance_drivers->last_name;  ?></td>
                                                         <td><?php echo $ambulance_drivers->phone_number;  ?>
                                                         </td>
+                                                        <td><?php echo DB::getInstance()->getName('core_subcounty',$ambulance_drivers->subcounty_id,'name','id');  ?></td>
                                                     </tr>  
                                                     <?php
                                                     $i++;

@@ -185,15 +185,33 @@
 
                 <ul class="sub-nav">
                     <li>
-                        <a href="index.php?page=messages">
+                        <a href="index.php?page=sms_number">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            Compose SMS
+                            SMS to Number
                         </a>
                     </li>
                     <li>
+                        <a href="index.php?page=sms_group">
+                            <i class="fa fa-arrow-circle-o-right"></i> 
+                            SMS a Group
+                        </a>
+                    </li>
+<!--                    <li>
                         <a href="index.php?page=broadcast_message">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            Choose Existing SMS
+                            SMS Patients
+                        </a>
+                    </li>-->
+                    <li>
+                        <a href="index.php?page=messages">
+                            <i class="fa fa-arrow-circle-o-right"></i> 
+                            Compose/Edit Reminder SMS
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.php?page=override_messages">
+                            <i class="fa fa-arrow-circle-o-right"></i> 
+                            Override Clone
                         </a>
                     </li>
 
