@@ -35,12 +35,12 @@ class User
             }
         }
     }
-    public function  login($username=null,$password=null){
+    public function  login($username=null,$password=null,$encoded_password=null){
         $user=  $this->find($username);
         //print_r($this->_data);
         if($user)
         {
-            if($this->data()->password===Hash::make($password)){
+            if($this->data()->password===Hash::make($password,$encoded_password)){
                 //echo 'OK!';
                 Session::put($this->_sessionId, $this->data()->id);
                 return TRUE;

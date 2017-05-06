@@ -54,10 +54,11 @@ ob_start();
                             if ($validation->passed()) {
                                 $username=Input::get("username");
                                 $password=Input::get("password");
-                                $send_pwd_python=  exec("python makepassword.py .$password");
-                                //login user
+                                $encoded_password=DB::getInstance()->getName("auth_user",$username,"password","username");
+                                $send_pwd_python=  exec("python checkpassword.py $password '$encoded_password'");
+                                echo $send_pwd_python; //login user
                                 $user = new User();
-                                $login = $user->login($usernamer, $send_pwd_python);
+                                $login = $user->login($username, $send_pwd_python);
                                 if ($login) {
                                     $_SESSION['getin_username']=$username;
                                     $_SESSION['getin_role']=DB::getInstance()->getName("auth_user",$username,"role","username");

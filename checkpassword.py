@@ -24,4 +24,4 @@ try:
     result = check_password(password,encoded)
 except:
     pass
-print(result)
+print(result)#sys.argv[2])
