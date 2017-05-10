@@ -40,7 +40,7 @@ class User
         //print_r($this->_data);
         if($user)
         {
-            if($this->data()->password===Hash::make($password,$encoded_password)){
+            if(Hash::make($password,$encoded_password)){
                 //echo 'OK!';
                 Session::put($this->_sessionId, $this->data()->id);
                 return TRUE;

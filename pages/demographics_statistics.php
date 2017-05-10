@@ -52,41 +52,15 @@
                                 <div class="row">
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-5">
-                                        <table width="100%" border="1">
-                                            <tr>
-                                                <td><strong>Marital Status</strong></td>
+                                        <label class="label label-success"><a href=""><font color="white">1. 4th ANC Visits</font></a></label>
+                                        <br/><p></p>
+                                        <label class="label label-success"><a href=""><font color="white">2. Girls due to deliver during the project life with the assistance of skilled attendance.</font></a></label>
+                                        <br/><p></p>
+                                        <label class="label label-success"><a href=""><font color="white">3. Number of calls made for ambulance pickups</font></a></label>
+                                        <br/><p></p>
+                                        <label class="label label-success"><a href=""><font color="white">4. Family planning - Number of girls due for postpartum family planning and have started on family planning.</font></a></label>
+                                        <br/>
 
-                                                <td><?php
-                                                    $marital_status = DB::getInstance()->query("SELECT marital_status ,count(marital_status) as number FROM core_patients group by marital_status");
-                                                    foreach ($marital_status->results() as $marital_status) {
-                                                        echo $marital_status->marital_status."     <strong>".$marital_status->number."</strong><br/>"; 
-                                                    }
-                                                    ?></td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td><strong>Education Level</strong></td>
-
-                                                <td><?php
-                                                    $education_level = DB::getInstance()->query("SELECT education_level ,count(education_level) as number FROM core_patients group by education_level");
-                                                    foreach ($education_level->results() as $education_level) {
-                                                        echo $education_level->education_level."     <strong>".$education_level->number."</strong><br/>"; 
-                                                    }
-                                                    ?></td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td><strong>Contraceptive Use</strong></td>
-
-                                                <td><?php
-                                                    $contraceptive_use = DB::getInstance()->query("SELECT contraceptive_use ,count(contraceptive_use) as number FROM core_patients group by contraceptive_use");
-                                                    foreach ($contraceptive_use->results() as $contraceptive_use) {
-                                                        echo $contraceptive_use->contraceptive_use."     <strong>".$contraceptive_use->number."</strong><br/>"; 
-                                                    }
-                                                    ?></td>
-                                            </tr>
-                                            
-                                        </table>
 
                                     </div> <!-- /.col -->
 
