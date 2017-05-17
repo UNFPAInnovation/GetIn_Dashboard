@@ -50,7 +50,7 @@ $user = new User();
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
                     <i class="fa fa-user"></i>
-                    Welcome: <?php echo $_SESSION['jermadmin_username'];?> 
+                    Welcome: <?php //echo $_SESSION['jermadmin_username'];?> 
                     <span class="caret"></span>
                 </a>
 

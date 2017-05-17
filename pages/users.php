@@ -101,10 +101,10 @@
                                          * send and receive values from python
                                          */
                                         //$uuid=`makeuuid.py`;
-                                        $send_pwd_python=  exec("python makepassword.py .$password");
+                           //             $send_pwd_python=  exec("python makepassword.py .$password");
                                         
-                                        $create_user_python=  exec("python createuser.py $username $password $fname $lname $email");
-                                        echo $create_user_python;
+                                        $create_user_python=  exec("python createuser.py '$username' '$password' '$fname' '$lname' '$email'");
+                                        echo "Python Feedback". $create_user_python;
 //                                        $userInsert = DB::getInstance()->insert('auth_user', array(
 //                                            'username' => $username,
 //                                            'u_role' => $role,

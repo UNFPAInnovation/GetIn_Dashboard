@@ -118,6 +118,7 @@ function send_sms($phone, $message) {
     $url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$user}&passwd={$pass}&from=UNFPA_GetIn_Project&numbers={$phone}&msg={$msg}";//http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username=$user&passwd=$pass&from=$sender&numbers=256775131098&msg=%s";
 //    echo $url;
     $contents = file_fetch_contents($url);
+//echo "<script>window.open('$url','_blank')</script>";
     print_r($contents); // check this to see if sent or not
     
     return TRUE;
