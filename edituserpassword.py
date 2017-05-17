@@ -15,7 +15,7 @@ sys.path.append('/opt/sana/sana.mds')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mds.settings'
 from django.conf import settings
 
-from auth.user import User
+from django.contrib.auth.models import User
 
 result = -1
 try:
