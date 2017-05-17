@@ -1,7 +1,7 @@
 <?php
 $user = new User();
 
-if ($user->isLoggedIn()) {
+//if ($user->isLoggedIn()) {
     ?>
    
 <header class="hidden-print" id="header">
@@ -50,7 +50,7 @@ if ($user->isLoggedIn()) {
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
                     <i class="fa fa-user"></i>
-                    Welcome: <?php echo $_SESSION['jermadmin_username'];?> 
+                    Welcome: <?php //echo $_SESSION['jermadmin_username'];?> 
                     <span class="caret"></span>
                 </a>
 
@@ -69,7 +69,7 @@ if ($user->isLoggedIn()) {
 
     </nav> <!-- /#top-bar -->
     <?php
-} else {
-    Redirect::to('index.php?page=login');
-}
+//} else {
+//    Redirect::to('index.php?page=login');
+//}
 ?>

@@ -55,10 +55,11 @@ ob_start();
                                 $username=Input::get("username");
                                 $password=Input::get("password");
                                 $encoded_password=DB::getInstance()->getName("auth_user",$username,"password","username");
-                                $send_pwd_python=  exec("python checkpassword.py $password '$encoded_password'");
-                                echo $send_pwd_python; //login user
+                                //$send_pwd_python=  exec("python checkpassword.py $password '$encoded_password'");
+//                                /echo $send_pwd_python; //login user
                                 $user = new User();
-                                $login = $user->login($username, $send_pwd_python);
+                                $login = $user->login($username, $password,$encoded_password);
+                                
                                 if ($login) {
                                     $_SESSION['getin_username']=$username;
                                     $_SESSION['getin_role']=DB::getInstance()->getName("auth_user",$username,"role","username");
