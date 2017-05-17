@@ -19,13 +19,13 @@ sys.path.append('/opt/sana/sana.mds')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mds.settings'
 from django.conf import settings
 
-from auth.user import User
+from django.contrib.auth.models import User
 
 result = -1
 try:
     username=sys.argv[1]
-    user = User(username=username)
-    user.set_password(sys.argv[2])
+    password =sys.arv[2]
+    user = User.objects.create_user(username, password=password)
     # set [optional] fields here
     try:
         user.first_name = sys.argv[3]
