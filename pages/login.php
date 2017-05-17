@@ -59,7 +59,7 @@ ob_start();
 //                                /echo $send_pwd_python; //login user
                                 $user = new User();
                                 $login = $user->login($username, $password,$encoded_password);
-
+                                
                                 if ($login) {
                                     $_SESSION['getin_username']=$username;
                                     $_SESSION['getin_role']=DB::getInstance()->getName("auth_user",$username,"role","username");

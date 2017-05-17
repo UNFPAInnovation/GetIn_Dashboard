@@ -102,16 +102,19 @@
                                          */
                                         //$uuid=`makeuuid.py`;
                                         $send_pwd_python=  exec("python makepassword.py .$password");
-                                        $userInsert = DB::getInstance()->insert('auth_user', array(
-                                            'username' => $username,
-                                            'u_role' => $role,
-                                            'password' => $send_pwd_python,
-                                            'first_name' => $fname,
-                                            'last_name' => $lname,
-                                            'email' => $email,
-                                            'is_active' => $is_active,
-                                            'date_joined' => $date_joined
-                                        ));
+                                        
+                                        $create_user_python=  exec("python createuser.py $username $password $fname $lname $email");
+                                        echo $create_user_python;
+//                                        $userInsert = DB::getInstance()->insert('auth_user', array(
+//                                            'username' => $username,
+//                                            'u_role' => $role,
+//                                            'password' => $send_pwd_python,
+//                                            'first_name' => $fname,
+//                                            'last_name' => $lname,
+//                                            'email' => $email,
+//                                            'is_active' => $is_active,
+//                                            'date_joined' => $date_joined
+//                                        ));
                                         if ($userInsert) {
                                             $last_insert_id = DB::getInstance()->previous_id();
                                             DB::getInstance()->insert('core_observer', array(

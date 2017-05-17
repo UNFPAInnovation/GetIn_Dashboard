@@ -110,7 +110,8 @@ function send_sms($phone, $message) {
 //    echo $api_reply;
     $user = "unfair";
     $pass = "unf41r";
-    $sender = "UNFPA - GetIn Project";
+    $sender = " "
+            . "UNFPA - GetIn Project";
     $phone_numbers = $phone;
     $msg = urlencode($message." - FROM ".$sender);
 
