@@ -154,6 +154,14 @@
                                             <label for="username">User Name</label>
                                             <input type="text" id="username-input" name="username" value="<?php echo escape(Input::get('username')); ?>" class="form-control">
                                         </div>
+                                        <div class="form-group">
+                                            <label for="patient-group">Village</label>
+                                            <select type="text" name="village_id" class="form-control">
+                                                <?php
+                                                echo DB::getInstance()->dropDowns('core_location','id','name');
+                                                ?>
+                                            </select>
+                                        </div>
                                         <button type="submit" class="btn btn-success fa fa-user"> Add User</button>
 
                                     </div> <!-- /.col -->
@@ -180,6 +188,14 @@
                                         <div class="form-group">
                                             <label for="phone-number">Phone</label>
                                             <input type="number" name="phone_number" placeholder="eg: 2567XX123456" id="phone-input" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="patient-group">Subcounty</label>
+                                            <select type="text" name="subcounty" class="form-control">
+                                                <?php
+                                                echo DB::getInstance()->dropDowns('core_subcounty','id','name');
+                                                ?>
+                                            </select>
                                         </div>
 
 

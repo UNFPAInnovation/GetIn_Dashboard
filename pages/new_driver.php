@@ -48,7 +48,7 @@
                             <form action="#" method="post">
                                 <?php
                                 if (isset($_POST['saveDriver'])) {
-                                    // echo Input::get('username');
+                                    echo "heheheh";
                                     $validate = new Validate();
                                     $validation = $validate->check($_POST, array(
                                         'first_name' => array(
