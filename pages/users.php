@@ -87,6 +87,9 @@
                                         $cpassword = Input::get('cpassword');
                                         $email = Input::get('email');
                                         $role = Input::get('role');
+                                        $subcounty = Input::get('subcounty');
+                                        $village_id = Input::get('village_id');
+                                        $location_ids=  implode(",", $village_id);
                                         $phone_number = Input::get('phone_number');
                                         $is_active = 1;
                                         $date_joined = date('Y-m-d');
@@ -116,15 +119,25 @@
 //                                            'date_joined' => $date_joined
 //                                        ));
                                         if (is_numeric($create_user_python)) {
-                                     //       $last_insert_id = DB::getInstance()->previous_id();
-                                            DB::getInstance()->insert('core_observer', array(
-                                                'uuid' => $uuid,
-                                                'user_id' => $create_user_python,
-                                                'role' => $role,
-                                                'phone_number'=>$phone_number
-                                            ));
+                                            /*
+                                             * create observer from python
+                                             */
+                                            $create_observer_python=  exec("python createobserver.py '$create_observer_python' '$role' '$phone_number' '$location_ids' '$subcounty'");
+                                         
+//                                     //       $last_insert_id = DB::getInstance()->previous_id();
+//                                            DB::getInstance()->insert('core_observer', array(
+//                                                'uuid' => $uuid,
+//                                                'user_id' => $create_user_python,
+//                                                'role' => $role,
+//                                                'phone_number'=>$phone_number
+//                                            ));
+                                            if(is_numeric($create_observer_python)){
                                             echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
+                                            echo $create_observer_python;
                                             header("refresh:2;url=index.php?page=users");
+                                            }else{
+                                               
+                                            }
                                         }
                                     } else {
                                         //output errors
@@ -156,7 +169,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="patient-group">Village</label>
-                                            <select multiple="multiple" type="text" name="village_id" class="form-control">
+                                            <select multiple="multiple" type="text" name="village_id[]" class="form-control">
                                                 <?php
                                                 echo DB::getInstance()->dropDowns('core_location','id','name');
                                                 ?>
