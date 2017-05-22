@@ -113,6 +113,12 @@
 
                 <ul class="sub-nav">
                     <li>
+                        <a href="index.php?page=new_driver">
+                            <i class="fa fa-arrow-circle-o-right"></i> 
+                            New Driver
+                        </a>
+                    </li>
+                    <li>
                         <a href="index.php?page=ambulance_drivers">
                             <i class="fa fa-arrow-circle-o-right"></i> 
                             Ambulance Drivers

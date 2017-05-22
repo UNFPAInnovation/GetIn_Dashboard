@@ -176,6 +176,11 @@ switch ($page) {
             include 'pages/' . $page . '.php';
         break; 
         
+    case 'new_driver':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break; 
+        
     
 }
 ?>
