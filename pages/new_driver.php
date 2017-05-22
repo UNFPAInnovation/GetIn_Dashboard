@@ -47,7 +47,7 @@
                         <div class="portlet-content">
                             <form action="#" method="post">
                                 <?php
-                                if (Input::exists()) {
+                                if (isset($_POST['saveDriver'])) {
                                     // echo Input::get('username');
                                     $validate = new Validate();
                                     $validation = $validate->check($_POST, array(
@@ -107,11 +107,13 @@
                                         <div class="form-group">
                                             <label for="patient-group">Subcounty</label>
                                             <select type="text" name="subcounty" class="form-control">
-                                                
+                                                <?php
+                                                echo DB::getInstance()->dropDowns('core_subcounty','id','name');
+                                                ?>
                                             </select>
                                         </div>
                                         
-                                        <button type="submit" class="btn btn-success fa fa-envelope"> Save</button>
+                                        <button type="submit" name="saveDriver" class="btn btn-success fa fa-envelope"> Save</button>
 
                                     </div> <!-- /.col -->
                                     <div class="col-sm-1"></div>
