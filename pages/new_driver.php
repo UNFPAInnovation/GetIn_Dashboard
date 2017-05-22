@@ -113,7 +113,7 @@
                                             </select>
                                         </div>
                                         
-                                        <button type="submit" name="saveDriver" class="btn btn-success fa fa-envelope"> Save</button>
+                                        <button type="submit" name="saveDriver" class="btn btn-success"> Save</button>
 
                                     </div> <!-- /.col -->
                                     <div class="col-sm-1"></div>
