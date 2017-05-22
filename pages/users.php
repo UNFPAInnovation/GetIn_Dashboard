@@ -156,7 +156,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="patient-group">Village</label>
-                                            <select type="text" name="village_id" class="form-control">
+                                            <select multiple="multiple" type="text" name="village_id" class="form-control">
                                                 <?php
                                                 echo DB::getInstance()->dropDowns('core_location','id','name');
                                                 ?>
