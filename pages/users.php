@@ -104,7 +104,7 @@
                            //             $send_pwd_python=  exec("python makepassword.py .$password");
                                         
                                         $create_user_python=  exec("python createuser.py '$username' '$password' '$fname' '$lname' '$email'");
-                                        echo "Python Feedback". $create_user_python;
+                                        //echo "Python Feedback". $create_user_python;
 //                                        $userInsert = DB::getInstance()->insert('auth_user', array(
 //                                            'username' => $username,
 //                                            'u_role' => $role,
@@ -115,11 +115,11 @@
 //                                            'is_active' => $is_active,
 //                                            'date_joined' => $date_joined
 //                                        ));
-                                        if ($userInsert) {
-                                            $last_insert_id = DB::getInstance()->previous_id();
+                                        if (is_numeric($create_user_python)) {
+                                     //       $last_insert_id = DB::getInstance()->previous_id();
                                             DB::getInstance()->insert('core_observer', array(
                                                 'uuid' => $uuid,
-                                                'user_id' => $last_insert_id,
+                                                'user_id' => $create_user_python,
                                                 'role' => $role,
                                                 'phone_number'=>$phone_number
                                             ));
