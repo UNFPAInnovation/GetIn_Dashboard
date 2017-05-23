@@ -100,6 +100,8 @@
                                             exit();
 //                                            
                                         endif;
+                                        
+                                        echo "These are IDS".$location_ids;
                                         /*
                                          * send and receive values from python
                                          */

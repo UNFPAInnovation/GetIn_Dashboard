@@ -33,6 +33,7 @@
 
 
                 <div id="content-container">	
+                    <a href="index.php?page=ambulance_drivers"><label class="label label-success">View Drivers</label></a><br/><p></p>
                     <div class="portlet">
 
                         <div class="portlet-header">

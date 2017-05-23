@@ -135,6 +135,7 @@ class DB {
     
     // populating drop downs
     public function dropDowns($tableName,$id,$name){
+        $this->_options="";
         $this->_dropQuery= $this->query("SELECT * FROM $tableName ORDER BY $name ASC");
         $this->_options.="<option value=''>----SELECT----</option>";
         if($this->_dropQuery->count()){

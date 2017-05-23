@@ -47,6 +47,7 @@
 
 
                 <div id="content-container">
+                    <a href="index.php?page=new_driver"><label class="label label-success">New Driver</label></a><br/><p></p>
 
                     <div class="row">
 
