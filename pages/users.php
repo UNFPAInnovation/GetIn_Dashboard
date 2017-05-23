@@ -126,7 +126,7 @@
                                             /*
                                              * create observer from python
                                              */
-                                            echo "'$user_id' '$role' '$phone_number' '$location_ids' '$subcounty'";
+                                           // echo "'$user_id' '$role' '$phone_number' '$location_ids' '$subcounty'";
                                             $create_observer_python=  exec("python createobserver.py '$user_id' '$role' '$phone_number' '$location_ids' '$subcounty'");
                                          
 //                                     //       $last_insert_id = DB::getInstance()->previous_id();
@@ -138,8 +138,9 @@
 //                                            ));
                                             if(is_numeric($create_observer_python)){
                                             echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
-                                            echo $create_observer_python;
-                                            header("refresh:2;url=index.php?page=users");
+                                            //echo $create_observer_python;
+                                            redirect("User Registered Successfully", "index.php?page=users");
+                                            //header("refresh:2;url=index.php?page=users");
                                             }else{
                                                
                                             }
