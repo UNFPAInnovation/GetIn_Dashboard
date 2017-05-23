@@ -101,7 +101,7 @@
 //                                            
                                         endif;
                                         
-                                        echo "These are IDS".$location_ids;
+                                        //echo "These are IDS".$location_ids;
                                         /*
                                          * send and receive values from python
                                          */
@@ -124,6 +124,7 @@
                                             /*
                                              * create observer from python
                                              */
+                                            echo "'$create_observer_python' '$role' '$phone_number' '$location_ids' '$subcounty'";
                                             $create_observer_python=  exec("python createobserver.py '$create_observer_python' '$role' '$phone_number' '$location_ids' '$subcounty'");
                                          
 //                                     //       $last_insert_id = DB::getInstance()->previous_id();
