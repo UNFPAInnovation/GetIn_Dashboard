@@ -120,12 +120,14 @@
 //                                            'is_active' => $is_active,
 //                                            'date_joined' => $date_joined
 //                                        ));
+                                        $user_id=$create_user_python;
+                                       // echo $create_user_python;
                                         if (is_numeric($create_user_python)) {
                                             /*
                                              * create observer from python
                                              */
                                             echo "'$create_observer_python' '$role' '$phone_number' '$location_ids' '$subcounty'";
-                                            $create_observer_python=  exec("python createobserver.py '$create_observer_python' '$role' '$phone_number' '$location_ids' '$subcounty'");
+                                            $create_observer_python=  exec("python createobserver.py '$user_id' '$role' '$phone_number' '$location_ids' '$subcounty'");
                                          
 //                                     //       $last_insert_id = DB::getInstance()->previous_id();
 //                                            DB::getInstance()->insert('core_observer', array(
