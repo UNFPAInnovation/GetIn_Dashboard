@@ -83,6 +83,9 @@
                                             <select id="select-input" name="group" class="form-control">
                                                 <option value="vht">VHT</option>
                                                 <option value="midwife">MidWife</option>
+                                                <option value="1">1st Trimester</option>
+                                                <option value="2">2nd Trimester</option>
+                                                <option value="3">3rd Trimester</option>
                                             </select>
                                         </div>
                                         <div class="form-group">

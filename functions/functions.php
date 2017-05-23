@@ -145,4 +145,10 @@ function addMonthsToDate($months, $dateCovert) {
     date_add($date, date_interval_create_from_date_string($months . ' months'));
     return date_format($date, 'Y-m-d');
 }
+
+function addDaysToDate($days, $dateCovert) {
+    $date = date_create($dateCovert);
+    date_add($date, date_interval_create_from_date_string($days . ' days'));
+    return date_format($date, 'Y-m-d');
+}
 ?>

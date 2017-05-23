@@ -47,7 +47,7 @@
 
 
                 <div id="content-container">
-
+                    <a href="index.php?page=users"><label class="label label-success">Add Users</label></a><br/><p></p>
                     <div class="row">
 
                         <div class="col-md-12">
@@ -79,7 +79,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="checkbox-column">
-                                                       #
+                                                        #
                                                     </th>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">Full Name</th>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">User Name</th>
@@ -92,19 +92,19 @@
                                             <tbody>
                                                 <?php
                                                 $midwife_list = DB::getInstance()->query("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='vht'");
-                                                $i=1;
+                                                $i = 1;
                                                 foreach ($midwife_list->results() as $midwife_list) {
                                                     ?>
                                                     <tr>
                                                         <td class="checkbox-column">
                                                             <?php echo $i; ?>
                                                         </td>
-                                                        <td><?php echo $midwife_list->first_name." ".$midwife_list->last_name;  ?></td>
-                                                        <td><?php echo $midwife_list->username;  ?></td>
+                                                        <td><?php echo $midwife_list->first_name . " " . $midwife_list->last_name; ?></td>
+                                                        <td><?php echo $midwife_list->username; ?></td>
                                                         <td><?php echo $midwife_list->email; ?></td>
-                                                        <td><?php echo $midwife_list->phone_number;  ?></td>
-                                                        <td><?php echo $midwife_list->role;  ?></td>
-                                                        <td><?php echo $midwife_list->last_login;  ?></td>
+                                                        <td><?php echo $midwife_list->phone_number; ?></td>
+                                                        <td><?php echo $midwife_list->role; ?></td>
+                                                        <td><?php echo $midwife_list->last_login; ?></td>
                                                     </tr>  
                                                     <?php
                                                     $i++;
