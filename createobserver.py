@@ -31,10 +31,10 @@ try:
     observer.user = user
     observer.role = sys.argv[2]
     observer.phone_number = sys.argv[3]
-    locaton_ids = [long(x) for x in sys.argv[4].split(",")]
-    observer.locations = Location.objects.filter(id__in=location_ids)
+    location_ids = [long(x) for x in sys.argv[4].split(",")]
     observer.subcounty = Subcounty.objects.get(id=long(sys.argv[5]))
     observer.save()
+    observer.locations = Location.objects.filter(id__in=location_ids)
     result = Observer.objects.get(user__id=user.id).id
 except:
     pass
