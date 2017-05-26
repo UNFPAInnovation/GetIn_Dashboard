@@ -103,7 +103,7 @@
                                                         <td class="hidden-xs hidden-sm"><?php echo $midwife->fever; ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php echo $midwife->blurred_vision; ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php echo $midwife->value_text; ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo "<strong>Name:</strong> ".DB::getInstance()->getName("auth_user",$midwife->user_id,"first_name","id")."  ".DB::getInstance()->getName("auth_user",$midwife->user_id,"last_name","id")."<br/> <strong> Phone: </strong>".$midwife->phone; ?></td>
+                                                        <td class="hidden-xs hidden-sm"><?php echo "<strong>Name:</strong> ".DB::getInstance()->getName("auth_user",$midwife->user_id,"first_name","id")."  ".DB::getInstance()->getName("auth_user",$midwife->user_id,"last_name","id")."<br/> <strong> Phone: </strong>".$midwife->phone_number; ?></td>
                                                     </tr>  
                                                     <?php
                                                 }

@@ -86,11 +86,12 @@
                                                     <th data-filterable="true" data-sortable="true">Email</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Date Joined</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Role</th>
+                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Phone</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $users_list = DB::getInstance()->query("SELECT * FROM auth_user");
+                                                $users_list = DB::getInstance()->query("SELECT au.*,co.* FROM auth_user au, core_observer co where co.user_id=au.id");
                                                 foreach ($users_list->results() as $users_list) {
                                                     ?>
                                                     <tr>
@@ -102,7 +103,8 @@
                                                         </td>
                                                         <td><?php echo $users_list->email; ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php echo plain_date($users_list->date_joined); ?></td>
-                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->u_role; ?></td>
+                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->role; ?></td>
+                                                        <td class="hidden-xs hidden-sm"><?php echo $users_list->phone_number; ?></td>
                                                     </tr>  
                                                     <?php
                                                 }
