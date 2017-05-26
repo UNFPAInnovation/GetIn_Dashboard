@@ -1,4 +1,4 @@
-# Creates new auth.User object in the database.
+# Creates new core.Observer object in the database.
 #
 # Any parameters which MAY have spaces or restricted characters should
 # be passed using single quotes-i.e. '$param'
@@ -35,6 +35,7 @@ try:
     observer.subcounty = Subcounty.objects.get(id=long(sys.argv[5]))
     observer.save()
     observer.locations = Location.objects.filter(id__in=location_ids)
+    observer.save()
     result = Observer.objects.get(user__id=user.id).id
 except:
     pass
