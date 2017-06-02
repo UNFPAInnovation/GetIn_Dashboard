@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 
 //'mysql' => array(
 //        'host' => '127.0.0.1',

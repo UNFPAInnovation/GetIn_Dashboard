@@ -97,7 +97,7 @@
                                                     $due_on=$scheduled->due_on;
                                                     $date_due_on_array=  explode(" ", $due_on);
                                                     $date_due_on=$date_due_on_array[0];
-                                                    if($status==5){
+                                                    if($status==3){
                                                         if($date_due_on<$date_today){
                                                     ?>
                                                     <tr>
