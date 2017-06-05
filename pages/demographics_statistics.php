@@ -54,7 +54,7 @@
                                 <div class="row">
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-5">
-                                        <label class="label label-success"><a href=""><font color="white">1. 4th ANC Visits</font></a></label>
+                                        <label class="label label-success"><a href="index.php?page=forth_anc"><font color="white">1. 4th ANC Visits</font></a></label>
                                         <br/><p></p>
                                         <label class="label label-success"><a href=""><font color="white">2. Girls due to deliver during the project life with the assistance of skilled attendance.</font></a></label>
                                         <br/><p></p>

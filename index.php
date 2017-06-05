@@ -179,7 +179,12 @@ switch ($page) {
     case 'new_driver':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
-        break; 
+        break;
+        
+    case 'forth_anc':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break;
         
     
 }
