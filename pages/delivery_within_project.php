@@ -42,7 +42,7 @@
             <div id="content">		
 
                 <div id="content-header">
-                    <h1>Demographics</h1>
+                    <h1>Pregnant Girls</h1>
                 </div> <!-- #content-header -->	
 
 
@@ -58,7 +58,7 @@
 
                                     <h3>
                                         <i class="fa fa-list"></i>
-                                        List Mapped Girl Demographics
+                                       Girls due to delivery during the project life cycle
                                     </h3>
 
                                 </div> <!-- /.portlet-header -->
