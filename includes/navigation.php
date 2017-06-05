@@ -217,7 +217,7 @@
                     <li>
                         <a href="index.php?page=override_messages">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            Override Clone
+                            Send Message Now
                         </a>
                     </li>
 
