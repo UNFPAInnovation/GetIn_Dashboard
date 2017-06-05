@@ -57,11 +57,11 @@
                                         <label class="label label-success"><a href="index.php?page=forth_anc"><font color="white">1. 4th ANC Visits</font></a></label>
                                         <br/><p></p>
                                         <label class="label label-success"><a href=""><font color="white">2. Girls due to deliver during the project life with the assistance of skilled attendance.</font></a></label>
-                                        <br/><p></p>
+<!--                                        <br/><p></p>
                                         <label class="label label-success"><a href=""><font color="white">3. Number of calls made for ambulance pickups</font></a></label>
                                         <br/><p></p>
                                         <label class="label label-success"><a href=""><font color="white">4. Family planning - Number of girls due for postpartum family planning and have started on family planning.</font></a></label>
-                                        <br/>
+                                        <br/>-->
 
 
                                     </div> <!-- /.col -->
