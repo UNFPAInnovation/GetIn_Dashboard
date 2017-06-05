@@ -186,6 +186,11 @@ switch ($page) {
             include 'pages/' . $page . '.php';
         break;
         
+    case 'delivery_within_project':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break;
+        
     
 }
 ?>
