@@ -97,7 +97,7 @@ function file_fetch_contents($url) {
 
     return $contents;
 }
-
+require_once('AfricasTalkingGateway.php');
 function send_sms($phone, $message) {
 //    $sms_username = "unfair";
 //    $sms_password = "unf41r";
@@ -108,19 +108,28 @@ function send_sms($phone, $message) {
 //    $url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$sms_username}&passwd={$sms_password}&from=UNFPA_GetIn_Project&numbers={$sms_phone_number}&msg={$sms_message}";
 //    $api_reply = file_fetch_contents($url);
 //    echo $api_reply;
-    $user = "unfair";
-    $pass = "unf41r";
-    $sender = " "
-            . "UNFPA - GetIn Project";
-    $phone_numbers = $phone;
-    $msg = urlencode($message." - FROM ".$sender);
+    // $user = "unfair";
+    // $pass = "unf41r";
+    // $msg = urlencode($message." - FROM ".$sender);
 
-    $url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$user}&passwd={$pass}&from=UNFPA_GetIn_Project&numbers={$phone}&msg={$msg}";//http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username=$user&passwd=$pass&from=$sender&numbers=256775131098&msg=%s";
-//    echo $url;
-    $contents = file_fetch_contents($url);
-//echo "<script>window.open('$url','_blank')</script>";
-    print_r($contents); // check this to see if sent or not
-    
+    // $url = "http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username={$user}&passwd={$pass}&from=UNFPA_GetIn_Project&numbers={$phone}&msg={$msg}";//http://www.socnetsolutions.com/projects/bulk/amfphp/services/blast.php?username=$user&passwd=$pass&from=$sender&numbers=256775131098&msg=%s";
+    //    echo $url;
+    // $contents = file_fetch_contents($url);
+    //echo "<script>window.open('$url','_blank')</script>";
+    // print_r($contents); // check this to see if sent or not
+    $sender = "UNFPA - GetIn Project";
+    $recipients = $phone;
+    $username = "Donald Waruhanga";
+    $apikey = "ae36f17fe7916232b8d9db06a9e0c798eaec0f396245477979f6d27f883e74e3";
+    // Create a new instance of our awesome gateway class
+    $gateway    = new AfricasTalkingGateway($username, $apikey);
+    try{
+        $results = $gateway->sendMessage($recipients, $message);
+    }
+    catch ( AfricasTalkingGatewayException $e )
+    {
+        echo "Encountered an error while sending: ".$e->getMessage();
+    }
     return TRUE;
 }
 
