@@ -97,7 +97,8 @@ function file_fetch_contents($url) {
 
     return $contents;
 }
-require_once('AfricasTalkingGateway.php');
+//require_once('AfricasTalkingGateway.php');
+include('../classes/AfricasTalkingGateway.php');
 function send_sms($phone, $message) {
 //    $sms_username = "unfair";
 //    $sms_password = "unf41r";
