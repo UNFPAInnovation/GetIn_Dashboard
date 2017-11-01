@@ -12,8 +12,7 @@ final class GetINNotifications{
 		$this->sms = new AfricasTalkingGateway(getenv('AIT_USERNAME'), getenv('AIT_KEY'));
 	}
 
-	public function sendSMS($recipients){
-		$message = "";
+	public function sendSMS($recipients, $message = ""){
 		$failedRecipients = array(); //track failed deliveries
 		$passedRecipients = array(); //track successful deliveries
 
