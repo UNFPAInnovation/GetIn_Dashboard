@@ -592,8 +592,10 @@ function send_sms($phone, $message) {
     // print_r($contents); // check this to see if sent or not
     $sender = "UNFPA - GetIn Project";
     $recipients = $phone;
-    $username = "Donald Waruhanga";
-    $apikey = "ae36f17fe7916232b8d9db06a9e0c798eaec0f396245477979f6d27f883e74e3";
+    //$username = "Donald Waruhanga";
+    $username = "getin";
+    //$apikey = "ae36f17fe7916232b8d9db06a9e0c798eaec0f396245477979f6d27f883e74e3";
+    $apikey = "0739ecbbc9d236ef3e7ac014ab6ecf309a4138d07fe798e3a03bf4ba174fce42";
     // Create a new instance of our awesome gateway class
     $gateway    = new AfricasTalkingGateway($username, $apikey);
     try{
