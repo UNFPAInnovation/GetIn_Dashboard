@@ -5,10 +5,9 @@
 <meta name="description" content="">
 <meta name="author" content="" />
 
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,800italic,400,600,800" type="text/css">
-
-<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />		
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />	
+<link rel="stylesheet" href="css/google-open-sans.css" type="text/css" />
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.css" type="text/css" />
 
 <link rel="stylesheet" href="js/plugins/icheck/skins/minimal/blue.css" type="text/css" />
