@@ -102,8 +102,8 @@ include('classes/AfricasTalkingGateway.php');
 function send_sms($phone, $message) {
     $sender = "UNFPA - GetIn Project";
     $recipients = $phone;
-    $username = $_ENV['AIT_USER'];
-    $apikey = $_ENV['AIT_KEY'];
+    $username = $_SERVER['AIT_USER'];
+    $apikey = $_SERVER['AIT_KEY'];
     // Create a new instance of our awesome gateway class
     $gateway    = new AfricasTalkingGateway($username, $apikey);
     $sms_result = FALSE;
