@@ -1,8 +1,8 @@
 <?php 
-define ("DB_HOST", "localhost");
-define ("DB_USER", "mds");
-define ("DB_PASS","GetIn2016");
-define ("DB_NAME","mds");
+define ("DB_HOST", $_SERVER['DB_HOST']);
+define ("DB_USER", $_SERVER['DB_USER']);
+define ("DB_PASS", $_SERVER['DB_PASS']);
+define ("DB_NAME", $_SERVER['DB_NAME']);
 
 $link = mysql_connect(DB_HOST, DB_USER, DB_PASS) or die("Couldn't make connection.");
 $db = mysql_select_db(DB_NAME, $link) or die("Couldn't select database");
