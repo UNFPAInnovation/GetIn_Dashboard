@@ -43,7 +43,7 @@ try:
         observer.save()
     # Set m2m field locations based on parishes
     if observer.role == 'midwife' or observer.role == 'vht':
-        parishes = [x.id for x in observer.parishes ]
+        parishes = [x.id for x in observer.parishes.all() ]
         observer.locations = Location.objects.filter(parish__id__in=parishes)
         observer.save()
     result = Observer.objects.get(user__id=user.id).id
