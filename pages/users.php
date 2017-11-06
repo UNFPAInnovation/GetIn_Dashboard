@@ -88,8 +88,8 @@
                                         $email = Input::get('email');
                                         $role = Input::get('role');
                                         $subcounty = Input::get('subcounty');
-                                        $village_id = Input::get('village_id');
-                                        $location_ids=  implode(",", $village_id);
+                                        $parish_id = Input::get('parish_id');
+                                        $parish_ids=  implode(",", $parish_id);
                                         $phone_number = Input::get('phone_number');
                                         $is_active = 1;
                                         $date_joined = date('Y-m-d');
@@ -109,38 +109,16 @@
                            //             $send_pwd_python=  exec("python makepassword.py .$password");
                                         
                                         $create_user_python=  exec("python createuser.py '$username' '$password' '$fname' '$lname' '$email'");
-                                        //echo "Python Feedback". $create_user_python;
-//                                        $userInsert = DB::getInstance()->insert('auth_user', array(
-//                                            'username' => $username,
-//                                            'u_role' => $role,
-//                                            'password' => $send_pwd_python,
-//                                            'first_name' => $fname,
-//                                            'last_name' => $lname,
-//                                            'email' => $email,
-//                                            'is_active' => $is_active,
-//                                            'date_joined' => $date_joined
-//                                        ));
                                         $user_id=$create_user_python;
                                        // echo $create_user_python;
                                         if (is_numeric($create_user_python)) {
                                             /*
                                              * create observer from python
                                              */
-                                           // echo "'$user_id' '$role' '$phone_number' '$location_ids' '$subcounty'";
-                                            $create_observer_python=  exec("python createobserver.py '$user_id' '$role' '$phone_number' '$location_ids' '$subcounty'");
-                                         
-//                                     //       $last_insert_id = DB::getInstance()->previous_id();
-//                                            DB::getInstance()->insert('core_observer', array(
-//                                                'uuid' => $uuid,
-//                                                'user_id' => $create_user_python,
-//                                                'role' => $role,
-//                                                'phone_number'=>$phone_number
-//                                            ));
+                                            $create_observer_python=  exec("python createobserver.py '$user_id' '$role' '$phone_number' '$subcounty' '$parish_ids'");
                                             if(is_numeric($create_observer_python)){
                                             echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
-                                            //echo $create_observer_python;
                                             redirect("User Registered Successfully", "index.php?page=users");
-                                            //header("refresh:2;url=index.php?page=users");
                                             }else{
                                                
                                             }
@@ -173,6 +151,7 @@
                                             <label for="username">User Name</label>
                                             <input type="text" id="username-input" name="username" value="<?php echo escape(Input::get('username')); ?>" class="form-control">
                                         </div>
+                                        <!--
                                         <div class="form-group">
                                             <label for="patient-group">Village</label>
                                             <select multiple="multiple" type="text" name="village_id[]" class="form-control">
@@ -181,6 +160,16 @@
                                                 ?>
                                             </select>
                                         </div>
+                                        -->
+                                        <div class="form-group">
+                                            <label for="patient-group">Parish</label>
+                                            <select multiple="multiple" type="text" name="parish_id[]" class="form-control">
+                                                <?php
+                                                echo DB::getInstance()->dropDowns('core_parish','id','name');
+                                                ?>
+                                            </select>
+                                        </div>
+
                                         <button type="submit" class="btn btn-success fa fa-user"> Add User</button>
 
                                     </div> <!-- /.col -->
