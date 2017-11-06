@@ -1,21 +1,14 @@
 <?php
 error_reporting(0);
 
-//'mysql' => array(
-//        'host' => '127.0.0.1',
-//        'username' => 'root',
-//        'password' => 'GetIn2016',
-//        'db' => 'mds'
-//    ),
-
 //session_start();
 $GLOBALS['config'] = array(
     
     'mysql' => array(
          'host' => $_SERVER['DB_HOST'],
          'username' => $_SERVER['DB_USER'],
-         'password' => $_SERVER['DB_PASSWORD'],
-         'db' => $_SERVER['DB_HOST']
+         'password' => $_SERVER['DB_PASS'],
+         'db' => $_SERVER['DB_NAME']
      ),
      
     'remember' => array(
