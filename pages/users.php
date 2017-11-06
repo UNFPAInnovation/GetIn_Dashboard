@@ -97,16 +97,13 @@
                                         if (DB::getInstance()->checkRows($queryDup)):
                                             echo "<h5 align='center' ><font color='red'>User Already Registered.</font></h5>";
                                             header("refresh:1;url=index.php?page=users");
-                                            exit();
-//                                            
+                                            exit();                        
                                         endif;
                                         
                                         //echo "These are IDS".$location_ids;
                                         /*
                                          * send and receive values from python
                                          */
-                                        //$uuid=`makeuuid.py`;
-                           //             $send_pwd_python=  exec("python makepassword.py .$password");
                                         
                                         $create_user_python=  exec("python createuser.py '$username' '$password' '$fname' '$lname' '$email'");
                                         $user_id=$create_user_python;
