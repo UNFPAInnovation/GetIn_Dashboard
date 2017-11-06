@@ -12,10 +12,10 @@ error_reporting(0);
 $GLOBALS['config'] = array(
     
     'mysql' => array(
-         'host' => '127.0.0.1',
-         'username' => 'root',
-         'password' => 'GetIn2016',
-         'db' => 'mds'
+         'host' => $_SERVER['DB_HOST'],
+         'username' => $_SERVER['DB_USER'],
+         'password' => $_SERVER['DB_PASSWORD'],
+         'db' => $_SERVER['DB_HOST']
      ),
      
     'remember' => array(
