@@ -31,7 +31,8 @@ try:
     observer.user = user
     observer.role = sys.argv[2]    
     observer.phone_number = sys.argv[3]
-    observer.subcounty = Subcounty.objects.get(id=long(sys.argv[4]))
+    if(sys.argv[4]):
+        observer.subcounty = Subcounty.objects.get(id=long(sys.argv[4]))
     observer.save()
     # Set parishes m2m field
     if observer.role == 'midwife':
@@ -47,7 +48,7 @@ try:
         observer.locations = Location.objects.filter(parish__id__in=parishes)
         observer.save()
     result = Observer.objects.get(user__id=user.id).id
-except:
-    pass
+except Exception as e:
+    sys.stderr.write("(dashboard) Error creating  observer. Message:'%s'" % e)
 print(result)
 
