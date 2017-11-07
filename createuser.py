@@ -29,18 +29,18 @@ try:
     # set [optional] fields here
     try:
         user.first_name = sys.argv[3]
-    except:
-        pass
+    except Exception as e:
+        sys.stderr.write("(dashboard) createuser.py Error reading optional field '%s'. Message '%s'" % ("first_name", e))
     try:
         user.last_name = sys.argv[4]
-    except:
-        pass
+    except Exception as e:
+        sys.stderr.write("(dashboard) createuser.py Error reading optional field '%s'. Message '%s'" % ("last_name", e))
     try:
         user.email = sys.argv[5]
-    except:
-        pass
+    except Exception as e:
+        sys.stderr.write("(dashboard) createuser.py Error reading optional field '%s'. Message '%s'" % ("email", e))
     user.save()
     result = User.objects.get(username=username).id
-except:
-    pass
+except Exception as e:
+    sys.stderr.write("(dashboard) createuser.py Error saving user. Message: %s" % e)
 print(result)
