@@ -157,8 +157,6 @@
                                             </select>
                                         </div>
 
-                                        <button type="submit" class="btn btn-success fa fa-user"> Add User</button>
-
                                     </div> <!-- /.col -->
 
                                     <div class="col-sm-5">
@@ -217,7 +215,13 @@
                                     <div class="col-sm-1"></div>
 
                                 </div> <!-- /.row -->
-
+                                <div class="row"> <!-- /.row -->
+                                    <div class="col-sm-5"></div>
+                                    <div class="col-sm-1">
+                                        <button type="submit" class="btn btn-success fa fa-user"> Add User</button>
+                                    </div>
+                                    <div class="col-sm-5"></div>
+                                </div> <!-- /.row -->
                             </form>
                         </div> <!-- /.portlet-content -->
 
