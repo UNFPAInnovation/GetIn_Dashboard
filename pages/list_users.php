@@ -87,6 +87,7 @@
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Date Joined</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Role</th>
                                                      <th data-filterable="true" class="hidden-xs hidden-sm">Phone</th>
+                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Edit</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -105,7 +106,10 @@
                                                         <td class="hidden-xs hidden-sm"><?php echo plain_date($users_list->date_joined); ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php echo $users_list->role; ?></td>
                                                         <td class="hidden-xs hidden-sm"><?php echo $users_list->phone_number; ?></td>
-                                                    </tr>  
+                                                        <td>
+                                                            <button id=<?php echo "\"".$users_list->user_id."\""?> onClick="edit_click(this.id)" class="btn btn-success fa fa-user">Edit</button>
+                                                        </td>
+                                                    </tr> 
                                                     <?php
                                                 }
                                                 ?>
@@ -119,20 +123,16 @@
                             </div> <!-- /.portlet -->
 
 
-
                         </div> <!-- /.col -->
 
                     </div> <!-- /.row -->
-
-
-
-
-
-
-
-
+                    <script type="text/javascript">
+                      function edit_click(clicked_id){
+                          var url = "/id=" + clicked_id;
+                          // Do something
+                      }
+                    </script>
                 </div> <!-- /#content-container -->
-
 
 
             </div> <!-- #content -->
