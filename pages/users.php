@@ -148,17 +148,7 @@
                                             <label for="username">User Name</label>
                                             <input type="text" id="username-input" name="username" value="<?php echo escape(Input::get('username')); ?>" class="form-control">
                                         </div>
-                                        <!--
-                                        <div class="form-group">
-                                            <label for="patient-group">Village</label>
-                                            <select multiple="multiple" type="text" name="village_id[]" class="form-control">
-                                                <?php
-                                                echo DB::getInstance()->dropDowns('core_location','id','name');
-                                                ?>
-                                            </select>
-                                        </div>
-                                        -->
-                                        <div class="form-group">
+                                        <div class="form-group" id="parish_select_div" style="display:none;">
                                             <label for="patient-group">Parish</label>
                                             <select multiple="multiple" type="text" name="parish_id[]" class="form-control">
                                                 <?php
@@ -175,6 +165,7 @@
                                         <div class="form-group">	
                                             <label for="select-role">Role</label>
                                             <select id="select-input" name="role" class="form-control">
+                                                <option value="">----SELECT----</option>
                                                 <option value="vht">VHT</option>
                                                 <option value="midwife">MidWife</option>
                                                 <option value="dho">DHO</option>
@@ -194,7 +185,7 @@
                                             <label for="phone-number">Phone</label>
                                             <input type="number" name="phone_number" placeholder="eg: 2567XX123456" id="phone-input" class="form-control">
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" id="subcounty_select_div" style="display:none;">
                                             <label for="patient-group">Subcounty</label>
                                             <select type="text" name="subcounty" class="form-control">
                                                 <?php
@@ -202,11 +193,28 @@
                                                 ?>
                                             </select>
                                         </div>
-
-
+                                        <script type="text/javascript">
+                                            document.getElementById('select-input').addEventListener('change', function () {
+                                                var subcounties = document.getElementById('subcounty_select_div');
+                                                var parishes = document.getElementById('parish_select_div');
+                                                switch(this.value){
+                                                    case "vht":
+                                                        parishes.style.display = 'block';
+                                                        subcounties.style.display = 'none';
+                                                        break;
+                                                    case "midwife":
+                                                        parishes.style.display = 'none';
+                                                        subcounties.style.display = 'block';
+                                                        break;
+                                                    default:
+                                                        parishes.style.display = 'none';
+                                                        subcounties.style.display = 'none';
+                                                        break;
+                                                }
+                                            });
+                                        </script>
                                     </div> <!-- /.col -->
                                     <div class="col-sm-1"></div>
-
 
                                 </div> <!-- /.row -->
 
@@ -214,12 +222,6 @@
                         </div> <!-- /.portlet-content -->
 
                     </div> <!-- /.portlet -->
-
-
-
-
-
-
 
                 </div> <!-- /#content-container -->			
 
