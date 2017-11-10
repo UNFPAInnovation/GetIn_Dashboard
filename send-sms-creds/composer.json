@@ -1,0 +1,19 @@
+{
+    "name": "slybard/send-sms-creds",
+    "description": "Send new creds to GetIN users via sms",
+    "require": {
+        "vlucas/phpdotenv": "^2.4",
+        "monolog/monolog": "^1.23",
+        "league/csv": "^9.1"
+    },
+    "require-dev": {
+        "monolog/monolog": "^1.23",
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "authors": [
+        {
+            "name": "slybard",
+            "email": "joshoke2003@gmail.com"
+        }
+    ]
+}
