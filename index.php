@@ -18,6 +18,8 @@ $encoded_page = isset($_GET['page']) ? $_GET['page'] : ('login');
 //$page = $crypt->decode($encoded_page);
 $page=$encoded_page;
 
+//--To-Do (Josh) --refactor switch statement with simple function
+
 switch ($page) {
     default:
         $page = "error";

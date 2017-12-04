@@ -1,4 +1,5 @@
 <?php
+
 error_reporting(0);
 
 //session_start();
@@ -25,6 +26,6 @@ $GLOBALS['config'] = array(
 //require_once 'classes/config.php';
 spl_autoload_register(function($class) {
     require_once 'classes/' . $class . '.php';
-});
+});  //-- To-Do (Josh) -- replace with composer to manage classes -- psr-4
 require_once 'functions/functions.php';
 ?>
