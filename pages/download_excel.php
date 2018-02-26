@@ -1,4 +1,4 @@
-<?php 
+<?php
 define ("DB_HOST", $_SERVER['DB_HOST']);
 define ("DB_USER", $_SERVER['DB_USER']);
 define ("DB_PASS", $_SERVER['DB_PASS']);
@@ -15,7 +15,7 @@ $setSql = "select * from core_patients";
 
 $setRec = mysql_query($setSql);
 
-$setCounter = mysql_num_fields($setRec);
+$setCounter = mysql_num_fields($setRec); 
 
 for ($i = 0; $i < $setCounter; $i++) {
     $setMainHeader .= mysql_field_name($setRec, $i)."\t";
