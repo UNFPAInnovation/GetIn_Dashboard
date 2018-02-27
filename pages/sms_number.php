@@ -28,27 +28,6 @@
             <div id="content">
 
                 <div id="content-header">
-                  <?php
-                  $us = getenv('AIT_USERNAME');
-                  echo $us;
-                  exit();
-                  $username = 'safepalapp';
-                  $apikey = '0053faabbc79d10769a8440a30a77e113faaeb8f89d736bca3024340f74d1a50';
-                  $ait = new \AfricasTalkingGateway($username, $apikey);
-                  $recipients = "+256753601781,+256750333668";
-                  $message    = "GetIN SMS test";
-                  try {
-                    $results = $ait->sendMessage($recipients, $message);
-                    foreach ($results as $result) {
-                      echo " Number: " .$result->number;
-                      echo " Status: " .$result->status;
-                      echo " MessageId: " .$result->messageId;
-                      echo " Cost: "   .$result->cost."\n";
-                    }
-                  } catch (\Exception $e) {
-                    echo "Encountered an error while sending: ".$e->getMessage();
-                  }
-                  exit();?>
                     <h1>Instant Messaging</h1>
                 </div> <!-- #content-header -->
 
@@ -85,10 +64,15 @@
                                         //login user
                                         $phone = Input::get('patient_group');
                                         $message = Input::get('message');
-                                        $response=send_sms($phone, $message);
+                                        $sms = new \GetINSMS(); //init sms class
+                                        $response = $sms->sendToNumber("+".$phone, $message);
                                         if($response){
-                                            redirect("Message Sent", "index.php?page=sms_number");
+                                          $feedback = "Message sent successfully!";
+                                        } else {
+                                          $feedback = "Failed to send message. Try again";
                                         }
+                                        //have to redirect anyway
+                                        redirect($feedback, "index.php?page=sms_number");
                                     }
                                 }
                                 ?>
@@ -102,7 +86,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="message">Message (130 Characters Only)</label>
-                                            <textarea type="text" id="username-input" name="message" class="form-control">
+                                            <textarea type="text" id="username-input" name="message" class="form-control" style="text-align: left !important;">
                                                 <?php echo escape(Input::get('message')); ?>
                                             </textarea>
                                         </div>

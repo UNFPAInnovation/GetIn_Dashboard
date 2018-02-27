@@ -2,7 +2,7 @@
 require_once('vendor/autoload.php');
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
-error_reporting(0);
+//error_reporting(0);
 
 //session_start();
 $GLOBALS['config'] = array(
@@ -15,12 +15,12 @@ $GLOBALS['config'] = array(
      ),
 
     'remember' => array(
-        'cookie_name' => 'hash',
-        'cookie_expiry' => 604800
+        'cookie_name' => getenv('COOKIE_NAME'),
+        'cookie_expiry' => getenv('COOKIE_EXPIRY')
     ),
     'session' => array(
-        'session_name' => 'user',
-        'token_name' => 'token'
+        'session_name' => getenv('SESSION_NAME'),
+        'token_name' => getenv('TOKEN_NAME')
     )
 );
 //require_once 'classes/config.php';
