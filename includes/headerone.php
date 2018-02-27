@@ -1,16 +1,17 @@
 <?php
 $user = new User();
-
-if ($user->isLoggedIn()) {
+$logged = TRUE;
+//if ($user->isLoggedIn()) {
+  if ($logged) {
     ?>
-   
+
 <header class="hidden-print" id="header">
 
     <h1 id="site-logo" class="hidden-print">
             <a href="#">
                 <img src="img/logos/logo.png" style="height: 100px;width: 160px;" alt="Site Logo" />
             </a>
-        </h1>	
+        </h1>
 
         <a href="javascript:;" data-toggle="collapse" data-target=".top-bar-collapse" id="top-bar-toggle" class="navbar-toggle collapsed">
             <i class="fa fa-cog"></i>
@@ -26,7 +27,7 @@ if ($user->isLoggedIn()) {
         <ul class="nav navbar-nav pull-left">
             <li class="">
                 <a href="index.php?page=dashboard">
-                    <i class="fa fa-home"></i> 
+                    <i class="fa fa-home"></i>
                     Home
                 </a>
             </li>
@@ -50,16 +51,16 @@ if ($user->isLoggedIn()) {
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
                     <i class="fa fa-user"></i>
-                    Welcome: <?php echo  $_SESSION['getin_username'];?> 
+                    Welcome: <?php echo  $_SESSION['getin_username'];?>
                     <span class="caret"></span>
                 </a>
 
                 <ul class="dropdown-menu" role="menu">
-                    
+
                     <li class="divider"></li>
                     <li>
                         <a href="index.php?page=logout">
-                            <i class="fa fa-sign-out"></i> 
+                            <i class="fa fa-sign-out"></i>
                             &nbsp;&nbsp;Logout
                         </a>
                     </li>

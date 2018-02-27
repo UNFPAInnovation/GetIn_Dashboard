@@ -5,3 +5,5 @@
 /send-sms-creds/.env
 /send-sms-creds/data/users.csv
 /send-sms-creds/data/*
+/vendor/*
+vendor/

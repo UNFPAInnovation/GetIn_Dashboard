@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <?php include 'includes/header.php'; ?>	
+        <?php include 'includes/header.php'; ?>
     </head>
 
     <body>
@@ -25,14 +25,35 @@
 
 
 
-            <div id="content">		
+            <div id="content">
 
                 <div id="content-header">
+                  <?php
+                  $us = getenv('AIT_USERNAME');
+                  echo $us;
+                  exit();
+                  $username = 'safepalapp';
+                  $apikey = '0053faabbc79d10769a8440a30a77e113faaeb8f89d736bca3024340f74d1a50';
+                  $ait = new \AfricasTalkingGateway($username, $apikey);
+                  $recipients = "+256753601781,+256750333668";
+                  $message    = "GetIN SMS test";
+                  try {
+                    $results = $ait->sendMessage($recipients, $message);
+                    foreach ($results as $result) {
+                      echo " Number: " .$result->number;
+                      echo " Status: " .$result->status;
+                      echo " MessageId: " .$result->messageId;
+                      echo " Cost: "   .$result->cost."\n";
+                    }
+                  } catch (\Exception $e) {
+                    echo "Encountered an error while sending: ".$e->getMessage();
+                  }
+                  exit();?>
                     <h1>Instant Messaging</h1>
-                </div> <!-- #content-header -->	
+                </div> <!-- #content-header -->
 
 
-                <div id="content-container">	
+                <div id="content-container">
                     <div class="portlet">
 
                         <div class="portlet-header">
@@ -47,6 +68,7 @@
                         <div class="portlet-content">
                             <form action="#" method="post">
                                 <?php
+
                                 if (Input::exists()) {
                                     // echo Input::get('username');
                                     $validate = new Validate();
@@ -103,7 +125,7 @@
 
 
 
-                </div> <!-- /#content-container -->			
+                </div> <!-- /#content-container -->
 
             </div> <!-- #content -->
 
