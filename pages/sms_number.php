@@ -65,7 +65,7 @@
                                         $phone = Input::get('patient_group');
                                         $message = Input::get('message');
                                         $sms = new \GetINSMS(); //init sms class
-                                        $response = $sms->sendToNumber("+".$phone, $message);
+                                        $response = $sms->sendToNumber($phone, $message);
                                         if($response){
                                           $feedback = "Message sent successfully!";
                                         } else {

@@ -60,21 +60,14 @@ ob_start();
 
                                 $encoded_password=DB::getInstance()->getName("auth_user",$username,"password","username");
                                 //$send_pwd_python=  exec("python checkpassword.py $password '$encoded_password'");
-//                                /echo $send_pwd_python; //login user
+                                //echo $send_pwd_python;
+                                //login user
                                 $user = new User();
-
                                 $login = $user->login($username, $password,$encoded_password);
                                 if ($login) {
                                     $_SESSION['getin_username']=$username;
                                     $_SESSION['getin_role']=DB::getInstance()->getName("auth_user",$username,"role","username");
                                     $_SESSION['getin_user_id']=DB::getInstance()->getName("auth_user",$username,"id","username");
-                                    /*print_r($_SESSION['getin_username']);
-                                    echo "<br/>  user role:";
-                                    print_r($_SESSION['getin_role']);
-                                    echo "<br/> userid: ";
-                                    print_r($_SESSION['getin_user_id']);
-                                    exit(); */
-                                    $_GET['page'] = 'dashboard';
                                     Redirect::to('index.php?page=dashboard');
                                     //redirect('OK','index.php?page=dashboard');
                                 } else {

@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <?php include 'includes/header.php'; ?>	
+        <?php include 'includes/header.php'; ?>
     </head>
 
     <body>
@@ -25,14 +25,14 @@
 
 
 
-            <div id="content">		
+            <div id="content">
 
                 <div id="content-header">
                     <h1>Instant Messaging</h1>
-                </div> <!-- #content-header -->	
+                </div> <!-- #content-header -->
 
 
-                <div id="content-container">	
+                <div id="content-container">
                     <div class="portlet">
 
                         <div class="portlet-header">
@@ -61,14 +61,16 @@
                                         $store_numbers = array();
                                         $group = Input::get('group');
                                         $message = Input::get('message');
-                                        $return_numbers = DB::getInstance()->query("select * from core_observer where role='$group'");
+                                        //changed query to only return phone numbers
+                                        $return_numbers = DB::getInstance()->query("select phone_number from core_observer where role='$group'");
                                         foreach ($return_numbers->results() as $return_numbers) {
                                             array_push($store_numbers, $return_numbers->phone_number);
                                         }
-                                        $numbers = implode(",", $store_numbers);
-                                        //print_r($store_numbers);
-                                        //echo $numbers;
-                                        $response = send_sms($numbers, $message);
+                                        $numbers = implode(",+", $store_numbers);
+                                        //$numbers = "256753601781,+256773971147,+256750333668";
+                                        //send SMSes
+                                        $sms = new \GetINSMS(); //init sms class
+                                        $response = $sms->sendToMany($numbers, $message);
                                         if ($response) {
                                             redirect("Message Sent", "index.php?page=sms_group");
                                         }
@@ -78,7 +80,7 @@
                                 <div class="row">
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-5">
-                                        <div class="form-group">	
+                                        <div class="form-group">
                                             <label for="select-role">Group</label>
                                             <select id="select-input" name="group" class="form-control">
                                                 <option value="vht">VHT</option>
@@ -113,7 +115,7 @@
 
 
 
-                </div> <!-- /#content-container -->			
+                </div> <!-- /#content-container -->
 
             </div> <!-- #content -->
 
