@@ -7,3 +7,5 @@
 /send-sms-creds/data/*
 /vendor/*
 vendor/
+core/.env
+/core/.env
