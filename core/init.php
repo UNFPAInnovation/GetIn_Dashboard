@@ -2,9 +2,9 @@
 require_once('vendor/autoload.php');
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
-//error_reporting(0);
+error_reporting(0);
 
-//session_start();
+session_start();
 $GLOBALS['config'] = array(
 
     'mysql' => array(

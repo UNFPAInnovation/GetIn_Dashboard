@@ -1,8 +1,8 @@
 <?php
 $user = new User();
 $logged = TRUE;
-//if ($user->isLoggedIn()) {
-  if ($logged) {
+if ($user->isLoggedIn()) {
+  //if ($logged) {
     ?>
 
 <header class="hidden-print" id="header">
