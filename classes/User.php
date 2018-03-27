@@ -2,7 +2,7 @@
 class User
 {
     private $_db,$_data,$_sessionId, $_isLoggedIn;
-    
+
     public function __construct($user=NULL) {
         $this->_db=DB::getInstance();
         $this->_sessionId=  Config::get('session/session_name');
@@ -28,6 +28,7 @@ class User
         if($user){
             $field=(is_numeric($user)) ? 'id':'username';
             $data=  $this->_db->get('auth_user',array($field,'=',$user));
+            //print_r($data->count()); exit();
             if($data->count())
             {
                 $this->_data=$data->first();
@@ -37,7 +38,6 @@ class User
     }
     public function  login($username=null,$password=null,$encoded_password=null){
         $user=  $this->find($username);
-        //print_r($this->_data);
         if($user)
         {
             if(Hash::make($password,$encoded_password)){
@@ -46,7 +46,6 @@ class User
                 return TRUE;
             }
         }
-        
         return FALSE;
     }
     public function logout()
@@ -61,6 +60,6 @@ class User
     public function isLoggedIn(){
         return $this->_isLoggedIn;
     }
-    
+
 }
 ?>

@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <?php include 'includes/header.php'; ?>	
+        <?php include 'includes/header.php'; ?>
     </head>
 
     <body>
@@ -25,14 +25,14 @@
 
 
 
-            <div id="content">		
+            <div id="content">
 
                 <div id="content-header">
                     <h1>Instant Messaging</h1>
-                </div> <!-- #content-header -->	
+                </div> <!-- #content-header -->
 
 
-                <div id="content-container">	
+                <div id="content-container">
                     <div class="portlet">
 
                         <div class="portlet-header">
@@ -47,6 +47,7 @@
                         <div class="portlet-content">
                             <form action="#" method="post">
                                 <?php
+
                                 if (Input::exists()) {
                                     // echo Input::get('username');
                                     $validate = new Validate();
@@ -63,10 +64,15 @@
                                         //login user
                                         $phone = Input::get('patient_group');
                                         $message = Input::get('message');
-                                        $response=send_sms($phone, $message);
+                                        $sms = new \GetINSMS(); //init sms class
+                                        $response = $sms->sendToNumber($phone, $message);
                                         if($response){
-                                            redirect("Message Sent", "index.php?page=sms_number");
+                                          $feedback = "Message sent successfully!";
+                                        } else {
+                                          $feedback = "Failed to send message. Try again";
                                         }
+                                        //have to redirect anyway
+                                        redirect($feedback, "index.php?page=sms_number");
                                     }
                                 }
                                 ?>
@@ -80,7 +86,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="message">Message (130 Characters Only)</label>
-                                            <textarea type="text" id="username-input" name="message" class="form-control">
+                                            <textarea type="text" id="username-input" name="message" class="form-control" style="text-align: left !important;">
                                                 <?php echo escape(Input::get('message')); ?>
                                             </textarea>
                                         </div>
@@ -103,7 +109,7 @@
 
 
 
-                </div> <!-- /#content-container -->			
+                </div> <!-- /#content-container -->
 
             </div> <!-- #content -->
 
