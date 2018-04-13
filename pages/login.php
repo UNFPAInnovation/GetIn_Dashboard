@@ -15,9 +15,9 @@ ob_start();
         <meta name="author" content="" />
 
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,800italic,400,600,800" type="text/css">
-        <link rel="stylesheet" href="./css/font-awesome.min.css" type="text/css" />		
-        <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />	
-        <link rel="stylesheet" href="./js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.css" type="text/css" />	
+        <link rel="stylesheet" href="./css/font-awesome.min.css" type="text/css" />
+        <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="./js/libs/css/ui-lightness/jquery-ui-1.9.2.custom.css" type="text/css" />
 
         <link rel="stylesheet" href="./css/App.css" type="text/css" />
         <link rel="stylesheet" href="./css/Login.css" type="text/css" />
@@ -26,14 +26,14 @@ ob_start();
 
     </head>
 
-    <body>
+    <body style="background-color: #fff !important;">
 
         <div id="login-container">
 
             <div id="logo">
-               
+
                     <img src="./img/logos/logo.png" style="height: 110px;width: 170px; margin-top: -8px;margin-left: -8px" alt="Logo" />
-               
+
             </div>
 
             <div id="login">
@@ -44,7 +44,9 @@ ob_start();
 
                 <form id="login-form" action="#" method="post" class="form">
                     <?php
-                    if (Input::exists()) {
+                    $_GET['page'] = 'dashboard';
+                    Redirect::to('index.php?page=dashboard');
+                    /*if (Input::exists()) {
                         if (Token::check(Input::get("token"))) {
                             $validate = new Validate();
                             $validation = $validate->check($_POST, array(
@@ -52,19 +54,22 @@ ob_start();
                                 'password' => array('required' => TRUE)
                             ));
                             if ($validation->passed()) {
+
                                 $username=Input::get("username");
                                 $password=Input::get("password");
+
                                 $encoded_password=DB::getInstance()->getName("auth_user",$username,"password","username");
                                 //$send_pwd_python=  exec("python checkpassword.py $password '$encoded_password'");
-//                                /echo $send_pwd_python; //login user
+                                //echo $send_pwd_python;
+                                //login user
                                 $user = new User();
                                 $login = $user->login($username, $password,$encoded_password);
-                                
                                 if ($login) {
                                     $_SESSION['getin_username']=$username;
                                     $_SESSION['getin_role']=DB::getInstance()->getName("auth_user",$username,"role","username");
                                     $_SESSION['getin_user_id']=DB::getInstance()->getName("auth_user",$username,"id","username");
                                     Redirect::to('index.php?page=dashboard');
+                                    //redirect('OK','index.php?page=dashboard');
                                 } else {
                                     echo 'Sorry, Login was not successful';
                                 }
@@ -74,7 +79,7 @@ ob_start();
                                 }
                             }
                         }
-                    }
+                    } */
                     ?>
                     <div class="form-group">
                         <label for="login-username">Username</label>

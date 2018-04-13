@@ -1,0 +1,15 @@
+{
+    "name": "slybard/unfpa-getin-dashboard",
+    "description": "UNFPA Uganda GetIN dashboard",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "slybard",
+            "email": "joshoke2003@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^2.4"
+    }
+}

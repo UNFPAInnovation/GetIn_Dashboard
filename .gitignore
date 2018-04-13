@@ -1,3 +1,11 @@
 /nbproject/private/
 /getin-sms/vendor/
 /getin-sms/.env
+/send-sms-creds/vendor/
+/send-sms-creds/.env
+/send-sms-creds/data/users.csv
+/send-sms-creds/data/*
+/vendor/*
+vendor/
+core/.env
+/core/.env
