@@ -12,7 +12,7 @@
         </li>
 
         <?php
-        if ($_SESSION['getin_role'] == 'Administrator'):
+        if ($_SESSION['getin_role'] == 'dho' || $_SESSION['getin_role'] == 'admin'):
             ?>
             <li class="dropdown">
                 <a href="javascript:;">
