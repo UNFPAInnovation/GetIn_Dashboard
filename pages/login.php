@@ -44,9 +44,9 @@ ob_start();
 
                 <form id="login-form" action="#" method="post" class="form">
                     <?php
-                    $_GET['page'] = 'dashboard';
-                    Redirect::to('index.php?page=dashboard');
-                    /*if (Input::exists()) {
+                    //$_GET['page'] = 'dashboard';
+                    //Redirect::to('index.php?page=dashboard');
+                    if (Input::exists()) {
                         if (Token::check(Input::get("token"))) {
                             $validate = new Validate();
                             $validation = $validate->check($_POST, array(
@@ -66,8 +66,8 @@ ob_start();
                                 $login = $user->login($username, $password,$encoded_password);
                                 if ($login) {
                                     $_SESSION['getin_username']=$username;
-                                    $_SESSION['getin_role']=DB::getInstance()->getName("auth_user",$username,"role","username");
                                     $_SESSION['getin_user_id']=DB::getInstance()->getName("auth_user",$username,"id","username");
+                                    $_SESSION['getin_role']=DB::getInstance()->getName("core_observer",$_SESSION['getin_user_id'],"role","user_id");
                                     Redirect::to('index.php?page=dashboard');
                                     //redirect('OK','index.php?page=dashboard');
                                 } else {
@@ -79,7 +79,7 @@ ob_start();
                                 }
                             }
                         }
-                    } */
+                    }
                     ?>
                     <div class="form-group">
                         <label for="login-username">Username</label>
