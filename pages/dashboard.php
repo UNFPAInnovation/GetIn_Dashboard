@@ -163,6 +163,7 @@
                                                 endif;
                                             }
                                             ?>
+                                            
                                             <td width="30%">
                                                 (15-19) Years:     <br/><p></p>
                                                 (20-24) Years:     <br/><p></p>
@@ -179,7 +180,35 @@
                                                 <a href="index.php?page=demographics&grp=3"><label class="label label-success">Details</label></a><br/><p></p>
                                             </td>
                                         </tr>
-
+                                        <tr>
+                                            
+                                            <th data-sortable="true" width="40%">Girls Enrolled in VOucher Programs</th>
+                                            
+                                            <td width="30%">
+                                                Reproductive Health Voucher Programme:     <br/><p></p>
+                                                Family Planning (Marie Stoppes):     <br/><p></p>
+                                                Social Marketing Activity (UHMG - Uganda Health Marketing Group)     <br/><p></p>     <br/><p></p>
+                                                Young People and Key Populations (Marie Stoppes):    
+                                            </td>
+                                            <?php
+                                                $voucher1 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'HBBH%'");
+                                                $voucher2 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'FPUG%'");
+                                                $voucher3 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'SMA%'");
+                                                $voucher4 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'LKUP%'");
+                                            ?>
+                                            <td width="30%">
+                                                <strong><?php echo $voucher1; ?> Girls  </strong>  <br/><p></p>
+                                                <strong><?php echo $voucher2; ?> Girls </strong>  <br/><p></p>
+                                                <strong><?php echo $voucher3; ?> Girls </strong>  <br/><p></p>
+                                                <strong><?php echo $voucher4; ?> Girls </strong>  <br/><p></p>
+                                            </td>
+                                            <td>
+                                                <a href="index.php?page=demographics&vgrp=1"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=demographics&vgrp=2"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=demographics&vgrp=3"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=demographics&vgrp=4"><label class="label label-success">Details</label></a><br/><p></p>
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <th data-direction="asc" data-filterable="true" data-sortable="true">Mapped Girls</th>
                                             <td>Mapped Girl </td>
