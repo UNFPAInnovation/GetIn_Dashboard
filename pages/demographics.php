@@ -64,9 +64,56 @@
                                 </div> <!-- /.portlet-header -->
 
                                 <div class="portlet-content">						
-
+                                        <?php
+                                            $get_id = Input::get("grp");
+                                            $select_voucher = Input::get("vgrp");
+                                            if(!isset($select_voucher)){
+                                                $select_voucher = "";
+                                            }
+                                            $voucher_query = "";
+                                            $select = "";
+                                            $select1 = $_POST['vgrp'];
+                                            switch ($select_voucher) {
+                                                case '-1':
+                                                  $voucher_query = " WHERE system_id != ''";
+                                                  break;
+                                                case '0':
+                                                  $voucher_query = "";
+                                                  break;
+                                                case '1':
+                                                  $voucher_query = " WHERE system_id LIKE 'HBBH%'";
+                                                  break;
+                                                case '2':
+                                                  $voucher_query = " WHERE system_id  LIKE 'FPUG%'";
+                                                  break;
+                                                case '3':
+                                                  $voucher_query = " WHERE system_id LIKE 'SMA%'";
+                                                  break;
+                                                case '4':
+                                                  $voucher_query = " WHERE system_id LIKE 'LKUP%'";
+                                                  break;
+                                              }
+                                          ?>
+                                          <form action="" method="post">
+                                        <label for="id_grp">Age group</label>
+                                        <select name="grp" id="id_grp" >
+                                            <option value="0">All</option>
+                                            <option value="1">15-19 years old</option>
+                                            <option value="2">20-24 years old</option>
+                                            <option value="3">25-30 years old</option>
+                                        </select>
+                                        <label for="id_grp_voucher">Voucher Program</label>
+                                        <select name="grp_voucher" id="id_grp_voucher">
+                                            <option value="-1">No voucher program</option>
+                                            <option value="0">All voucher programs</option>
+                                            <option value="1">Reproductive Health Voucher Programme (Marie Stoppes Int)</option>
+                                            <option value="2">Family Planning (Marie Stoppes)</option>
+                                            <option value="3">Social Marketing Activity (UHMG - Uganda Health Marketing Group)</option>
+                                            <option value="4">Young People and Key Populations (Marie Stoppes)</option>
+                                        </select>
+                                        <input type="submit" name="submit" value="Go"/>
+                                    </form>
                                     <div class="table-responsive">
-
                                         <table 
                                             class="table table-striped table-bordered table-hover table-highlight table-checkable" 
                                             data-provide="datatable" 
@@ -86,14 +133,16 @@
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">LMD</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Marital Status</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Education Level</th>
+                                                    <th data-filterable="true" class="hidden-xs hidden-sm">Voucher ID</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">EDD</th>
                                                     <th data-filterable="true" class="hidden-xs hidden-sm">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $get_id = Input::get("grp");
-                                                $patient_list = DB::getInstance()->query("SELECT * FROM core_patients");
+                                                $age_query = isset($get_id)? $get_id:"";
+                                                $filter_id = true;
+                                                $patient_list = DB::getInstance()->query("SELECT * FROM core_patients" . $voucher_query . "");
                                                 foreach ($patient_list->results() as $patient_list) {
                                                     $age = calcAge($patient_list->dob, date('Y-m-d'));
                                                     if ($get_id == 1) {
@@ -108,6 +157,7 @@
                                                                 <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
                                                                 <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
                                                                 <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->system_id; ?></td>
                                                                 <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
                                                                 <td><form action="index.php?page=demograhics_details" method="post">
                                                                     <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
@@ -128,6 +178,7 @@
                                                                 <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
                                                                 <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
                                                                 <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->system_id; ?></td>
                                                                 <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
                                                                 <td><form action="index.php?page=demograhics_details" method="post">
                                                                     <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
@@ -148,6 +199,7 @@
                                                                 <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
                                                                 <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
                                                                 <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->system_id; ?></td>
                                                                 <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
                                                                 <td>
                                                                     <form action="index.php?page=demograhics_details" method="post">
@@ -168,7 +220,8 @@
                                                             <td class="hidden-xs hidden-sm"><?php echo $patient_list->location; ?></td>
                                                             <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
                                                             <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
-                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
+                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
+                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->system_id; ?></td>
                                                             <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
                                                             <td><form action="index.php?page=demograhics_details" method="post">
                                                                     <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
