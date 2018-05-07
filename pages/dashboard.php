@@ -145,7 +145,7 @@
                                     >
                                     <thead>
                                         <tr>
-                                            <th data-sortable="true" width="40%">AGE Groups</th>
+                                            <th data-sortable="true" width="40%" style="vertical-align:text-top">AGE Groups</th>
                                             <?php
                                             $group1 = 0;
                                             $group2 = 0;
@@ -182,7 +182,7 @@
                                         </tr>
                                         <tr>
                                             
-                                            <th data-sortable="true" width="40%">Girls Enrolled in VOucher Programs</th>
+                                            <th data-sortable="true" width="40%" style="vertical-align:text-top">Girls Enrolled in VOucher Programs</th>
                                             
                                             <td width="30%">
                                                 Reproductive Health Voucher Programme:     <br/><p></p>
@@ -210,13 +210,13 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th data-direction="asc" data-filterable="true" data-sortable="true">Mapped Girls</th>
+                                            <th data-direction="asc" data-filterable="true" data-sortable="true style="vetical-align:text-top"">Mapped Girls</th>
                                             <td>Mapped Girl </td>
                                             <td><strong><?php echo $mother_counter; ?></strong></td>
                                             <td> <a href="index.php?page=demographics"><label class="label label-success">Details</label></a></td>
                                         </tr>
                                         <tr>
-                                            <th data-sortable="true" width="40%">Personnel</th>
+                                            <th data-sortable="true" width="40%" style="vertical-align:text-top">Personnel</th>
                                             <td width="30%">
                                                 VHT:           <br/><p></p>
                                                 Mid Wives:     <br/><p></p>
@@ -254,7 +254,7 @@
                                     >
                                     <thead>
                                         <tr>
-                                            <th data-sortable="true" width="60%">Visits</th>
+                                            <th data-sortable="true" width="60%" style="vertical-align:text-top">Visits</th>
                                             <td width="25%">Scheduled Visits   <br/><p></p>
                                                 Visited Today:    <br/><p></p>
                                                 Missed Visit:    <br/><p></p>
@@ -270,7 +270,7 @@
                                                 </strong>
                                             </td>
                                             <td>
-                                                <a href="index.php?page=scheduled_appointments"><label class="label label-success">Details</label></a><br/><p></p>
+                                                <a href="index.php?page=scheduled_appointments" style="vertical-align:text-top"><label class="label label-success">Details</label></a><br/><p></p>
                                                 <a href="index.php?page=attended_today"><label class="label label-success">Details</label></a><br/><p></p>
                                                 <a href="index.php?page=missed_attendance"><label class="label label-success">Details</label></a><br/><p></p>
                                                 <a href="index.php?page=expected_visits"><label class="label label-success">Details</label></a><br/><p></p>
@@ -308,7 +308,7 @@
                                                 }
                                             }
                                             ?>
-                                            <th data-sortable="true" width="40%">User Groups</th>
+                                            <th data-sortable="true" width="40%" style="vertical-align:text-top">User Groups</th>
                                             <td width="25%">MTN:    <br/><p></p>
                                                 Airtel:     <br/><p></p>
                                                 Pending:     <br/><p></p>
@@ -324,7 +324,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th data-sortable="true" width="60%">Composed Broad Cast Messages</th>
+                                            <th data-sortable="true" width="60%"  style="vertical-align:text-top">Composed Broad Cast Messages</th>
                                             <td width="25%"> 
                                                 Messages
                                             </td>
