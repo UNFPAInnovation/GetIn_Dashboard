@@ -291,25 +291,26 @@
                                             foreach ($cug->results() as $cug) {
                                                 $phone1 = str_split($cug->pnumber);
                                                 $phone2 = str_split($cug->holder_pnumber);
+                                                if(count($phone1) >= 3 && count($phone2) >= 3){
+                                                    $pattern1 = $phone1[0] . "" . $phone1[1] . "" . $phone1[2];
+                                                    $pattern2 = $phone2[0] . "" . $phone2[1] . "" . $phone2[2];
+                                                    if ($pattern1 == '078' || $pattern1 == '077' || $pattern1 == '075' || $pattern1 == '070') {
 
-                                                $pattern1 = $phone1[0] . "" . $phone1[1] . "" . $phone1[2];
-                                                $pattern2 = $phone2[0] . "" . $phone2[1] . "" . $phone2[2];
-                                                if ($pattern1 == '078' || $pattern1 == '077' || $pattern1 == '075' || $pattern1 == '070') {
+                                                        if ($pattern1 == '078' || $pattern1 == '077'):
+                                                            $mtn++;
+                                                        elseif ($pattern1 == '075' || $pattern1 == '070'):
+                                                            $airtel++;
+                                                        endif;
 
-                                                    if ($pattern1 == '078' || $pattern1 == '077'):
-                                                        $mtn++;
-                                                    elseif ($pattern1 == '075' || $pattern1 == '070'):
-                                                        $airtel++;
-                                                    endif;
-
-
-                                                    if ($pattern2 == '075' || $pattern2 == '070'):
-                                                        $airtel++;
-                                                    elseif ($pattern2 == '078' || $pattern2 == '077'):
-                                                        $mtn++;
-                                                    endif;
-                                                }
-                                                else {
+                                                        if ($pattern2 == '075' || $pattern2 == '070'):
+                                                            $airtel++;
+                                                        elseif ($pattern2 == '078' || $pattern2 == '077'):
+                                                            $mtn++;
+                                                        endif;
+                                                    } else {
+                                                        $pending++;
+                                                    }
+                                                } else {
                                                     $pending++;
                                                 }
                                             }
