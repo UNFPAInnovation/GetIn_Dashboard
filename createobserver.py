@@ -7,10 +7,12 @@
 #
 # Arguments:
 #    user_id The row id of the user record
-#    role  The "role" of the observer-must be "vht", "midwife", "admin", "none"
+#    role  The "role" of the observer-must be "vht", "midwife", "admin", "dho", "none"
 #    phone_number A valid phone number
+#    district The row id of the district or "none"
 #    subcounty Long value representing the Subcounty row id
 #    parishes Comma separated list of valid long values-i.e. "1L,2L,3L" or "1,2,3"
+#    villages Comma separated list of valid long values-i.e. "1L,2L,3L" or "1,2,3"
 # Returns: The row id of the new record as a long value-i.e. 2L
 #          -1L if the creation was unsuccessful
 import sys, os
@@ -30,9 +32,11 @@ try:
     observer = Observer()
     observer.user = user
     observer.role = sys.argv[2]    
-    observer.phone_number = sys.argv[3]
-    if(sys.argv[4]):
-        observer.subcounty = Subcounty.objects.get(id=long(sys.argv[4]))
+    district = sys.argv[3]
+    observer.district = District.objects.get(id=district)
+    observer.phone_number = sys.argv[4]
+    if(sys.argv[5]):
+        observer.subcounty = Subcounty.objects.get(id=long(sys.argv[5]))
     observer.save()
     # Set parishes m2m field
     if observer.role == 'midwife':
@@ -42,9 +46,11 @@ try:
         parish_ids = [long(x) for x in sys.argv[5].split(",")]
         observer.parishes = Parish.objects.filter(id__in=parish_ids)
         observer.save()
+    elif observer.role == 'dho':
+        pass
     # Set m2m field locations based on parishes
-    if observer.role == 'midwife' or observer.role == 'vht':
-        parishes = [x.id for x in observer.parishes.all() ]
+    if observer.role == 'midwife' or observer.role == 'vht' or observer.role == 'dho':
+        parishes = [x.id for x in observer.parishes.filter(parish__subcounty__district=district) ]
         observer.locations = Location.objects.filter(parish__id__in=parishes)
         observer.save()
     result = Observer.objects.get(user__id=user.id).id
