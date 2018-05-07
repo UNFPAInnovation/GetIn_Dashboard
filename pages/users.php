@@ -115,9 +115,16 @@
                                              */
                                             $create_observer_python=  exec("python createobserver.py '$user_id' '$role' '$phone_number' '$district' '$subcounty' '$parish_ids'");
                                             if(is_numeric($create_observer_python)){
-                                            echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
-                                            // TODO send SMS with credentials
-                                            redirect("User Registered Successfully", "index.php?page=users");
+                                                echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
+                                                // TODO send SMS with credentials
+                                                $message = "Welcome to GetIN! Your login credentials are:\n".$username"."\n".$password;
+                                                $sms = new \GetINSMS(); //init sms class
+                                                $response = $sms->sendToNumber($phone, $message);
+                                                if($response){
+                                                    redirect("User Registered Successfully. Credentials sent!", "index.php?page=users");
+                                                } else {
+                                                    redirect("User Registered Successfully. Unable to send credentials!", "index.php?page=users");
+                                                }
                                             }else{
                                                
                                             }
