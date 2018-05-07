@@ -47,7 +47,7 @@
 
                         <div class="portlet-content">
 
-                            <form action="#" method="post">
+                            <form action="#" method="post" name="userform">
                                 <?php
                                //echo "This is the UUID:".$uuid;
                                 if (Input::exists()) {
@@ -87,7 +87,8 @@
                                         $cpassword = Input::get('cpassword');
                                         $email = Input::get('email');
                                         $role = Input::get('role');
-                                        $subcounty = Input::get('subcounty');
+                                        $district = Input::get('district_id');
+                                        $subcounty = Input::get('subcounty_id');
                                         $parish_id = Input::get('parish_id');
                                         $parish_ids=  implode(",", $parish_id);
                                         $phone_number = Input::get('phone_number');
@@ -112,9 +113,10 @@
                                             /*
                                              * create observer from python
                                              */
-                                            $create_observer_python=  exec("python createobserver.py '$user_id' '$role' '$phone_number' '$subcounty' '$parish_ids'");
+                                            $create_observer_python=  exec("python createobserver.py '$user_id' '$role' '$phone_number' '$district' '$subcounty' '$parish_ids'");
                                             if(is_numeric($create_observer_python)){
                                             echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
+                                            // TODO send SMS with credentials
                                             redirect("User Registered Successfully", "index.php?page=users");
                                             }else{
                                                
@@ -152,6 +154,7 @@
                                             <label for="patient-group">Parish</label>
                                             <select multiple="multiple" type="text" name="parish_id[]" class="form-control">
                                                 <?php
+                                                // TODO Only want parishes where parish -> subcounty -> district = session district
                                                 echo DB::getInstance()->dropDowns('core_parish','id','name');
                                                 ?>
                                             </select>
@@ -164,7 +167,7 @@
                                             <label for="select-role">Role</label>
                                             <select id="select-input" name="role" class="form-control">
                                                 <option value="">----SELECT----</option>
-                                                <option value="vht">VHT</option>
+                                                <option value="vht">CHEW</option>
                                                 <option value="midwife">MidWife</option>
                                                 <option value="dho">DHO</option>
                                                 <option value="admin">Admin</option>
@@ -176,18 +179,43 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="confirm-password">Confirm Password</label>
-                                            <input type="password" name="cpassword" id="username-input" class="form-control">
+                                            <input type="password" name="cpassword" id="cpassword-input" class="form-control">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="phone-number">Phone</label>
                                             <input type="number" name="phone_number" placeholder="eg: 2567XX123456" id="phone-input" class="form-control">
                                         </div>
+                                        <div class="form-group" id="district_select_div" style="display:none">
+                                            <label for="district">District</label>
+                                            <select type="text" name="district_id" id="id_district" class="form-control"">
+                                                <?php
+                                                    $selected_district = Input::get('district_id');
+                                                    if(isset($selected_district) && !(empty($selected_district))){
+                                                        echo DB::getInstance()->dropDownsSelected('core_district','id','name', $selected_district);
+                                                    }else{
+                                                        $selected_district = $_SESSION['getin_district'];
+                                                        echo("<!-- selected_district=".$selected_district."-->");
+                                                        if(isset($selected_district) && !(empty($selected_district))){
+                                                            echo DB::getInstance()->dropDownsSelected('core_district','id','name', $selected_district);
+                                                        }else{
+                                                             echo DB::getInstance()->dropDowns('core_district','id','name');
+                                                        }
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
                                         <div class="form-group" id="subcounty_select_div" style="display:none;">
                                             <label for="patient-group">Subcounty</label>
-                                            <select type="text" name="subcounty" class="form-control">
+                                            <select type="text" name="subcounty_id" class="form-control">
                                                 <?php
-                                                echo DB::getInstance()->dropDowns('core_subcounty','id','name');
+                                                    $selected_subcounty = Input::get('subcounty_id');
+                                                    if(isset($selected_district) && !(empty($selected_district))){
+                                                      $where = array('district_id','=', $selected_district) ;
+                                                      echo DB::getInstance()->dropDownWithWhere('core_subcounty','id','name', $where);
+                                                    }else{
+                                                      echo DB::getInstance()->dropDowns('core_subcounty','id','name');
+                                                    }
                                                 ?>
                                             </select>
                                         </div>
@@ -195,16 +223,25 @@
                                             document.getElementById('select-input').addEventListener('change', function () {
                                                 var subcounties = document.getElementById('subcounty_select_div');
                                                 var parishes = document.getElementById('parish_select_div');
+                                                var district = document.getElementById('district_select_div');
                                                 switch(this.value){
                                                     case "vht":
+                                                        district.display = 'none';
                                                         parishes.style.display = 'block';
                                                         subcounties.style.display = 'none';
                                                         break;
                                                     case "midwife":
+                                                        district.display = 'none';
                                                         parishes.style.display = 'none';
                                                         subcounties.style.display = 'block';
                                                         break;
+                                                    case "dho":
+                                                        district.display = 'block';
+                                                        parishes.style.display = 'none';
+                                                        subcounties.style.display = 'none';
+                                                        break;
                                                     default:
+                                                        district.display = 'none';
                                                         parishes.style.display = 'none';
                                                         subcounties.style.display = 'none';
                                                         break;
