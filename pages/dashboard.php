@@ -282,6 +282,8 @@
                                         </tr>
                                         <tr>
                                             <?php
+                                            // TODO filter by session district
+                                            $district = $_SESSION['getin_district'];
                                             $cug = DB::getInstance()->query("SELECT * FROM core_patients");
                                             $mtn = 0;
                                             $airtel = 0;
