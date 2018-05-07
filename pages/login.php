@@ -67,8 +67,9 @@ ob_start();
                                 if ($login) {
                                     $_SESSION['getin_username']=$username;
                                     $_SESSION['getin_user_id']=DB::getInstance()->getName("auth_user",$username,"id","username");
+                                    $_SESSION['getin_observer_id']=DB::getInstance()->getName("core_observer",$_SESSION['getin_user_id'],"id","user_id");
                                     $_SESSION['getin_role']=DB::getInstance()->getName("core_observer",$_SESSION['getin_user_id'],"role","user_id");
-                                    $_SESSION['getin_district']=DB::getInstance()->getName("core_observer",$_SESSION['getin_user_id'],"district","district");
+                                    $_SESSION['getin_district']=DB::getInstance()->getName("core_observer",$_SESSION['getin_user_id'],"district_id","user_id");
                                     Redirect::to('index.php?page=dashboard');
                                     //redirect('OK','index.php?page=dashboard');
                                 } else {
