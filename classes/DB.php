@@ -44,7 +44,6 @@ class DB {
                 $this->_result = $this->_query->fetchAll(PDO::FETCH_OBJ);
                 $this->_count = $this->_query->rowCount();
             } else {
-                error_log($this->_query->errorInfo());
                 print_r($this->_query->errorInfo());
                 $this->_error = true;
             }
@@ -134,7 +133,12 @@ class DB {
         return $this->_count;
     }
     
-    // populating drop downs
+    /*  
+        Populates a set of option elements within a select. 
+        $tablename = table to query
+        $id = column to use for the value attribute
+        $name = column to use for the option
+    */
     public function dropDowns($tableName,$id,$name){
         $this->_options="";
         $this->_dropQuery="";
@@ -142,13 +146,20 @@ class DB {
         $this->_options.="<option value=''>----SELECT----</option>";
         if($this->_dropQuery->count()){
             foreach ($this->_dropQuery->results() as $result){
-            $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
+                $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
             }
         }
         return $this->_options;
     }
     
-    // populating drop downs with default selected
+    /*  
+        Populates a set of option elements within a select and specifies
+        which option to set as selected
+        $tablename = table to query
+        $id = column to use for the value attribute
+        $name = column to use for the option
+        $selected = option to set with selected attribute equal to 'selected'
+    */
     public function dropDownsSelected($tableName,$id,$name,$selected){
         $this->_options="";
         $this->_dropQuery="";
@@ -157,15 +168,23 @@ class DB {
         if($this->_dropQuery->count()){
             foreach ($this->_dropQuery->results() as $result){
             if((isset($selected) && !(empty($selected))) && $result->{$id} == $selected){
-              $this->_options.="<option value='".$result->{$id}."' selected='selected'>".$result->{$name}."</option>";
+                $this->_options.="<option value='".$result->{$id}."' selected='selected'>".$result->{$name}."</option>";
             } else {
-              $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
+                $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
             }
           }
         }
         return $this->_options;
     }
-    // populate dropdown with query tht has a WHERE clause
+
+    /*  
+        Populates a set of option elements within a select where the query includes a WHERE
+        clause
+        $tablename = table to query
+        $id = column to use for the value attribute
+        $name = column to use for the option
+        $where = array as ['column', 'operator', 'value']
+    */
     public function dropDownWithWhere($tableName,$id,$name, $where){
         $this->_options="";
         $this->_dropQuery="";
@@ -173,12 +192,38 @@ class DB {
         $this->_options.="<option value=''>----SELECT----</option>";
         if($this->_dropQuery->count()){
             foreach ($this->_dropQuery->results() as $result){
-            $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
+                $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
             }
         }
         return $this->_options;
     }
     
+    /*  
+        Populates a set of option elements within a select where the query includes a WHERE
+        clause and specifies which option to set as selected='selected'
+        $tablename = table to query
+        $id = column to use for the value attribute
+        $name = column to use for the option
+        $where = array as ['column', 'operator', 'value']
+        $selected = option to set with selected attribute equal to 'selected'
+    */
+    public function dropDownWithWhereAndSelected($tableName,$id,$name, $where, $selected){
+        $this->_options="";
+        $this->_dropQuery="";
+        $this->_dropQuery= $this->query("SELECT * FROM $tableName ORDER BY $name ASC", $where);
+        $this->_options.="<option value=''>----SELECT----</option>";
+        if($this->_dropQuery->count()){
+            foreach ($this->_dropQuery->results() as $result){
+              if((isset($selected) && !(empty($selected))) && $result->{$id} == $selected){
+                $this->_options.="<option value='".$result->{$id}."' selected='selected'>".$result->{$name}."</option>";
+              } else {
+                $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
+              }
+            }
+        }
+        return $this->_options;
+    }
+
     //get field name
     public function getName($table,$id,$return,$idColumn)
     {
