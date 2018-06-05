@@ -117,7 +117,7 @@
                                             if(is_numeric($create_observer_python)){
                                                 echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
                                                 // TODO send SMS with credentials
-                                                $message = "Welcome to GetIN! Your login credentials are:\n".$username"."\n".$password;
+                                                $message = "Welcome to GetIN! Your login credentials are:\n".$username."\n".$password;
                                                 $sms = new \GetINSMS(); //init sms class
                                                 $response = $sms->sendToNumber($phone, $message);
                                                 if($response){
@@ -158,8 +158,8 @@
                                             <input type="text" id="username-input" name="username" value="<?php echo escape(Input::get('username')); ?>" class="form-control">
                                         </div>
                                         <div class="form-group" id="parish_select_div" style="display:none;">
-                                            <label for="patient-group">Parish</label>
-                                            <select multiple="multiple" type="text" name="parish_id[]" class="form-control">
+                                            <label for="parish">Parish</label>
+                                            <select multiple="multiple" type="text" name="parish" class="form-control">
                                                 <?php
                                                 // TODO Only want parishes where parish -> subcounty -> district = session district
                                                 echo DB::getInstance()->dropDowns('core_parish','id','name');
@@ -226,31 +226,45 @@
                                                 ?>
                                             </select>
                                         </div>
+                                        <div class="form-group" id="village_select_div" style="display:none;">
+                                            <label for="parish">Village</label>
+                                            <select multiple="multiple" type="text" name="village" class="form-control">
+                                                <?php
+                                                // TODO Only want parishes where parish -> subcounty -> district = session district
+                                                echo DB::getInstance()->dropDowns('core_parish','id','name');
+                                                ?>
+                                            </select>
+                                        </div>
                                         <script type="text/javascript">
                                             document.getElementById('select-input').addEventListener('change', function () {
                                                 var subcounties = document.getElementById('subcounty_select_div');
                                                 var parishes = document.getElementById('parish_select_div');
                                                 var district = document.getElementById('district_select_div');
+                                                var village = document.getElementById('village_select_div');
                                                 switch(this.value){
                                                     case "vht":
-                                                        district.display = 'none';
-                                                        parishes.style.display = 'block';
+                                                        district.style.display = 'none';
+                                                        parishes.style.display = 'none';
                                                         subcounties.style.display = 'none';
+                                                        village.style.display = 'block';
                                                         break;
                                                     case "midwife":
-                                                        district.display = 'none';
+                                                        district.style.display = 'none';
                                                         parishes.style.display = 'none';
                                                         subcounties.style.display = 'block';
+                                                        village.style.display = 'none';
                                                         break;
                                                     case "dho":
-                                                        district.display = 'block';
+                                                        district.style.display = 'block';
                                                         parishes.style.display = 'none';
                                                         subcounties.style.display = 'none';
+                                                        village.style.display = 'none';
                                                         break;
                                                     default:
-                                                        district.display = 'none';
+                                                        district.style.display = 'none';
                                                         parishes.style.display = 'none';
                                                         subcounties.style.display = 'none';
+                                                        village.style.display = 'none';
                                                         break;
                                                 }
                                             });
