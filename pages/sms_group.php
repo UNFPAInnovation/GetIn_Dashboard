@@ -83,7 +83,7 @@
                                         <div class="form-group">
                                             <label for="select-role">Group</label>
                                             <select id="select-input" name="group" class="form-control">
-                                                <option value="vht">VHT</option>
+                                                <option value="vht">CHEW</option>
                                                 <option value="midwife">MidWife</option>
                                                 <option value="1">1st Trimester</option>
                                                 <option value="2">2nd Trimester</option>
