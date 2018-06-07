@@ -3,6 +3,12 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<?php
+require 'vendor/autoload.php';
+
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
+?>
     <head>
         <?php include 'includes/header.php'; ?>	
     </head>
@@ -16,7 +22,7 @@
             <div id="sidebar-wrapper" class="collapse sidebar-collapse">
 
 
-
+        
                 <?php
                 include 'includes/navigation.php';
                 ?>
@@ -51,29 +57,41 @@
                                     // echo Input::get('username');
                                     $validate = new Validate();
                                     $validation = $validate->check($_POST, array(
+                                        'tag' => array(
+                                            'required' => TRUE,
+                                            'min' => 2
+                                        ),
                                         'message' => array(
                                             'required' => TRUE,
                                             'min' => 2
                                         )
                                     ));
                                     if ($validation->passed()) {
+                                        $uuid =  Uuid::uuid4()->toString();
+                                        $now = date("Y-m-d h:i:s");
                                         $message = Input::get('message');
+                                        $tag = Input::get('tag');
                                         $sql = "select * from messages";
-                                        $where = 'Message_Id';
+                                        ///$where = 'Message_Id';;
+                                        $where = 'tag';
                                         if (DB::getInstance()->checkRows($sql) > 0):
-                                            $insert_message = DB::getInstance()->update('messages', 1, array(
-                                                'Message' => $message), $where);
+                                            $insert_message = DB::getInstance()->update('core_smsmessage', 1, array(
+                                                'text' => $tag, 'modified' => $now), $where);
                                             $message = "Message Updated";
                                         else:
-                                            $insert_message = DB::getInstance()->insert('messages', array(
-                                                'Message' => $message
+                                            $insert_message = DB::getInstance()->insert('core_smsmessage', array(
+                                                'uuid' => $uuid,
+                                                'text' => $message,
+                                                'tag' => $tag,
+                                                'created' => $now,
+                                                'modified' => $now
                                             ));
                                             $message = "Message Saved";
                                         endif;
 
                                         if ($insert_message) {
                                             echo "<h5 align='center' ><strong><font color='green' size='2px'>" . $message . "</font></strong></h5>";
-                                            header("refresh:2;url=index.php?page=messages");
+                                            //header("refresh:2;url=index.php?page=messages");
                                         }
                                     } else {
                                         //output errors
@@ -84,15 +102,22 @@
                                 }
                                 ?>
                                 <?php
-                                $amount_f = DB::getInstance()->query("SELECT * FROM messages");
+                                $messages = '';
+                                $amount_f = DB::getInstance()->query("SELECT * FROM core_smsmessage");
                                 foreach ($amount_f->results() as $amount_f) {
-                                    $messages = $amount_f->Message;
+                                    $messages = $amount_f->text;
                                 }
                                 ?>
                                 <div class="row">
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-5">
 
+                                        <div class="form-group">
+                                            <label for="tag">Enter tag(128 characters Only)</label>
+                                            <textarea type="text" id="id_tag" name="tag" class="form-control">
+                                                <?php echo $messages; ?>
+                                            </textarea>
+                                        </div>
                                         <div class="form-group">
                                             <label for="message">Message (130 Characters Only)</label>
                                             <textarea type="text" id="username-input" name="message" class="form-control">
