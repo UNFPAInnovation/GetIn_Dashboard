@@ -54,7 +54,6 @@ use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
                             <form action="#" method="post">
                                 <?php
                                 if (Input::exists()) {
-                                    // echo Input::get('username');
                                     $validate = new Validate();
                                     $validation = $validate->check($_POST, array(
                                         'tag' => array(
@@ -71,12 +70,21 @@ use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
                                         $now = date("Y-m-d h:i:s");
                                         $message = Input::get('message');
                                         $tag = Input::get('tag');
+                                        $msg_python=  exec("python create_sms.py '$tag' '$message'");
+                                        if(is_numeric($msg_python)){
+                                            echo "<h5 align='center' ><strong><font color='green' size='2px'>Message '" . $tag . "' Created</font></strong></h5>";
+                                            //header("refresh:2;url=index.php?page=messages");
+                                        } else {
+                                            echo "<h5 align='center' ><strong><font color='red' size='2px'>Error saving message '" . $tag . "'"</font></strong></h5>";
+                                        }
+                                        /*
+
                                         $sql = "select * from messages";
                                         ///$where = 'Message_Id';;
                                         $where = 'tag';
                                         if (DB::getInstance()->checkRows($sql) > 0):
                                             $insert_message = DB::getInstance()->update('core_smsmessage', 1, array(
-                                                'text' => $tag, 'modified' => $now), $where);
+                                                'tag' => $tag, 'text' => $message, 'modified' => $now), $where);
                                             $message = "Message Updated";
                                         else:
                                             $insert_message = DB::getInstance()->insert('core_smsmessage', array(
@@ -87,12 +95,16 @@ use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
                                                 'modified' => $now
                                             ));
                                             $message = "Message Saved";
+                                            if(!boolval($insert_message)){
+                                                $message = "Insert failed";
+                                            }
                                         endif;
 
                                         if ($insert_message) {
                                             echo "<h5 align='center' ><strong><font color='green' size='2px'>" . $message . "</font></strong></h5>";
                                             //header("refresh:2;url=index.php?page=messages");
                                         }
+                                        */
                                     } else {
                                         //output errors
                                         foreach ($validation->errors() as $error) {
@@ -114,14 +126,13 @@ use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 
                                         <div class="form-group">
                                             <label for="tag">Enter tag(128 characters Only)</label>
-                                            <textarea type="text" id="id_tag" name="tag" class="form-control">
-                                                <?php echo $messages; ?>
-                                            </textarea>
+                                            <input type="text" id="id_tag" name="tag" class="form-control">
+                                            
+                                            </input>
                                         </div>
                                         <div class="form-group">
                                             <label for="message">Message (130 Characters Only)</label>
-                                            <textarea type="text" id="username-input" name="message" class="form-control">
-                                                <?php echo $messages; ?>
+                                            <textarea type="text" id="id_message" name="message" class="form-control">
                                             </textarea>
                                         </div>
                                         <button type="submit" class="btn btn-success fa fa-envelope"> Create Message</button>
