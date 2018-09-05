@@ -13,7 +13,9 @@ class DB {
             $_ipNumber=null,
             $_count = 0,
             $_ugxAmount,
-            $_track_order;
+            $_track_order,
+            $_columnCount = 0,
+            $_columns = array();
 
     private function __construct() {
         try {
@@ -41,7 +43,10 @@ class DB {
                 }
             }
             if ($this->_query->execute()) {
+                // get records
                 $this->_result = $this->_query->fetchAll(PDO::FETCH_OBJ);
+                $this->_columns = $this->columnNames();
+                $this->_columnCount = $this->_query->columnCount();
                 $this->_count = $this->_query->rowCount();
             } else {
                 print_r($this->_query->errorInfo());
@@ -54,7 +59,7 @@ class DB {
 
     public function action($action, $table, $where = array()) {
         if (count($where) == 3) {
-            $operators = array('=', '>', '<', '>=', '<=');
+            $operators = array('=', '>', '<', '>=', '<=', 'LIKE');
             $field = $where[0];
             $operator = $where[1];
             $value = $where[2];
@@ -131,6 +136,24 @@ class DB {
 
     public function count() {
         return $this->_count;
+    }
+    
+    private function columnNames(){
+        $columns = array();
+        $count = $this->_query->columnCount();
+        for($i = 0; $i < $count; $i++){
+            $columns[] =  $this->_query->getColumnMeta($i)['name'];
+        }
+        return $columns;
+        //return array_values($this->_query->fetchAll(PDO::FETCH_ASSOC));
+    }
+    
+    public function columns() {
+        return $this->_columns;
+    }
+    
+    public function columnCount() {
+        return $this->_columnCount;
     }
     
     /*  
@@ -276,7 +299,11 @@ class DB {
         if ($this->_query = $this->_pdo->prepare($sql)) {
 
             if ($this->_query->execute()) {
+                // get meta data
+                // Get records
                 $this->_result = $this->_query->fetchAll(PDO::FETCH_OBJ);
+                $this->_columns = $this->columnNames();
+                $this->_columnCount = $this->_query->columnCount();
                 $this->_count = $this->_query->rowCount();
             } else {
                 //print sql error
@@ -290,6 +317,8 @@ class DB {
     public function previous_id() {
         return $this->_pdo->lastInsertId();
     }
+    
+    
 }
 
 ?>
