@@ -38,5 +38,6 @@ try:
         obj = SMSMessage.objects.get(tag=tag)
         result = obj.id
 except Exception as e:
+    result = '%s' % e
     sys.stderr.write("(dashboard) createuser.py Error saving user. Message: %s" % e)
 print(result)
