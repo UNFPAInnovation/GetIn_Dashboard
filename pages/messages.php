@@ -75,7 +75,7 @@ use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
                                             echo "<h5 align='center' ><strong><font color='green' size='2px'>Message '" . $tag . "' Created</font></strong></h5>";
                                             //header("refresh:2;url=index.php?page=messages");
                                         } else {
-                                            echo "<h5 align='center' ><strong><font color='red' size='2px'>Error saving message '" . $tag . "'"</font></strong></h5>";
+                                            echo "<h5 align='center' ><strong><font color='red' size='2px'>Error saving message '" . $tag . "'</font></strong></h5>";
                                         }
                                         /*
 
@@ -126,14 +126,12 @@ use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 
                                         <div class="form-group">
                                             <label for="tag">Enter tag(128 characters Only)</label>
-                                            <input type="text" id="id_tag" name="tag" class="form-control">
-                                            
+                                            <input type="text" id="id_tag" name="tag" class="form-control message-tag" maxlength="128">
                                             </input>
                                         </div>
                                         <div class="form-group">
                                             <label for="message">Message (130 Characters Only)</label>
-                                            <textarea type="text" id="id_message" name="message" class="form-control">
-                                            </textarea>
+                                            <textarea type="text" id="id_message" name="message" class="form-control message-text" maxlength="130"></textarea>
                                         </div>
                                         <button type="submit" class="btn btn-success fa fa-envelope"> Create Message</button>
 
