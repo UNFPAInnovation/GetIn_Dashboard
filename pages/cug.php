@@ -40,7 +40,10 @@
 
 
             <div id="content">		
-
+                <?php
+                    $district_id = $_SESSION['getin_district'];
+                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                ?>
                 <div id="content-header">
                     <h1>Closed Used Groups</h1>
                 </div> <!-- #content-header -->	
@@ -92,7 +95,7 @@
                                                 <?php
                                                 $ie=1;
                                                 $get_id=  Input::get("grp");
-                                                $users_list = DB::getInstance()->query("SELECT * FROM core_patients");
+                                                $users_list = DB::getInstance()->query("SELECT * FROM core_patients WHERE district LIKE '".$district."'");
                                                 foreach ($users_list->results() as $users_list) {
                                                     $phone1 = str_split($users_list->pnumber);
                                                     $phone2 = str_split($users_list->holder_pnumber);

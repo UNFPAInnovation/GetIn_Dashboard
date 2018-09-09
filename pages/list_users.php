@@ -39,8 +39,11 @@
 
 
 
-            <div id="content">		
-
+            <div id="content">
+                <?php
+                    $district_id = $_SESSION['getin_district'];
+                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                ?>
                 <div id="content-header">
                     <h1>System Users</h1>
                 </div> <!-- #content-header -->	
@@ -92,7 +95,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $users_list = DB::getInstance()->query("SELECT au.*,co.* FROM auth_user au, core_observer co where co.user_id=au.id");
+                                                $users_list = DB::getInstance()->query("SELECT au.*,co.* FROM auth_user au, core_observer co where co.user_id=au.id and co.district_id=$district_id");
                                                 foreach ($users_list->results() as $users_list) {
                                                     ?>
                                                     <tr>

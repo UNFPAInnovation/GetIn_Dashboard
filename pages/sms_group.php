@@ -26,7 +26,10 @@
 
 
             <div id="content">
-
+                <?php
+                    $district_id = $_SESSION['getin_district'];
+                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                ?>
                 <div id="content-header">
                     <h1>Instant Messaging</h1>
                 </div> <!-- #content-header -->
@@ -62,7 +65,7 @@
                                         $group = Input::get('group');
                                         $message = Input::get('message');
                                         //changed query to only return phone numbers
-                                        $return_numbers = DB::getInstance()->query("select phone_number from core_observer where role='$group'");
+                                        $return_numbers = DB::getInstance()->query("select phone_number from core_observer where role='$group' and district_id=$district_id");
                                         foreach ($return_numbers->results() as $return_numbers) {
                                             array_push($store_numbers, $return_numbers->phone_number);
                                         }

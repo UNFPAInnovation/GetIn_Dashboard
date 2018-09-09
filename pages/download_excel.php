@@ -47,8 +47,9 @@ $setCounter = 0;
 
 $setExcelName = 'patient_info_';
 $timestamp = date("Ymd-His");
-
-$setSql = "select * from core_patients ".$voucher_query.";";
+$district_id = $_SESSION['getin_district'];
+$district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+$setSql = "select * from core_patients ".$voucher_query." AND district LIKE '".$district."';";
 
 //$setRec = mysql_query($setSql);
 $db = DB::getInstance();

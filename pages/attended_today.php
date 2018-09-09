@@ -39,8 +39,11 @@
 
 
 
-            <div id="content">		
-
+            <div id="content">
+                <?php
+                    $district_id = $_SESSION['getin_district'];
+                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                ?>
                 <div id="content-header">
                     <h1>List of all completed visits today</h1>
                 </div> <!-- #content-header -->	
@@ -91,7 +94,7 @@
                                             <tbody>
                                                 <?php
                                                 $date_today=  date('Y-m-d');
-                                                $scheduled = DB::getInstance()->query("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id");
+                                                $scheduled = DB::getInstance()->query("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and cp.district LIKE '".$district."'");
                                                 foreach ($scheduled->results() as $scheduled) {
                                                     $status=$scheduled->status_id;
                                                     $due_on=$scheduled->due_on;

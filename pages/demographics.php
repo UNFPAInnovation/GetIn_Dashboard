@@ -40,7 +40,10 @@
 
 
             <div id="content">		
-
+                <?php
+                    $district_id = $_SESSION['getin_district'];
+                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                ?>
                 <div id="content-header">
                     <h1>Demographics</h1>
                 </div> <!-- #content-header -->	
@@ -53,7 +56,19 @@
                         <div class="col-md-12">
 
                             <div class="portlet">
-                                <img src="img/excel.png" alt="excel"/> <a href="index.php?page=download_excel" target="_blank"><label class="label label-success">Download Excel</label></a>
+                                    <?php
+                                            $get_id = Input::get("grp");
+                                            $vgrp = Input::get("vgrp");
+                                            if(!isset($vgrp)){
+                                                $vgrp =  '0';
+                                            }
+                                            ?>
+                                <img src="img/excel.png" alt="excel"/> 
+                                    <?php
+                                        echo '<a href="index.php?page=download_excel&vgrp='.$vgrp.'"  target="_blank">'
+                                    ?>        
+                                        <label class="label label-success">Download Excel</label>
+                                    </a>
                                 <div class="portlet-header">
 
                                     <h3>
@@ -65,32 +80,36 @@
 
                                 <div class="portlet-content">						
                                         <?php
+                                            $_query = array();
                                             $get_id = Input::get("grp");
-                                            $select_voucher = Input::get("vgrp");
-                                            if(!isset($select_voucher)){
-                                                $select_voucher = "";
+                                            $vgrp = Input::get("vgrp");
+                                            if(!isset($vgrp)){
+                                                $vgrp = '0';
                                             }
                                             $voucher_query = "";
                                             $select = "";
-                                            $select1 = $_POST['vgrp'];
-                                            switch ($select_voucher) {
-                                                case '-1':
-                                                  $voucher_query = " WHERE system_id != ''";
-                                                  break;
+                                            switch ($vgrp) {
                                                 case '0':
                                                   $voucher_query = "";
                                                   break;
                                                 case '1':
-                                                  $voucher_query = " WHERE system_id LIKE 'HBBH%'";
+                                                  $voucher_query = "WHERE COALESCE(system_id, '') = ''";
                                                   break;
                                                 case '2':
-                                                  $voucher_query = " WHERE system_id  LIKE 'FPUG%'";
+                                                  $voucher_query = "WHERE system_id LIKE ''";
+                                                  $voucher_query = "WHERE COALESCE(system_id, '') != ''";
                                                   break;
                                                 case '3':
-                                                  $voucher_query = " WHERE system_id LIKE 'SMA%'";
+                                                  $voucher_query = "WHERE system_id LIKE 'HBBH%'";
                                                   break;
                                                 case '4':
-                                                  $voucher_query = " WHERE system_id LIKE 'LKUP%'";
+                                                  $voucher_query = "WHERE system_id  LIKE 'FPUG%'";
+                                                  break;
+                                                case '5':
+                                                  $voucher_query = "WHERE system_id LIKE 'SMA%'";
+                                                  break;
+                                                case '6':
+                                                  $voucher_query = "WHERE system_id LIKE 'LKUP%'";
                                                   break;
                                               }
                                           ?>
@@ -102,14 +121,23 @@
                                             <option value="2">20-24 years old</option>
                                             <option value="3">25-30 years old</option>
                                         </select>
-                                        <label for="id_grp_voucher">Voucher Program</label>
-                                        <select name="grp_voucher" id="id_grp_voucher">
-                                            <option value="-1">No voucher program</option>
-                                            <option value="0">All voucher programs</option>
-                                            <option value="1">Reproductive Health Voucher Programme (Marie Stoppes Int)</option>
-                                            <option value="2">Family Planning (Marie Stoppes)</option>
-                                            <option value="3">Social Marketing Activity (UHMG - Uganda Health Marketing Group)</option>
-                                            <option value="4">Young People and Key Populations (Marie Stoppes)</option>
+                                        <label for="id_vgrp">Voucher Program</label>
+                                        <?php
+                                            echo('<select name="vgrp" id="id_vgrp" value="'.$vgrp.'">');
+                                                $voucher_options = array(
+                                                    "All pregnant girls",
+                                                    "No voucher program",
+                                                    "All voucher programs",
+                                                    "Reproductive Health Voucher Programme (Marie Stoppes Int)",
+                                                    "Family Planning (Marie Stoppes)",
+                                                    "Social Marketing Activity (UHMG - Uganda Health Marketing Group)",
+                                                    "Young People and Key Populations (Marie Stoppes)");
+                                                $count = sizeof($voucher_options);
+                                                for($i = 0; $i < $count; $i++){
+                                                    $selected = ($vgrp==$i)? 'selected':'';
+                                                    echo('<option value="'.$i.'" '.$selected.'>'.$voucher_options[$i].'</option>');
+                                                }
+                                            ?>
                                         </select>
                                         <input type="submit" name="submit" value="Go"/>
                                     </form>
@@ -142,7 +170,7 @@
                                                 <?php
                                                 $age_query = isset($get_id)? $get_id:"";
                                                 $filter_id = true;
-                                                $patient_list = DB::getInstance()->query("SELECT * FROM core_patients" . $voucher_query . "");
+                                                $patient_list = DB::getInstance()->query("SELECT * FROM core_patients " . $voucher_query . " AND district LIKE '".$district."'");
                                                 foreach ($patient_list->results() as $patient_list) {
                                                     $age = calcAge($patient_list->dob, date('Y-m-d'));
                                                     if ($get_id == 1) {

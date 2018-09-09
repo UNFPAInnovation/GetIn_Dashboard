@@ -39,8 +39,11 @@
 
 
 
-            <div id="content">		
-
+            <div id="content">
+                <?php
+                    $district_id = $_SESSION['getin_district'];
+                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                ?>
                 <div id="content-header">
                     <h1>Midwife Follow up</h1>
                 </div> <!-- #content-header -->	
@@ -90,7 +93,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $midwife = DB::getInstance()->query("select cb.*,ce.*,co.*,cs.*,cp.* from core_observer cb, core_observation co, core_subject cs, core_encounter ce,core_patients cp where cb.uuid=ce.observer_id and co.encounter_id=ce.uuid and cs.uuid=ce.subject_id and cp.subject_ptr_id=cs.id and cb.role='midwife' group by cs.uuid");
+                                                $midwife = DB::getInstance()->query("select cb.*,ce.*,co.*,cs.*,cp.* from core_observer cb, core_observation co, core_subject cs, core_encounter ce,core_patients cp where cb.uuid=ce.observer_id and co.encounter_id=ce.uuid and cs.uuid=ce.subject_id and cp.subject_ptr_id=cs.id and cb.role='midwife' and cb.district_id=".$district_id." group by cs.uuid");
                                                 foreach ($midwife->results() as $midwife) {
                                                     ?>
                                                     <tr>

@@ -39,10 +39,13 @@
 
 
 
-            <div id="content">		
-
+            <div id="content">
+                <?php
+                    $district_id = $_SESSION['getin_district'];
+                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                ?>
                 <div id="content-header">
-                    <h1>VHT</h1>
+                    <h1>CHEW</h1>
                 </div> <!-- #content-header -->	
 
 
@@ -91,7 +94,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $midwife_list = DB::getInstance()->query("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='vht'");
+                                                $midwife_list = DB::getInstance()->query("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='vht' and co.district=".$district_id);
                                                 $i = 1;
                                                 foreach ($midwife_list->results() as $midwife_list) {
                                                     ?>
