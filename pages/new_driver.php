@@ -26,7 +26,9 @@
 
 
             <div id="content">		
-
+                <?php
+                    $district_id = $_SESSION['getin_district'];
+                ?>
                 <div id="content-header">
                     <h1>New Ambulance Driver</h1>
                 </div> <!-- #content-header -->	
@@ -48,6 +50,7 @@
                         <div class="portlet-content">
                             <form action="#" method="post">
                                 <?php
+                                $id = (!empty(Input::get('id')))? intval(Input::get('id')): -1;
                                 if (isset($_POST['saveDriver'])) {
                                     echo "heheheh";
                                     $validate = new Validate();
@@ -94,24 +97,27 @@
                                     <div class="col-sm-5">
 
                                         <div class="form-group">
-                                            <label for="patient-group">First Name</label>
+                                            <label for="first_name">First Name</label>
                                             <input type="text" id="firstname-input" value="<?php echo escape(Input::get('first_name')); ?>" name="first_name" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="patient-group">Last Name</label>
-                                            <input type="text" id="firstname-input" value="<?php echo escape(Input::get('last_name')); ?>" name="last_name" class="form-control">
+                                            <label for="last_name">Last Name</label>
+                                            <input type="text" id="lastname-input" value="<?php echo escape(Input::get('last_name')); ?>" name="last_name" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="patient-group">Phone Number</label>
-                                            <input type="text" id="firstname-input" value="<?php echo escape(Input::get('phone_number')); ?>" placeholder="Format:2567XX123456"name="phone_number" class="form-control">
+                                            <label for="phone_number">Phone Number</label>
+                                            <input type="text" id="phonenumber-input" value="<?php echo escape(Input::get('phone_number')); ?>" placeholder="Format:2567XX123456"name="phone_number" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="patient-group">Subcounty</label>
+                                            <label for="subcounty">Subcounty</label>
                                             <select type="text" name="subcounty" class="form-control">
                                                 <?php
-                                                echo DB::getInstance()->dropDowns('core_subcounty','id','name');
+                                                $where = array('district_id', '=', $district_id);
+                                                $rawWhere = "district_id = $district_id";
+                                                echo DB::getInstance()->dropDownWithWhereRaw('core_subcounty','id','name', $rawWhere);
                                                 ?>
                                             </select>
+                                            <?php echo "district = $district_id" ?>
                                         </div>
                                         
                                         <button type="submit" name="saveDriver" class="btn btn-success"> Save</button>
@@ -119,19 +125,12 @@
                                     </div> <!-- /.col -->
                                     <div class="col-sm-1"></div>
 
-
                                 </div> <!-- /.row -->
 
                             </form>
                         </div> <!-- /.portlet-content -->
 
                     </div> <!-- /.portlet -->
-
-
-
-
-
-
 
                 </div> <!-- /#content-container -->			
 
@@ -142,13 +141,8 @@
 
         <?php
         include 'includes/footer.php';
+        include 'includes/footerjs.php';
+        include 'includes/appjs.php';
         ?>
-
-        <script src="./js/libs/jquery-1.9.1.min.js"></script>
-        <script src="./js/libs/jquery-ui-1.9.2.custom.min.js"></script>
-        <script src="./js/libs/bootstrap.min.js"></script>
-
-        <script src="./js/App.js"></script>
-
     </body>
 </html>
