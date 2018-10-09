@@ -27,7 +27,8 @@
 
             <div id="content">		
                 <?php
-                    $district_id = $_SESSION['getin_district'];
+                    $_oid =  $_SESSION['getin_observer_id'];
+                    $district_id = DB::getInstance()->getName('core_observer', $_oid, 'district_id', 'id');
                 ?>
                 <div id="content-header">
                     <h1>New Ambulance Driver</h1>
@@ -117,7 +118,6 @@
                                                 echo DB::getInstance()->dropDownWithWhereRaw('core_subcounty','id','name', $rawWhere);
                                                 ?>
                                             </select>
-                                            <?php echo "district = $district_id" ?>
                                         </div>
                                         
                                         <button type="submit" name="saveDriver" class="btn btn-success"> Save</button>
