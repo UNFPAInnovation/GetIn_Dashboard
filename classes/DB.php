@@ -15,7 +15,8 @@ class DB {
             $_ugxAmount,
             $_track_order,
             $_columnCount = 0,
-            $_columns = array();
+            $_columns = array(),
+            $_columnTypes = array();
 
     private function __construct() {
         try {
@@ -47,6 +48,7 @@ class DB {
                 $this->_result = $this->_query->fetchAll(PDO::FETCH_OBJ);
                 $this->_columns = $this->columnNames();
                 $this->_columnCount = $this->_query->columnCount();
+                $this->_columnTypes = $this->columnTypes();
                 $this->_count = $this->_query->rowCount();
             } else {
                 print_r($this->_query->errorInfo());
@@ -141,8 +143,19 @@ class DB {
     private function columnNames(){
         $columns = array();
         $count = $this->_query->columnCount();
+        for($i = 0; $i < $count; $i++){  
+            $columns[] = $this->_query->getColumnMeta($i)['name'];
+            
+        }
+        return $columns;
+        //return array_values($this->_query->fetchAll(PDO::FETCH_ASSOC));
+    }
+    
+    private function columnTypes(){
+        $columns = array();
+        $count = $this->_query->columnCount();
         for($i = 0; $i < $count; $i++){
-            $columns[] =  $this->_query->getColumnMeta($i)['name'];
+            $columns[] = $this->_query->getColumnMeta($i)['pdo_type'];
         }
         return $columns;
         //return array_values($this->_query->fetchAll(PDO::FETCH_ASSOC));
@@ -242,6 +255,28 @@ class DB {
               } else {
                 $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
               }
+            }
+        }
+        return $this->_options;
+    }
+
+    /*
+        Populates a set of option elements within a select where the query includes a WHERE
+        clause
+        $tablename = table to query
+        $id = column to use for the value attribute
+        $name = column to use for the option
+        $where = array as ['column', 'operator', 'value']
+    */
+    public function dropDownWithWhereRaw($tableName,$id,$name, $where){
+        $this->_options="";
+        $this->_dropQuery="";
+        $rawWhere = (is_array($where))? implode(",", $where): $where; 
+        $this->_dropQuery= $this->query("SELECT * FROM $tableName WHERE $rawWhere ORDER BY $name ASC");
+        $this->_options.="<option value=''>----SELECT----</option>";
+        if($this->_dropQuery->count()){
+            foreach ($this->_dropQuery->results() as $result){
+                $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
             }
         }
         return $this->_options;
