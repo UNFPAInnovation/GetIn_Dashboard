@@ -96,7 +96,7 @@
                                             <tbody>
                                                 <?php
                                                 $get_id = Input::get("grp");
-                                                $patient_list = DB::getInstance()->query("SELECT * FROM core_patients where edd between '2017-07-01' and '2018-01-31' and district LIKE '".$district."'");                                                foreach ($patient_list->results() as $patient_list) {
+                                                $patient_list = DB::getInstance()->query("SELECT * FROM core_patients where edd between '2017-07-01' and '2099-01-31' and district LIKE '".$district."'");                                                foreach ($patient_list->results() as $patient_list) {
                                                     ?>
                                                         <tr>
                                                             <td><?php echo $patient_list->given_name . " " . $patient_list->family_name; ?></td>
