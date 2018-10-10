@@ -41,11 +41,10 @@
 
             <div id="content">
                 <?php
-                    $district_id = $_SESSION['getin_district'];
-                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                    $district = Session::getActiveDistrict();
                 ?>
                 <div id="content-header">
-                    <h1>Mid Wives</h1>
+                    <h1>Midwives</h1>
                 </div> <!-- #content-header -->	
 
 
@@ -81,9 +80,6 @@
                                             >
                                             <thead>
                                                 <tr>
-                                                    <th class="checkbox-column">
-                                                        #
-                                                    </th>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">Full Name</th>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">User Name</th>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">Email</th>
@@ -94,19 +90,16 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $midwife_list = DB::getInstance()->query("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='midwife' and co.district=$district_id");                                                $i = 1;
-                                                foreach ($midwife_list->results() as $midwife_list) {
+                                                $query = DB::getInstance()->query("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='midwife' and co.district_id=$district->id");                                                $i = 1;
+                                                foreach ($query->results() as $result) {
                                                     ?>
-                                                    <tr>
-                                                        <td class="checkbox-column">
-                                                            <?php echo $i; ?>
-                                                        </td>
-                                                        <td><?php echo $midwife_list->first_name . " " . $midwife_list->last_name; ?></td>
-                                                        <td><?php echo $midwife_list->username; ?></td>
-                                                        <td><?php echo $midwife_list->email; ?></td>
-                                                        <td><?php echo $midwife_list->phone_number; ?></td>
-                                                        <td><?php echo $midwife_list->role; ?></td>
-                                                        <td><?php echo $midwife_list->last_login; ?></td>
+                                                    <tr class="click-edit" id=<?php echo "\"$result->id\""; ?> >
+                                                        <td><?php echo $result->first_name . " " . $result->last_name; ?></td>
+                                                        <td><?php echo $result->username; ?></td>
+                                                        <td><?php echo $result->email; ?></td>
+                                                        <td><?php echo $result->phone_number; ?></td>
+                                                        <td><?php echo $result->role; ?></td>
+                                                        <td><?php echo $result->last_login; ?></td>
                                                     </tr>  
                                                     <?php
                                                     $i++;
@@ -116,49 +109,26 @@
                                         </table>
                                     </div> <!-- /.table-responsive -->
 
-
                                 </div> <!-- /.portlet-content -->
 
                             </div> <!-- /.portlet -->
-
-
 
                         </div> <!-- /.col -->
 
                     </div> <!-- /.row -->
 
-
-
-
-
-
-
-
                 </div> <!-- /#content-container -->
 
-
-
             </div> <!-- #content -->
-
 
         </div> <!-- #wrapper -->
 
         <?php
-        include 'includes/footer.php';
+        include 'includes/footer.php';        
+        include 'includes/footerjs.php';
+        include 'includes/datatablejs.php';
+        include 'includes/appjs.php';
         ?>
-
-        <script src="./js/libs/jquery-1.9.1.min.js"></script>
-        <script src="./js/libs/jquery-ui-1.9.2.custom.min.js"></script>
-        <script src="./js/libs/bootstrap.min.js"></script>
-
-        <script src="./js/plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="./js/plugins/datatables/DT_bootstrap.js"></script>
-        <script src="./js/plugins/tableCheckable/jquery.tableCheckable.js"></script>
-
-        <script src="./js/plugins/icheck/jquery.icheck.min.js"></script>
-
-        <script src="./js/App.js"></script>
-
 
     </body>
 </html>
