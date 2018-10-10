@@ -79,45 +79,30 @@
                                             >
                                             <thead>
                                                 <tr>
-                                                    <th class="checkbox-column">
-                                                       #
-                                                    </th>
-                    
-                                                    <th data-filterable="true" data-sortable="true" data-direction="desc" class="hidden-xs hidden-sm"/>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">Last Name</th>
                                                     <th data-filterable="true" data-sortable="true" data-direction="desc">First Name</th>
                                                     <th data-direction="asc" data-filterable="true" data-sortable="true">Phone</th>
                                                     <th data-direction="asc" data-filterable="true" data-sortable="true">Operational Subcounty</th>
-                                                    <th/>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 $i=1;
-                                                $district_id = $_SESSION['getin_district'];
+                                                $district = Session::getActiveDistrict();
                                                 $ambulance_drivers = NULL;
                                                 // Safety check on the district id. Shouldn't ever happen.
-                                                if(!empty($district_id)){
-                                                    $ambulance_drivers = DB::getInstance()->query("SELECT ca.*, cs.name AS subcounty FROM core_ambulancedriver ca, core_subcounty cs WHERE ca.subcounty_id=cs.id AND cs.district_id=$district_id ORDER BY cs.name ASC");
+                                                if(!empty($district->id)){
+                                                    $ambulance_drivers = DB::getInstance()->query("SELECT ca.*, cs.name AS subcounty FROM core_ambulancedriver ca, core_subcounty cs WHERE ca.subcounty_id=cs.id AND cs.district_id=$district->id ORDER BY cs.name ASC");
                                                 }
                                                 // Set results to empty array if db not queried
                                                 $drivers = (!empty($ambulance_drivers))? $ambulance_drivers->results(): [];
                                                 foreach ($drivers as $driver) {
                                                     ?>
-                                                    <tr>
-                                                        <td class="checkbox-column">
-                                                            <input type="checkbox" class="icheck-input"/>
-                                                        </td>
-                                                        <td class="hidden-xs hidden-sm"> 
-                                                            <?php echo $driver->id; ?>
-                                                        </td>
+                                                    <tr class="click-edit" id=<?php echo "\"$driver->id\""; ?> >
                                                         <td><?php echo $driver->last_name;  ?></td>
                                                         <td><?php echo $driver->first_name; ?></td>
                                                         <td><?php echo $driver->phone_number;  ?></td>
                                                         <td><?php echo $driver->subcounty;  ?></td>
-                                                        <td>
-                                                            <button id=<?php echo "\"".$driver->id."\""?> onClick=<?php echo "\"(function(){window.location='./index.php?page=new_driver&id=".$driver->id."'})()\""; ?> class="btn btn-success fa fa-user btn-edit">Edit</button>
-                                                        </td>
                                                     </tr>  
                                                     <?php
                                                     $i++;
