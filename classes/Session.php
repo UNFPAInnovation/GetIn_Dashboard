@@ -30,5 +30,17 @@ class Session{
         }
         return '';
     }
+    
+    public static function getUser(){
+    
+    }
+    
+    public static function getActiveDistrict(){
+        $_oid =  $_SESSION['getin_observer_id'];
+        $district_id = DB::getInstance()->getName('core_observer', $_oid, 'district_id', 'id');
+        $sql = "SELECT * from core_district WHERE id = $district_id";
+        $district = DB::getInstance()->query($sql)->first();
+        return $district;    
+    }
 }
 ?>
