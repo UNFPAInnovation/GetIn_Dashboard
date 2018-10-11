@@ -44,7 +44,7 @@
                         <a href="index.php?page=vht_follow">
 
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            VHT
+                            CHEW
                         </a>
                     </li>		
                     <li>
