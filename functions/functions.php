@@ -145,4 +145,75 @@ function addDaysToDate($days, $dateCovert) {
     date_add($date, date_interval_create_from_date_string($days . ' days'));
     return date_format($date, 'Y-m-d');
 }
+/*
+ * Calculates the beginning and end dates for a range of years.
+ *
+ *  $minAge The minumum age in the range as an interval string       
+ *  $upperBound The maximum age in the range as an interval string(default: value of $minAge)
+ *  $fromDate A string or DateTime object to calculate the range from(default: current date and time) 
+ *
+ * Returns an array of two string as the beginning and end of the range.
+ */
+function ageRange( $minAge, $maxAge=NULL, $fromDate=NULL){
+    $immutable = NULL;
+    $fromImmutable = NULL;
+    if(!empty($fromDate)){
+        if($fromDate instanceof DateTimeInterface){
+            $fromImmutable = date_create_immutable_from_format('Y-m-d H:i:s',$fromDate->format('Y-m-d H:i:s'));
+        } else {
+            $fromImmutable = date_create_immutable_from_format('Y-m-d H:i:s', $fromDate);
+        }
+    } else {
+        $fromImmutable = date_create_immutable("now");
+    }
+    $range = array();
+    $maxAge = (!empty($maxAge))? $maxAge: $minAge;
+    $startDate = $fromImmutable->sub(date_interval_create_from_date_string($maxAge));
+    $endDate = $fromImmutable->sub(date_interval_create_from_date_string($minAge));
+    return array($startDate->format('Y-m-d H:i:s'), $endDate->format('Y-m-d H:i:s'));    
+}
+
+function quoteStr($input, $quoteChar="'"){
+    return "$quoteChar".$input."$quoteChar";
+}
+
+function html($value, $element=NULL, $attributes=[]){
+    $safeStr = "";
+    $safeArr = array();
+    if (is_array($value)){
+        $element = "pre";
+        foreach($value as $k => $v){
+            $safeArr[] = "    $k => '$v'";
+        }
+        $safeArr[] ="</pre>";
+    } else if (is_object($value)){
+        if(in_array("__toString", get_class_methods($value))){
+            $safeArr[] = strval($value->__toString());
+        } else {
+            $safeArr[] = strval($value);
+        }
+    } else{
+        $safeStr = strval($value);
+    }
+    $safeStr = (!empty($element))? "<$element>".implode(" ", $safeArr)."</$element>":"<div>".implode(" ", $safeArr)."</div>" ;
+    return $safeStr;
+
+}
+
+function htmlselect($arr, $selected=NULL, $attrs=array()){
+        foreach($attrs as $key => $val){
+        }
+        $safeArr = array("<select name=\"\" id=\"\">");
+        foreach($arr as $key => $val){
+            $selected = ($key == $selected)? "selected":""; 
+            $safeArr[] = "<option value=\"$key\" $selected>$group</option>";
+        }
+        $safeArr[] = "</select>";
+        return implode("\n",$safeArr);
+}
+
+function htmlp($value){
+    return html($value, "p");
+}
+
 ?>
