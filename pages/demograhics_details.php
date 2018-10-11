@@ -50,25 +50,23 @@
                             <form action="#" method="post">
                                 <?php
                                 $patient_id = Input::get("patient_id");
-                                $patient_list = DB::getInstance()->query("SELECT * FROM core_patients where subject_ptr_id=".$patient_id);
-                                foreach ($patient_list->results() as $patient_list) {
-                                    $patient_name=$patient_list->given_name."  ".$patient_list->family_name;
-                                    $pnumber=$patient_list->pnumber;
-                                    $dob=$patient_list->dob;
-                                    $gender=$patient_list->gender;
-                                    $marital_status=$patient_list->marital_status;
-                                    $education_level=$patient_list->educational_level;
-                                    $contraceptive_use=$patient_list->contraceptive_use;
-                                    $district=$patient_list->district;
-                                    $county=$patient_list->county;
-                                    $scounty=$patient_list->sub_county;
-                                    $parish=$patient_list->parish;
-                                    $village=$patient_list->village;
-                                    $lmd=$patient_list->lmd;
-                                    $edd=$patient_list->edd;
-                                    $holder_pnumber=$patient_list->holder_pnumber;
-                                    
-                                    
+                                $query = DB::getInstance()->query("SELECT * FROM core_patients where subject_ptr_id=".$patient_id);
+                                foreach ($query->results() as $result) {
+                                    $patient_name=$result->given_name."  ".$result->family_name;
+                                    $pnumber=$result->pnumber;
+                                    $dob=$result->dob;
+                                    $gender=$result->gender;
+                                    $marital_status=$result->marital_status;
+                                    $education_level=$result->education_level;
+                                    $contraceptive_use=$result->contraceptive_use;
+                                    $district=$result->district;
+                                    $county=$result->county;
+                                    $scounty=$result->subcounty;
+                                    $parish=$result->parish;
+                                    $village=$result->village;
+                                    $lmd=$result->lmd;
+                                    $edd=$result->edd;
+                                    $holder_pnumber=$result->holder_pnumber;
                                 }
                                 ?>
                                 <div class="row">
@@ -146,19 +144,12 @@
                                     </div> <!-- /.col -->
                                     <div class="col-sm-1"></div>
 
-
                                 </div> <!-- /.row -->
 
                             </form>
                         </div> <!-- /.portlet-content -->
 
                     </div> <!-- /.portlet -->
-
-
-
-
-
-
 
                 </div> <!-- /#content-container -->			
 
@@ -169,13 +160,10 @@
 
         <?php
         include 'includes/footer.php';
+        include 'includes/footerjs.php';
+        include 'includes/datatablejs.php';
+        include 'includes/appjs.php';
         ?>
-
-        <script src="./js/libs/jquery-1.9.1.min.js"></script>
-        <script src="./js/libs/jquery-ui-1.9.2.custom.min.js"></script>
-        <script src="./js/libs/bootstrap.min.js"></script>
-
-        <script src="./js/App.js"></script>
 
     </body>
 </html>

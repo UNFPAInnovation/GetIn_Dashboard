@@ -41,8 +41,7 @@
 
             <div id="content">		
                 <?php
-                    $district_id = $_SESSION['getin_district'];
-                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                    $district = Session::getActiveDistrict();
                 ?>
                 <div id="content-header">
                     <h1>Demographics</h1>
@@ -57,12 +56,10 @@
 
                             <div class="portlet">
                                     <?php
-                                            $get_id = Input::get("grp");
-                                            $vgrp = Input::get("vgrp");
-                                            if(!isset($vgrp)){
-                                                $vgrp =  '0';
-                                            }
-                                            ?>
+                                        $grp = Input::get("grp", '0');
+                                        $vgrp = Input::get("vgrp", '0');
+                                        $where = array(array("district", "LIKE", "'$district->name'"));
+                                    ?>
                                 <img src="img/excel.png" alt="excel"/> 
                                     <?php
                                         echo '<a href="index.php?page=download_excel&vgrp='.$vgrp.'"  target="_blank">'
@@ -80,46 +77,75 @@
 
                                 <div class="portlet-content">						
                                         <?php
-                                            $_query = array();
-                                            $get_id = Input::get("grp");
-                                            $vgrp = Input::get("vgrp");
-                                            if(!isset($vgrp)){
-                                                $vgrp = '0';
-                                            }
-                                            $voucher_query = "";
-                                            $select = "";
                                             switch ($vgrp) {
                                                 case '0':
-                                                  $voucher_query = "";
                                                   break;
                                                 case '1':
-                                                  $voucher_query = "WHERE COALESCE(system_id, '') = ''";
+                                                  $where[] = array("COALESCE(system_id, '')","=", "''");
                                                   break;
                                                 case '2':
-                                                  $voucher_query = "WHERE system_id LIKE ''";
-                                                  $voucher_query = "WHERE COALESCE(system_id, '') != ''";
+                                                  $where[] = array("COALESCE(system_id, '')", "!=", "''");
                                                   break;
                                                 case '3':
-                                                  $voucher_query = "WHERE system_id LIKE 'HBBH%'";
+                                                  $where[] = array("system_id", "LIKE", "'HBBH%'");
                                                   break;
                                                 case '4':
-                                                  $voucher_query = "WHERE system_id  LIKE 'FPUG%'";
+                                                  $where[] = array("system_id",  "LIKE", "'FPUG%'");
                                                   break;
                                                 case '5':
-                                                  $voucher_query = "WHERE system_id LIKE 'SMA%'";
+                                                  $where[] = array("system_id",  "LIKE", "'SMA%'");
                                                   break;
                                                 case '6':
-                                                  $voucher_query = "WHERE system_id LIKE 'LKUP%'";
+                                                  $where[] = array("system_id",  "LIKE", "'LKUP%'");
+                                                  break;
+                                                default:
                                                   break;
                                               }
                                           ?>
                                           <form action="" method="post">
                                         <label for="id_grp">Age group</label>
                                         <select name="grp" id="id_grp" >
-                                            <option value="0">All</option>
-                                            <option value="1">15-19 years old</option>
-                                            <option value="2">20-24 years old</option>
-                                            <option value="3">25-30 years old</option>
+                                            <?php
+                                                $groups = array(
+                                                    "All",
+                                                    "15-19 years old",
+                                                    "20-24 years old",
+                                                    "25-30 years old"
+                                                    );
+                                                foreach($groups as $key => $group){
+                                                    $selected = ($key == $grp)? "selected":""; 
+                                                    echo "<option value=\"$key\" $selected>$group</option>";
+                                                }
+                                                $range = NULL;
+                                                switch ($grp){
+                                                    case '0':
+                                                        // Everyone no age filter
+                                                        break;
+                                                    case '1':
+                                                        // 15-19
+                                                        $range = ageRange("15 years", "19 years");
+                                                        break;
+                                                    case '2':
+                                                        // 20 - 24
+                                                        $range = ageRange("20 years", "24 years");
+                                                        break;
+                                                    case '3':
+                                                        // 25-30
+                                                        $range = ageRange("25 years", "30 years");
+                                                        break;
+                                                    default:
+                                                        break;
+                                                };
+                                                if(!empty($range)){
+                                                    $safeDates = array_map(quoteStr, $range);
+                                                    $where[] = [
+                                                            "dob",
+                                                            "BETWEEN",
+                                                            implode(" AND ", $safeDates)
+                                                        ];
+                                                }
+                                                
+                                        ?>
                                         </select>
                                         <label for="id_vgrp">Voucher Program</label>
                                         <?php
@@ -168,148 +194,65 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $age_query = isset($get_id)? $get_id:"";
+                                                $age_query = isset($grp)? $grp:"";
                                                 $filter_id = true;
-                                                $patient_list = DB::getInstance()->query("SELECT * FROM core_patients " . $voucher_query . " AND district LIKE '".$district."'");
-                                                foreach ($patient_list->results() as $patient_list) {
-                                                    $age = calcAge($patient_list->dob, date('Y-m-d'));
-                                                    if ($get_id == 1) {
-                                                        if ($age >= 15 && $age <= 19) {
-                                                            ?>
-                                                            <tr>
-                                                                <td><?php echo $patient_list->given_name . " " . $patient_list->family_name; ?></td>
-                                                                <td><?php echo streamline_date($patient_list->dob); ?></td>
-                                                                <td><?php echo $patient_list->pnumber; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->holder_pnumber; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->location; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->system_id; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
-                                                                <td><form action="index.php?page=demograhics_details" method="post">
-                                                                    <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
-                                                                    <button class="btn btn-xs btn-success" type="submit">View Details</button>
-                                                                </form></td>
-                                                            </tr>   
-                                                            <?php
-                                                        }
-                                                    } elseif ($get_id == 2) {
-                                                        if ($age >= 20 && $age <= 24) {
-                                                            ?>
-                                                            <tr>
-                                                                <td><?php echo $patient_list->given_name . " " . $patient_list->family_name; ?></td>
-                                                                <td><?php echo streamline_date($patient_list->dob); ?></td>
-                                                                <td><?php echo $patient_list->pnumber; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->holder_pnumber; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->location; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->system_id; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
-                                                                <td><form action="index.php?page=demograhics_details" method="post">
-                                                                    <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
-                                                                    <button class="btn btn-xs btn-success" type="submit">View Details</button>
-                                                                </form></td>
-                                                            </tr> 
-                                                            <?php
-                                                        }
-                                                    } elseif ($get_id == 3) {
-                                                        if ($age >= 25 && $age <= 30) {
-                                                            ?>
-                                                            <tr>
-                                                                <td><?php echo $patient_list->given_name . " " . $patient_list->family_name; ?></td>
-                                                                <td><?php echo streamline_date($patient_list->dob); ?></td>
-                                                                <td><?php echo $patient_list->pnumber; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->holder_pnumber; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->location; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->system_id; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
-                                                                <td>
-                                                                    <form action="index.php?page=demograhics_details" method="post">
-                                                                    <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
-                                                                    <button class="btn btn-xs btn-success" type="submit">View Details</button>
-                                                                </form>
-                                                                </td>
-                                                            </tr> 
-                                                            <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <tr>
-                                                            <td><?php echo $patient_list->given_name . " " . $patient_list->family_name; ?></td>
-                                                            <td><?php echo streamline_date($patient_list->dob); ?></td>
-                                                            <td><?php echo $patient_list->pnumber; ?></td>
-                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->holder_pnumber; ?></td>
-                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->location; ?></td>
-                                                            <td class="hidden-xs hidden-sm"><?php echo streamline_date($patient_list->lmd); ?></td>
-                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->marital_status; ?></td>
-                                                                <td class="hidden-xs hidden-sm"><?php echo $patient_list->education_level; ?></td>
-                                                            <td class="hidden-xs hidden-sm"><?php echo $patient_list->system_id; ?></td>
-                                                            <td class="hidden-xs hidden-sm"><?php echo addMonthsToDate(9, $patient_list->lmd); ?></td>
-                                                            <td><form action="index.php?page=demograhics_details" method="post">
-                                                                    <input name="patient_id" value="<?php echo $patient_list->subject_ptr_id; ?>" type="hidden"/>
-                                                                    <button class="btn btn-xs btn-success" type="submit">View Details</button>
-                                                                </form></td>
-                                                        </tr> 
-                                                        <?php
-                                                    }
-                                                    ?>
-
-                                                    <?php
+                                                $whereStrs = array();
+                                                foreach($where as $w){
+                                                    $whereStrs[] = ($w[1] == "BETWEEN")? "(".implode(" ", $w).")": implode(" ", $w);
+                                                }
+                                                //echo "<p>WHERE=>\"".implode(" AND ", $whereStrs)."\"</p>";
+                                                $patient_list = NULL;
+                                                $sql = array("SELECT * FROM core_patients");
+                                                if(!empty($whereStrs)){
+                                                    $sql[] = "WHERE";
+                                                    $sql[] = implode(" AND ", $whereStrs);
+                                                }
+                                                $queryStr = implode(" ", $sql);
+                                                //echo "<p>$queryStr</p>";
+                                                $query = DB::getInstance()->query($queryStr);
+                                                foreach ($query->results() as $patient_list) {
+                                                    echo "<tr>";
+                                                    echo "<td>".$patient_list->given_name." " . $patient_list->family_name."</td>";
+                                                    echo "<td>".streamline_date($patient_list->dob)."</td>";
+                                                    echo "<td>".$patient_list->pnumber."</td>";
+                                                    echo "<td class=\"hidden-xs hidden-sm\">".$patient_list->holder_pnumber."</td>";
+                                                    echo "<td class=\"hidden-xs hidden-sm\">".$patient_list->location."</td>"; 
+                                                    echo "<td class=\"hidden-xs hidden-sm\">".streamline_date($patient_list->lmd)."</td>";
+                                                    echo "<td class=\"hidden-xs hidden-sm\">".$patient_list->marital_status."</td>";
+                                                    echo "<td class=\"hidden-xs hidden-sm\">".$patient_list->education_level."</td>";
+                                                    echo "<td class=\"hidden-xs hidden-sm\">".$patient_list->system_id."</td>";
+                                                    echo "<td class=\"hidden-xs hidden-sm\">".addMonthsToDate(9, $patient_list->lmd)."</td>";
+                                                    echo "<td><form action=\"index.php?page=demograhics_details\" method=\"post\">";
+                                                    echo "<input name=\"patient_id\" value=\"".$patient_list->subject_ptr_id."\" type=\"hidden\"/>";
+                                                    echo "<button class=\"btn btn-xs btn-success\" type=\"submit\">View Details</button>";
+                                                    echo "</form></td>";
+                                                    echo "</tr>";   
                                                 }
                                                 ?>
                                             </tbody>
                                         </table>
                                     </div> <!-- /.table-responsive -->
 
-
                                 </div> <!-- /.portlet-content -->
 
                             </div> <!-- /.portlet -->
-
-
 
                         </div> <!-- /.col -->
 
                     </div> <!-- /.row -->
 
-
-
-
-
-
-
-
                 </div> <!-- /#content-container -->
 
-
-
             </div> <!-- #content -->
-
 
         </div> <!-- #wrapper -->
 
         <?php
         include 'includes/footer.php';
-        ?>
-
-        <script src="./js/libs/jquery-1.9.1.min.js"></script>
-        <script src="./js/libs/jquery-ui-1.9.2.custom.min.js"></script>
-        <script src="./js/libs/bootstrap.min.js"></script>
-
-        <script src="./js/plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="./js/plugins/datatables/DT_bootstrap.js"></script>
-        <script src="./js/plugins/tableCheckable/jquery.tableCheckable.js"></script>
-
-        <script src="./js/plugins/icheck/jquery.icheck.min.js"></script>
-
-        <script src="./js/App.js"></script>
-
+        include 'includes/footerjs.php';
+        include 'includes/datatablejs.php';
+        include 'includes/appjs.php';
+        ?>            
 
     </body>
 </html>
