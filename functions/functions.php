@@ -173,6 +173,41 @@ function ageRange( $minAge, $maxAge=NULL, $fromDate=NULL){
     return array($startDate->format('Y-m-d H:i:s'), $endDate->format('Y-m-d H:i:s'));    
 }
 
+
+/* 
+ * Convert a role value string to label that should be displayed.
+ */
+function roleToViewStr($role){
+    $label = NULL;
+    if(!empty($role)){
+        switch($role){
+            case "vht":
+                $label = "CHEW";
+                break;
+            default:
+                $label = $role;
+        }
+    }
+    return $label;
+}
+
+/* 
+ * Convert a role label string to value that is persisted.
+ */
+function roleFromViewStr($viewStr){
+    $value = NULL;
+    if(!empty($viewStr)){
+        switch($viewStr){
+            case "CHEW":
+                $value = "vht";
+                break;
+            default:
+                $value = $viewStr;
+        }
+    }
+    return strtolower($value);
+}
+
 function quoteStr($input, $quoteChar="'"){
     return "$quoteChar".$input."$quoteChar";
 }
