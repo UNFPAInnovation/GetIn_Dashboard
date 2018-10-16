@@ -28,8 +28,7 @@
 
             <div id="content">		
                 <?php
-                    $district_id = $_SESSION['getin_district'];
-                    $district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
+                    $district = Session::getActiveDistrict();
                 ?>
                 <div id="content-header">
                     <h1>Dashboard</h1>
@@ -51,7 +50,7 @@
                                     <span class="value">
                                         <?php
                                         $mother_counter = 0;
-                                        $mother_count = DB::getInstance()->query("SELECT * FROM core_patients WHERE district LIKE '".$district."'");
+                                        $mother_count = DB::getInstance()->query("SELECT * FROM core_patients WHERE district LIKE '".$district->name."'");
                                         foreach ($mother_count->results() as $mother_count) {
                                             $mother_counter++;
                                         }
@@ -100,7 +99,7 @@
                                 <div class="details">
                                     <span class="content">Registered Users</span>
                                     <span class="value"><?php
-                                        echo DB::getInstance()->returnCount("SELECT * FROM core_observer WHERE district_id=".$district_id);
+                                        echo DB::getInstance()->returnCount("SELECT * FROM core_observer WHERE district_id=".$district->id);
                                         ?></span>
                                 </div> <!-- /.details -->
 
@@ -153,7 +152,7 @@
                                             $group1 = 0;
                                             $group2 = 0;
                                             $group3 = 0;
-                                            $age_groups = DB::getInstance()->query("SELECT * FROM core_patients WHERE district LIKE '".$district."'");
+                                            $age_groups = DB::getInstance()->query("SELECT * FROM core_patients WHERE district LIKE '".$district->name."'");
                                             foreach ($age_groups->results() as $age_groups) {
                                                 $age = calcAge($age_groups->dob, date('Y-m-d'));
                                                 if ($age >= 15 && $age <= 19):
@@ -194,10 +193,10 @@
                                                 Young People and Key Populations (Marie Stoppes):    
                                             </td>
                                             <?php
-                                                $voucher1 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'HBBH%' AND district LIKE '".$district."'");
-                                                $voucher2 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'FPUG%' AND district LIKE '".$district."'");
-                                                $voucher3 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'SMA%' AND district LIKE '".$district."'");
-                                                $voucher4 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'LKUP%' AND district LIKE '".$district."'");
+                                                $voucher1 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'HBBH%' AND district LIKE '".$district->name."'");
+                                                $voucher2 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'FPUG%' AND district LIKE '".$district->name."'");
+                                                $voucher3 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'SMA%' AND district LIKE '".$district->name."'");
+                                                $voucher4 = DB::getInstance()->returnCount("SELECT * FROM core_patients WHERE system_id LIKE 'LKUP%' AND district LIKE '".$district->name."'");
                                             ?>
                                             <td width="30%">
                                                 <strong><?php echo $voucher1; ?> Girls  </strong>  <br/><p></p>
@@ -226,8 +225,8 @@
                                                 Drivers:       <br/><p></p>
                                             </td>
                                             <td width="30%">
-                                                <strong><?php echo DB::getInstance()->returnCount("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='vht' and co.district_id=".$district_id); ?></strong><br/><p></p>
-                                                <strong><?php echo DB::getInstance()->returnCount("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='midwife' and co.district_id=".$district_id); ?></strong><br/><p></p>
+                                                <strong><?php echo DB::getInstance()->returnCount("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='vht' and co.district_id=".$district->id); ?></strong><br/><p></p>
+                                                <strong><?php echo DB::getInstance()->returnCount("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and co.role='midwife' and co.district_id=".$district->id); ?></strong><br/><p></p>
                                                 <strong><?php echo DB::getInstance()->returnCount("select * from core_ambulancedriver"); ?></strong> <br/><p></p>
                                             </td>
                                             <td>
@@ -268,10 +267,10 @@
                                                     <?php 
                                                         $date_due_on = date('Y-m-d');
                                                     ?> 
-                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and cp.district LIKE '".$district."'"); ?><br/><p></p>
-                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and tt.due_on LIKE '$date_due_on%' and cp.district LIKE '".$district."'"); ?><br/><p></p>
-                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and tt.due_on>'$date_due_on' and cp.district LIKE '".$district."'"); ?><br/><p></p>
-                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and tt.due_on LIKE '$date_due_on%' and cp.district LIKE '".$district."'"); ?><br/><p></p>
+                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and cp.district LIKE '".$district->name."'"); ?><br/><p></p>
+                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and tt.due_on LIKE '$date_due_on%' and cp.district LIKE '".$district->name."'"); ?><br/><p></p>
+                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and tt.due_on>'$date_due_on' and cp.district LIKE '".$district->name."'"); ?><br/><p></p>
+                                                    <?php echo DB::getInstance()->returnCount("SELECT cp.*,tt.* FROM tasks_task tt, tasks_encountertask tet,core_subject cs,core_patients cp where tt.id=task_ptr_id and tet.subject_id=cs.uuid and cs.id=cp.subject_ptr_id and tt.due_on LIKE '$date_due_on%' and cp.district LIKE '".$district->name."'"); ?><br/><p></p>
 
 
                                                 </strong>
@@ -286,7 +285,7 @@
                                         <tr>
                                             <?php
                                             // TODO filter by session district
-                                            $cug = DB::getInstance()->query("SELECT * FROM core_patients WHERE district LIKE '".$district."'");
+                                            $cug = DB::getInstance()->query("SELECT * FROM core_patients WHERE district LIKE '".$district->name."'");
                                             $mtn = 0;
                                             $airtel = 0;
                                             $pending = 0;
@@ -397,7 +396,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        $users_list = DB::getInstance()->query("SELECT * FROM core_patients WHERE district LIKE '".$district."' order by subject_ptr_id desc limit 10");
+                                                        $users_list = DB::getInstance()->query("SELECT * FROM core_patients WHERE district LIKE '".$district->name."' order by subject_ptr_id desc limit 10");
                                                         foreach ($users_list->results() as $users_list) {
                                                             ?>
                                                             <tr>
@@ -468,8 +467,8 @@
 
                                                     <tbody> 
                                                         <?php
-                                                        $recent_users = DB::getInstance()->query("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and  co.district_id=".$district_id." ORDER BY co.id DESC LIMIT 10");
-                                                        //$recent_users = DB::getInstance()->query("SELECT * FROM core_observer WHERE district_id=".$district_id." ORDER BY id DESC LIMIT 10");
+                                                        $recent_users = DB::getInstance()->query("SELECT co.*,au.* FROM core_observer co,auth_user au where au.id=co.user_id and  co.district_id=".$district->id." ORDER BY co.id DESC LIMIT 10");
+                                                        //$recent_users = DB::getInstance()->query("SELECT * FROM core_observer WHERE district_id=".$district->id." ORDER BY id DESC LIMIT 10");
                                                         $i = 1;
                                                         foreach ($recent_users->results() as $recent_users) {
                                                             ?>
