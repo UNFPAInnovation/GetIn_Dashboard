@@ -6,8 +6,8 @@
     <head>
         <?php include 'includes/header.php'; ?>	
         <link href="css/extension-page-style.css" rel="stylesheet" type="text/css"  />
-        <script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
-        <script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.widgets.js"></script>
+        <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+        <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/fusioncharts.widgets.js"></script>
     </head>
 
     <body>
