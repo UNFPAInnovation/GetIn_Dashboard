@@ -6,28 +6,27 @@ if(!isset($vgrp)){
 } 
 $voucher_query = ''; 
 $select = '';
+$where = [];
 switch ($vgrp) {
     case '0':
-        $voucher_query = '';
         break;
     case '1':
-        $voucher_query = "WHERE COALESCE(system_id, '') = ''";
+        $where[] = "COALESCE(system_id, '') = ''";
         break;
     case '2':
-        $voucher_query = "WHERE system_id LIKE ''";
-        $voucher_query = "WHERE COALESCE(system_id, '') != ''";
+        $where[] = "COALESCE(system_id, '') != ''";
         break;
     case '3':
-        $voucher_query = "WHERE system_id LIKE 'HBBH%'"; 
+        $where[] = "system_id LIKE 'HBBH%'"; 
         break;
     case '4':
-        $voucher_query = "WHERE system_id  LIKE 'FPUG%'";
+        $where[] = "system_id  LIKE 'FPUG%'";
         break;
     case '5':
-        $voucher_query = "WHERE system_id LIKE 'SMA%'";
+        $where[] = "system_id LIKE 'SMA%'";
         break;
     case '6':
-        $voucher_query = "WHERE system_id LIKE 'LKUP%'";
+        $where[] = "system_id LIKE 'LKUP%'";
         break;
 }
 
@@ -43,13 +42,13 @@ define ("DB_NAME", Config::get('mysql/db'));
 $link = mysql_connect(DB_HOST, DB_USER, DB_PASS) or die("Couldn't make connection.");
 $db = mysql_select_db(DB_NAME, $link) or die("Couldn't select database");
 */
+$district = Session::getActiveDistrict();
+$where[] = "district LIKE '$district->name'";
+$whereStr = implode(" AND ", $where);
 $setCounter = 0;
-
 $setExcelName = 'patient_info_';
 $timestamp = date("Ymd-His");
-$district_id = $_SESSION['getin_district'];
-$district = DB::getInstance()->getName('core_district', $district_id, 'name', 'id');
-$setSql = "select * from core_patients ".$voucher_query." AND district LIKE '".$district."';";
+$setSql = "select * from core_patients WHERE ".$whereStr;;
 
 //$setRec = mysql_query($setSql);
 $db = DB::getInstance();
