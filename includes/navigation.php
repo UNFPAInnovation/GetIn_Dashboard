@@ -168,9 +168,21 @@
 
                 <ul class="sub-nav">
                     <li>
-                        <a href="index.php?page=users">
+                        <a href="index.php?page=users_chew">
                             <i class="fa fa-arrow-circle-o-right"></i> 
-                            New User
+                            New CHEW
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.php?page=users_midwife">
+                            <i class="fa fa-arrow-circle-o-right"></i> 
+                            New Midwife
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.php?page=users_dho">
+                            <i class="fa fa-arrow-circle-o-right"></i> 
+                            New DHO
                         </a>
                     </li>
                     <li>

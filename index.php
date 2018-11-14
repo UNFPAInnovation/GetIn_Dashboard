@@ -48,6 +48,21 @@ switch ($page) {
             include 'pages/' . $page . '.php';
         break;
 
+    case 'users_chew':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break;
+
+    case 'users_midwife':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break;
+
+    case 'users_dho':
+        if (file_exists('pages/' . $page . '.php'))
+            include 'pages/' . $page . '.php';
+        break;
+
     case 'demographics':
         if (file_exists('pages/' . $page . '.php'))
             include 'pages/' . $page . '.php';
