@@ -250,8 +250,21 @@ class DB {
         $this->_options.="<option value=''>----SELECT----</option>";
         if($this->_dropQuery->count()){
             foreach ($this->_dropQuery->results() as $result){
-              if((isset($selected) && !(empty($selected))) && $result->{$id} == $selected){
-                $this->_options.="<option value='".$result->{$id}."' selected='selected'>".$result->{$name}."</option>";
+              if((isset($selected) && !(empty($selected)))){
+                // array or value
+                if(is_array($selected)){
+                    if(in_array($result->{$id}, $selected)){
+                        $this->_options.="<option value='".$result->{$id}."' selected='selected'>".$result->{$name}."</option>";
+                    } else {
+                        $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
+                    }
+                } else {
+                    if($result->{$id} == $selected){
+                        $this->_options.="<option value='".$result->{$id}."' selected='selected'>".$result->{$name}."</option>";
+                    } else {
+                        $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
+                    }
+                }
               } else {
                 $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
               }
