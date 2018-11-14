@@ -12,18 +12,13 @@
 
             <?php include 'includes/headerone.php'; ?>
 
-
             <div id="sidebar-wrapper" class="collapse sidebar-collapse">
-
-
 
                 <?php
                 include 'includes/navigation.php';
                 ?>
 
             </div> <!-- /#sidebar-wrapper -->
-
-
 
             <div id="content">		
                 <?php
@@ -34,7 +29,6 @@
                     <h1>Users</h1>
                 </div> <!-- #content-header -->	
 
-
                 <div id="content-container">	
                     <a href="index.php?page=list_users"><label class="label label-success">View Users</label></a><br/><p></p>
                     <div class="portlet">
@@ -43,7 +37,7 @@
 
                             <h3>
                                 <i class="fa fa-group"></i>
-                                New User
+                                New DHO
                             </h3>
 
                         </div> <!-- /.portlet-header -->
@@ -103,9 +97,11 @@
                                         $email = Input::get('email');
                                         $role = Input::get('role');
                                         $district_id = Input::get('district_id');
+                                        /*
                                         $subcounty = Input::get('subcounty_id');
                                         $parish_id = Input::get('parish_id');
                                         $parish_ids=  implode(",", $parish_id);
+                                        */
                                         $phone_number = Input::get('phone_number');
                                         $is_active = 1;
                                         $date_joined = date('Y-m-d');
@@ -128,8 +124,9 @@
                                             /*
                                              * create observer from python
                                              */
-                                            $create_observer_python=  exec("python createobserver.py '$user_id' '$role' '$phone_number' '$district->id' '$subcounty' '$parish_ids'");
-                                            if(is_numeric($create_observer_python)){
+                                            $create_dho = exec("python createdho.py '$user_id' 'dho' '$phone_number' '$district->id'"); 
+                                            //'$subcounty' '$parish_ids'");
+                                            if(is_numeric($create_dho)){
                                                 echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
                                                 // TODO send SMS with credentials
                                                 $message = "Welcome to GetIN! Your login credentials are:\n".$username."\n".$password;
@@ -172,14 +169,9 @@
                                             <label for="username">User Name</label>
                                             <input type="text" id="username-input" name="username" value="<?php echo escape(Input::get('username')); ?>" class="form-control">
                                         </div>
-                                    <!--
-                                    </div> 
-
-                                    <div class="col-sm-5">
-                                    -->
-                                        <div class="form-group">	
+                                        <div class="form-group" style="display:none;">	
                                             <label for="select-role">Role</label>
-                                            <select id="select-input" name="role" class="form-control">
+                                            <select id="select-input" name="role" class="form-control" value="dho">
                                                 <option value="">----SELECT----</option>
                                                 <option value="vht">CHEW</option>
                                                 <option value="midwife">MidWife</option>
@@ -204,6 +196,7 @@
                                             <label for="district_id">District</label>
                                             <input name="district_id" id="id_district" value=<?php echo("\"$district->id\""); ?> />
                                         </div>
+                                        <!--
                                         <div class="form-group" id="subcounty_select_div" onchange="this.form.submit()">
                                             <label for="patient-group">Subcounty</label>
                                             <select type="text" name="subcounty_id" class="form-control">
@@ -256,6 +249,7 @@
                                                 ?>
                                             </select>
                                         </div>
+                                        -->
                                         <script type="text/javascript">
                                             /*
                                             document.getElementById('select-input').addEventListener('change', function () {

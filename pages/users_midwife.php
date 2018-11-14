@@ -12,18 +12,13 @@
 
             <?php include 'includes/headerone.php'; ?>
 
-
             <div id="sidebar-wrapper" class="collapse sidebar-collapse">
-
-
 
                 <?php
                 include 'includes/navigation.php';
                 ?>
 
             </div> <!-- /#sidebar-wrapper -->
-
-
 
             <div id="content">		
                 <?php
@@ -43,7 +38,7 @@
 
                             <h3>
                                 <i class="fa fa-group"></i>
-                                New User
+                                New Midwife
                             </h3>
 
                         </div> <!-- /.portlet-header -->
@@ -90,8 +85,6 @@
                                         $role = Input::get('role');
                                         $district_id = Input::get('district_id');
                                         $subcounty = Input::get('subcounty_id');
-                                        $parish_id = Input::get('parish_id');
-                                        $parish_ids=  (isset($parish_id) && !empty($parish_id))? implode(",", $parish_id): "";
                                         $phone_number = Input::get('phone_number');
                                     if ($validation->passed()) {
                                         //login user
@@ -104,8 +97,6 @@
                                         $role = Input::get('role');
                                         $district_id = Input::get('district_id');
                                         $subcounty = Input::get('subcounty_id');
-                                        $parish_id = Input::get('parish_id');
-                                        $parish_ids=  implode(",", $parish_id);
                                         $phone_number = Input::get('phone_number');
                                         $is_active = 1;
                                         $date_joined = date('Y-m-d');
@@ -177,12 +168,12 @@
 
                                     <div class="col-sm-5">
                                     -->
-                                        <div class="form-group">	
+                                        <div class="form-group" style="display:none;">	
                                             <label for="select-role">Role</label>
-                                            <select id="select-input" name="role" class="form-control">
+                                            <select id="select-input" name="role" class="form-control" value="mideife">
                                                 <option value="">----SELECT----</option>
                                                 <option value="vht">CHEW</option>
-                                                <option value="midwife">MidWife</option>
+                                                <option value="midwife" selected>MidWife</option>
                                                 <option value="dho">DHO</option>
                                                 <option value="admin">Admin</option>
                                             </select>
@@ -222,7 +213,7 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        
+                                        <!--
                                         <div class="form-group" id="parish_select_div">
                                             <label for="parish">Parish<?php echo(" Subcounty=$subcounty"); ?> </label>
                                             <select multiple="multiple" type="text" name="parish" id="parish_id" class="form-control" onchange="this.form.submit()">
@@ -256,6 +247,7 @@
                                                 ?>
                                             </select>
                                         </div>
+                                        -->
                                         <script type="text/javascript">
                                             /*
                                             document.getElementById('select-input').addEventListener('change', function () {

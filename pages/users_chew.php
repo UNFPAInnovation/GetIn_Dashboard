@@ -43,7 +43,7 @@
 
                             <h3>
                                 <i class="fa fa-group"></i>
-                                New User
+                                New CHEW
                             </h3>
 
                         </div> <!-- /.portlet-header -->
