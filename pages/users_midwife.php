@@ -112,7 +112,7 @@
                                          * send and receive values from python
                                          */
                                         
-                                        $create_user_python=  exec("python user.py '$username' '$password' '$fname' '$lname' '$email'");
+                                        $create_user_python=  exec("python user.py '-1' '$username' '$password' '$fname' '$lname' '$email'");
                                         $user_id=$create_user_python;
                                        // echo $create_user_python;
                                         if (is_numeric($create_user_python)) {
