@@ -43,4 +43,4 @@ try:
     result = User.objects.get(username=username).id
 except Exception as e:
     sys.stderr.write("(dashboard) createuser.py Error saving user. Message: %s" % e)
-print(result)
+print('{}'.format(result).rstrip('L'))
