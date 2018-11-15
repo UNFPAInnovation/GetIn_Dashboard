@@ -3,7 +3,7 @@
 # Any parameters which MAY have spaces or restricted characters should
 # be passed using single quotes-i.e. '$password'
 # Usage:
-#    python createuser.py username password [first_name last_name email
+#    python user.py username password [first_name last_name email
 #
 # Arguments:
 #    username The string the user will log in with

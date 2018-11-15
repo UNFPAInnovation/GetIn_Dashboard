@@ -3,7 +3,7 @@
 # Any parameters which MAY have spaces or restricted characters should
 # be passed using single quotes-i.e. '$password'
 # Usage:
-#    python createuser.py username password [first_name last_name email
+#    python user.py username password [first_name last_name email
 #
 # Arguments:
 #    username The string the user will log in with
@@ -30,17 +30,17 @@ try:
     try:
         user.first_name = sys.argv[3]
     except Exception as e:
-        sys.stderr.write("(dashboard) createuser.py Error reading optional field '%s'. Message '%s'" % ("first_name", e))
+        sys.stderr.write("(dashboard) user.py Error reading optional field '%s'. Message '%s'" % ("first_name", e))
     try:
         user.last_name = sys.argv[4]
     except Exception as e:
-        sys.stderr.write("(dashboard) createuser.py Error reading optional field '%s'. Message '%s'" % ("last_name", e))
+        sys.stderr.write("(dashboard) user.py Error reading optional field '%s'. Message '%s'" % ("last_name", e))
     try:
         user.email = sys.argv[5]
     except Exception as e:
-        sys.stderr.write("(dashboard) createuser.py Error reading optional field '%s'. Message '%s'" % ("email", e))
+        sys.stderr.write("(dashboard) user.py Error reading optional field '%s'. Message '%s'" % ("email", e))
     user.save()
     result = User.objects.get(username=username).id
 except Exception as e:
-    sys.stderr.write("(dashboard) createuser.py Error saving user. Message: %s" % e)
+    sys.stderr.write("(dashboard) user.py Error saving user. Message: %s" % e)
 print('{}'.format(result).rstrip('L'))
