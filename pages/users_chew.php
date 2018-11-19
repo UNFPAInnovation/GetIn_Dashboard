@@ -81,18 +81,23 @@
                                             'required' => TRUE
                                         )
                                     ));
-                                        $fname = Input::get('firstname');
-                                        $lname = Input::get('lastname');
-                                        $username = Input::get('username');
-                                        $password = Input::get('password');
-                                        $cpassword = Input::get('cpassword');
-                                        $email = Input::get('email');
-                                        $role = Input::get('role');
-                                        $district_id = Input::get('district_id');
-                                        $subcounty = Input::get('subcounty_id');
-                                        $parish_id = Input::get('parish_id');
-                                        $parish_ids=  (isset($parish_id) && !empty($parish_id))? implode(",", $parish_id): "";
-                                        $phone_number = Input::get('phone_number');
+                                    $fname = Input::get('firstname');
+                                    $lname = Input::get('lastname');
+                                    $username = Input::get('username');
+                                    $password = Input::get('password');
+                                    $cpassword = Input::get('cpassword');
+                                    $email = Input::get('email');
+                                    $role = Input::get('role');
+                                    $district_id = Input::get('district_id');
+                                    $phone_number = Input::get('phone_number');
+                                    $subcounty = Input::get('subcounty_id');
+                                    $_raw = Input::get('parish_id');
+                                    $parish_id = (isset($_raw))? explode(",",$_raw): array();
+                                    $parish_ids=implode(",", $parish_id);
+                                    $_raw = Input::get('location_id');
+                                    $location_id = (isset($_raw))? explode(",",$_raw): array();
+                                    $location_ids= implode(",", $location_id);
+                                    $user_id = _GET['user_id'];    
                                     if ($validation->passed()) {
                                         //login user
                                         $fname = Input::get('firstname');
@@ -104,8 +109,21 @@
                                         $role = Input::get('role');
                                         $district_id = Input::get('district_id');
                                         $subcounty = Input::get('subcounty_id');
-                                        $parish_id = Input::get('parish_id');
-                                        $parish_ids=  implode(",", $parish_id);
+                                        /*
+                                        $parish_id = explode(",", Input::get('parish_id'));
+                                        $parish_ids=  (isset($parish_id) && !empty($parish_id))? implode(",", $parish_id): "";
+                                        //$_raw = Input::get('location_id');
+                                        //$_ids = (isset($_raw))?Input::get('location_id):array();
+                                        $location_id = explode(",", Input::get('location_id'));
+                                        $location_ids= implode(",", $location_id);
+                                        */
+                                        
+                                        $_raw = Input::get('parish_id');
+                                        $parish_id = (isset($_raw))? explode(",",$_raw): array();
+                                        $parish_ids=implode(",", $parish_id);
+                                        $_raw = Input::get('location_id');
+                                        $location_id = (isset($_raw))? explode(",",$_raw): array();
+                                        $location_ids= implode(",", $location_id);
                                         $phone_number = Input::get('phone_number');
                                         $is_active = 1;
                                         $date_joined = date('Y-m-d');
@@ -120,15 +138,15 @@
                                         /*
                                          * send and receive values from python
                                          */
-                                        
-                                        $create_user_python=  exec("python user.py '-1' '$username' '$password' '$fname' '$lname' '$email'");
-                                        $user_id=$create_user_python;
-                                       // echo $create_user_python;
-                                        if (is_numeric($create_user_python)) {
+                                        if((isset($subcounty) && isset(parish_id) && isset(location_id)){  
+                                            $create_user_python=  exec("python user.py '-1' '$username' '$password' '$fname' '$lname' '$email'");
+                                            $user_id=$create_user_python;
+                                            // echo $create_user_python;
+                                            if (is_numeric($create_user_python)) {
                                             /*
                                              * create observer from python
                                              */
-                                            $create_observer_python=  exec("python createobserver.py '$user_id' '$role' '$phone_number' '$district->id' '$subcounty' '$parish_ids'");
+                                            $create_observer_python=  exec("python chew.py '$user_id' '$phone_number' '$district->id' '$subcounty' '$parish_ids' '$location_ids'");
                                             if(is_numeric($create_observer_python)){
                                                 echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
                                                 // TODO send SMS with credentials
@@ -143,6 +161,8 @@
                                             }else{
                                                
                                             }
+                                        } else {
+                                            redirect("Please continue filling out values", "index.php?page=users");
                                         }
                                     } else {
                                         //output errors
@@ -177,8 +197,10 @@
 
                                     <div class="col-sm-5">
                                     -->
-                                        <div class="form-group">	
+                                        <div class="form-group" style="display:none">	
                                             <label for="select-role">Role</label>
+                                            <input type="text" name="role" id="role-input" class="form-control" value="vht"/>
+                                            <!--
                                             <select id="select-input" name="role" class="form-control">
                                                 <option value="">----SELECT----</option>
                                                 <option value="vht">CHEW</option>
@@ -186,35 +208,37 @@
                                                 <option value="dho">DHO</option>
                                                 <option value="admin">Admin</option>
                                             </select>
+                                            -->
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password</label>
-                                            <input type="password"  name="password" id="password-input" class="form-control">
+                                            <input type="password"  name="password" id="password-input" class="form-control" value="<?php echo escape(Input::get('password')); ?>" >
                                         </div>
                                         <div class="form-group">
                                             <label for="confirm-password">Confirm Password</label>
-                                            <input type="password" name="cpassword" id="cpassword-input" class="form-control">
+                                            <input type="password" name="cpassword" id="cpassword-input" class="form-control" value="<?php echo escape(Input::get('cpassword')); ?>" >
                                         </div>
 
                                         <div class="form-group">
                                             <label for="phone-number">Phone</label>
-                                            <input type="number" name="phone_number" placeholder="eg: 2567XX123456" id="phone-input" class="form-control">
+                                            <input type="number" name="phone_number" id="phone-input" class="form-control"  value="<?php echo escape(Input::get('phone_number')); ?>" >
                                         </div>
                                         <div class="form-group" id="district_select_div" style="display:none">
                                             <label for="district_id">District</label>
                                             <input name="district_id" id="id_district" value=<?php echo("\"$district->id\""); ?> />
                                         </div>
-                                        <div class="form-group" id="subcounty_select_div" onchange="this.form.submit()">
+                                        <div class="form-group" id="subcounty_select_div">
                                             <label for="patient-group">Subcounty</label>
-                                            <select type="text" name="subcounty_id" class="form-control">
+                                            <select type="text" name="subcounty_id" class="form-control" 
+                                             onchange="onChangeSubcounty(this)">
                                                 <?php
                                                     $selected_subcounty = Input::get('subcounty_id');
                                                     if(!empty($district->id)){
-                                                      $where = array('district_id','=', $district->id) ;
+                                                      $where = "district_id=$district->id";
                                                       if(!empty($selected_subcounty)){
-                                                        echo DB::getInstance()->dropDownWithWhereAndSelected('core_subcounty','id','name', $where, $selected_subcounty);
+                                                        echo DB::getInstance()->dropDownWithWhereAndSelectedRaw('core_subcounty','id','name', $where, $selected_subcounty);
                                                       } else {
-                                                        echo DB::getInstance()->dropDownWithWhere('core_subcounty','id','name', $where);
+                                                        echo DB::getInstance()->dropDownWithWhereRaw('core_subcounty','id','name', $where);
                                                       }    
                                                     }else{
                                                       echo DB::getInstance()->dropDowns('core_subcounty','id','name');
@@ -224,17 +248,21 @@
                                         </div>
                                         
                                         <div class="form-group" id="parish_select_div">
-                                            <label for="parish">Parish<?php echo(" Subcounty=$subcounty"); ?> </label>
-                                            <select multiple="multiple" type="text" name="parish" id="parish_id" class="form-control" onchange="this.form.submit()">
+                                            <label for="parish_id">Parish</label>
+                                            <!-- <?php echo("Subcounty=$subcounty"); ?> -->
+                                            <select multiple="multiple" type="text" name="parish_id" id="parish_id" class="form-control" 
+                                                onchange="onChangeParish(this)">
                                                 <?php
                                                 // TODO Only want parishes where parish -> subcounty = subcounty
                                                 if(isset($subcounty) && !empty($subcounty)){
-                                                    $where = array('subcounty_id','=', $subcounty);
-                                                    $parishes = Input::get('parish_id');
+                                                    $where = "subcounty_id=".$subcounty;
+                                                    //$parish = Input::get('parish_id');
+                                                    echo("<!-- parishes=array(".(is_array($parish_id)?'true':'false').") -> $parish_ids -->");
+                                                    echo("<!-- where=$where -->");
                                                     if(!empty($parish_id)){
-                                                      echo DB::getInstance()->dropDownWithWhereAndSelected('core_parish','id','name', $where, $parishes);
+                                                      echo DB::getInstance()->dropDownWithWhereAndSelectedRaw('core_parish','id','name', $where, $parish_id);
                                                     } else {
-                                                      echo DB::getInstance()->dropDownWithWhere('core_parish','id','name', $where);
+                                                      echo DB::getInstance()->dropDownWithWhereRaw('core_parish','id','name', $where);
                                                     }
                                                 } else {
                                                     echo("<option value=\"\">----SELECT SUBCOUNTY----</option>");
@@ -243,13 +271,16 @@
                                             </select>
                                         </div>
                                         <div class="form-group" id="village_select_div">
-                                            <label for="village">Village</label>
-                                            <select multiple="multiple" type="text" name="village" id="village_id" class="form-control">
+                                            <label for="location_id">Village</label>
+                                            <select multiple="multiple" type="text" name="location_id" id="location_id" class="form-control">
                                                 <?php
+                                                echo("<!-- parish(".(is_array($parish_id)?'true':'false').") -> [ $parish_ids ]-->");
                                                 // TODO Only want villages where village -> parish IN parish_ids
                                                 if(isset($parish_ids) && !empty($parish_ids)){
                                                     $where = array('parish_id', '=', $parish_ids) ;
-                                                    echo DB::getInstance()->dropDownWithWhere('core_village','id','name', $parish_ids);
+                                                    $where = "parish_id IN ($parish_ids)" ;
+                                                    echo("<!-- where=$where -->");
+                                                    echo DB::getInstance()->dropDownWithWhereAndSelectedRaw('core_location','id','name', $where, $location_id);
                                                 } else {
                                                     echo("<option value=\"\">----SELECT PARISH----</option>");
                                                 }
@@ -257,36 +288,24 @@
                                             </select>
                                         </div>
                                         <script type="text/javascript">
-                                            /*
-                                            document.getElementById('select-input').addEventListener('change', function () {
-                                                var subcounties = document.getElementById('subcounty_select_div');
-                                                var parishes = document.getElementById('parish_select_div');
-                                                var district = document.getElementById('district_select_div');
-                                                var village = document.getElementById('village_select_div');
-                                                switch(this.value){
-                                                    case "vht":
-                                                        district.style.display = 'none';
-                                                        parishes.style.display = 'none';
-                                                        village.style.display = 'block';
-                                                        break;
-                                                    case "midwife":
-                                                        district.style.display = 'none';
-                                                        parishes.style.display = 'none';
-                                                        village.style.display = 'none';
-                                                        break;
-                                                    case "dho":
-                                                        district.style.display = 'none';
-                                                        parishes.style.display = 'none';
-                                                        village.style.display = 'none';
-                                                        break;
-                                                    default:
-                                                        district.style.display = 'none';
-                                                        parishes.style.display = 'none';
-                                                        village.style.display = 'none';
-                                                        break;
+                                            function clearSelectInput(selectInput){
+                                                var len = selectInput.options.length;
+                                                while(selectInput.options.length > 0){
+                                                    selectInput.remove(0);
                                                 }
-                                            });
-                                            */
+                                            }
+                                            function onChangeSubcounty(selectInput){
+                                                var parishes = document.getElementById('parish_id');
+                                                clearSelectInput(parishes);
+                                                var villages = document.getElementById('location_id');
+                                                clearSelectInput(villages);
+                                                selectInput.form.submit();
+                                            }
+                                            function onChangeParish(selectInput){
+                                                var villages = document.getElementById('location_id');
+                                                clearSelectInput(villages);
+                                                selectInput.form.submit();
+                                            }
                                         </script>
                                     </div> <!-- /.col -->
                                     <div class="col-sm-1"></div>

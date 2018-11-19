@@ -35,6 +35,14 @@ class DB {
 
     public function query($sql, $params = array()) {
         $this->_error = false;
+        if(is_string($params)){
+            $starts_with = strtolower(substr(trim($params),0,5)); 
+            if(!( $starts_with === "where")){
+                $params = "WHERE ".$params;
+            }
+            $sql = $sql." ".$params;
+            $params = array();
+        }
         if ($this->_query = $this->_pdo->prepare($sql)) {
             $x = 1;
             if (count($params)) {
@@ -295,6 +303,45 @@ class DB {
         return $this->_options;
     }
 
+    /*  
+        Populates a set of option elements within a select where the query includes a WHERE
+        clause and specifies which option to set as selected='selected'
+        $tablename = table to query
+        $id = column to use for the value attribute
+        $name = column to use for the option
+        $where = array as ['column', 'operator', 'value']
+        $selected = option to set with selected attribute equal to 'selected'
+    */
+    public function dropDownWithWhereAndSelectedRaw($tableName,$id,$name, $where, $selected){
+        $this->_options="";
+        $this->_dropQuery="";
+        $rawWhere = (is_array($where))? implode(",", $where): $where; 
+        $this->_dropQuery= $this->query("SELECT * FROM $tableName WHERE $rawWhere ORDER BY $name ASC");
+        $this->_options.="<option value=''>----SELECT----</option>";
+        if($this->_dropQuery->count()){
+            foreach ($this->_dropQuery->results() as $result){
+              if((isset($selected) && !(empty($selected)))){
+                // array or value
+                if(is_array($selected)){
+                    if(in_array($result->{$id}, $selected)){
+                        $this->_options.="<option value='".$result->{$id}."' selected='selected'>".$result->{$name}."</option>";
+                    } else {
+                        $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
+                    }
+                } else {
+                    if($result->{$id} == $selected){
+                        $this->_options.="<option value='".$result->{$id}."' selected='selected'>".$result->{$name}."</option>";
+                    } else {
+                        $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
+                    }
+                }
+              } else {
+                $this->_options.="<option value='".$result->{$id}."'>".$result->{$name}."</option>";
+              }
+            }
+        }
+        return $this->_options;
+    }
     //get field name
     public function getName($table,$id,$return,$idColumn)
     {

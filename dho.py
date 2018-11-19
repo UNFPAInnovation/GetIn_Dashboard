@@ -57,7 +57,9 @@ try:
     observer.role = role
     observer.phone_number = phone_number
     observer.district = District.objects.get(id=district)
+    observer.save()
     observer.parishes = Parish.objects.filter(subcounty__district=district)
+    observer.save()
     observer.locations = Location.objects.filter(parish__subcounty__district=district)
     observer.save()
     

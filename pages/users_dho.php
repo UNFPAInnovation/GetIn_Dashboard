@@ -124,7 +124,7 @@
                                             /*
                                              * create observer from python
                                              */
-                                            $create_dho = exec("python createdho.py '$user_id' 'dho' '$phone_number' '$district->id'"); 
+                                            $create_dho = exec("python dho.py '$user_id' '-1' '$phone_number' '$district->id'"); 
                                             //'$subcounty' '$parish_ids'");
                                             if(is_numeric($create_dho)){
                                                 echo "<h5 align='center' ><strong><font color='green' size='2px'>User Created</font></strong></h5>";
